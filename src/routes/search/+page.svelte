@@ -34,7 +34,7 @@
 
   type Listing = Track | Playlist | User;
 
-  const query = createInfiniteQuery(() => ({
+  const searchQuery = createInfiniteQuery(() => ({
     queryKey: ["search", debouncedQ.current, params.kind],
     queryFn: async ({ pageParam }) => {
       if (!debouncedQ.current) return [] as Listing[];
@@ -66,7 +66,7 @@
     <form
       onsubmit={(e) => {
         e.preventDefault();
-        query.refetch();
+        searchQuery.refetch();
       }}
       class="mx-auto flex w-full max-w-xl gap-2"
     >
@@ -87,7 +87,7 @@
             class="capitalize"
             onclick={() => {
               params.kind = kind;
-              query.refetch();
+              searchQuery.refetch();
             }}
           >
             {kind}
@@ -98,6 +98,6 @@
   {/snippet}
 
   {#snippet right()}
-    <InfiniteQueryView {query} />
+    <InfiniteQueryView query={searchQuery} />
   {/snippet}
 </Main>

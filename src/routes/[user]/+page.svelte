@@ -33,7 +33,7 @@
     },
   );
 
-  const query = createInfiniteQuery(() => ({
+  const userDetailsQuery = createInfiniteQuery(() => ({
     queryKey: ["user", userQuery.data?.id, params.kind],
     queryFn: async ({ pageParam = 0 }) => {
       const data = {
@@ -91,6 +91,6 @@
       {/each}
     </div>
 
-    <InfiniteQueryView {query} />
+    <InfiniteQueryView query={userDetailsQuery} />
   {/snippet}
 </Main>

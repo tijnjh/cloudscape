@@ -53,7 +53,7 @@
     global.showNowPlayingView = false;
   });
 
-  const query = createQuery(() => ({
+  const relatedTracksQuery = createQuery(() => ({
     queryKey: ["related", nowPlaying.current?.id],
     queryFn: async () => {
       if (!nowPlaying.current) return [];
@@ -139,7 +139,10 @@
   <div class="mt-8 flex w-full flex-col gap-4 md:h-dvh md:max-w-sm">
     <h2 class="text-xl font-medium">Related Tracks</h2>
 
-    <AsyncView isLoading={query.isLoading} data={query.data}>
+    <AsyncView
+      isLoading={relatedTracksQuery.isLoading}
+      data={relatedTracksQuery.data}
+    >
       {#snippet content(data)}
         {#if data?.length === 0}
           <span class="text-mist-900-100/25 text-xl font-medium">
