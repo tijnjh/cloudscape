@@ -1,8 +1,8 @@
-import * as v from "valibot";
+import { Schema } from "effect";
 
-export const Paginated = v.strictObject({
-  limit: v.optional(v.number()),
-  offset: v.optional(v.number()),
+export const Paginated = Schema.Struct({
+  limit: Schema.UndefinedOr(Schema.Number),
+  offset: Schema.UndefinedOr(Schema.Number),
 });
 
-export type Paginated = v.InferOutput<typeof Paginated>;
+export type Paginated = typeof Paginated.Type;

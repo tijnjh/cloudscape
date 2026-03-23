@@ -1,6 +1,6 @@
 import { query } from "$app/server";
 import { Playlist } from "$lib/schemas/playlist";
-import { $api, getPermalinkPath } from "./utils";
+import { $api, getPermalinkPath } from "./utils/api";
 import * as v from "valibot";
 
 export const resolvePlaylist = query(

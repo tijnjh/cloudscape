@@ -14,7 +14,7 @@
 
   const selectionsQuery = createQuery(() => ({
     queryKey: ["selections"],
-    queryFn: () => getSelections(),
+    queryFn: () => getSelections(undefined),
   }));
 
   const favoritesQuery = createQuery(() => ({

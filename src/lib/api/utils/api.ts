@@ -1,25 +1,38 @@
+import { Effect } from "effect";
 import { isValidationError, up } from "up-fetch";
 
 export const upfetch = up(fetch);
 
-export const $api = up(fetch, async () => ({
-  baseUrl: "https://api-v2.soundcloud.com",
-  params: {
-    client_id: await getClientId(),
-  },
-  headers: {
-    "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
-  },
-  onError: (error) => {
-    if (isValidationError(error)) {
-      for (const issue of error.issues) {
-        console.error(issue);
-        throw 0; // prevent the error from flooding the console
+type UpfetchParams<T> = Parameters<typeof upfetch<T>>;
+
+export function $api<T>(
+  input: UpfetchParams<T>[0],
+  init?: UpfetchParams<T>[1],
+) {
+  const fetcher = up(fetch, async () => ({
+    baseUrl: "https://api-v2.soundcloud.com",
+    params: {
+      client_id: await getClientId(),
+    },
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+    },
+    onError: (error) => {
+      if (isValidationError(error)) {
+        for (const issue of error.issues) {
+          console.error(issue);
+          throw 0; // prevent the error from flooding the console
+        }
       }
-    }
-  },
-}));
+    },
+  }));
+
+  return Effect.tryPromise({
+    try: () => fetcher(input, init),
+    catch: (error) => console.error("API error:", error),
+  });
+}
 
 let clientId: string;
 let clientIdExpiry: number;
