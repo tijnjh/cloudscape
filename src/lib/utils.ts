@@ -1,3 +1,4 @@
+import { dev } from "$app/environment";
 import { IsInViewport, watch } from "runed";
 import type { Attachment } from "svelte/attachments";
 
@@ -10,4 +11,9 @@ export function whenInView(fn: VoidFunction): Attachment<HTMLElement> {
     const inViewport = new IsInViewport(() => node);
     watch(() => inViewport.current, fn);
   };
+}
+
+export function devOnly<T>(arg: T) {
+  if (!dev) return undefined as T;
+  return arg;
 }

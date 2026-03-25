@@ -1,6 +1,7 @@
 import { query } from "$app/server";
 import { paginated_limit } from "$lib/constants";
 import { Track } from "$lib/schemas/track";
+import { devOnly } from "$lib/utils";
 import { $api, getPermalinkPath } from "./utils";
 import * as v from "valibot";
 
@@ -11,13 +12,13 @@ export const resolveTrack = query(
   }),
   ({ user, track }) =>
     $api(getPermalinkPath(user, track), {
-      schema: Track,
+      schema: devOnly(Track),
     }),
 );
 
 export const getTrackById = query(v.number(), (id) =>
   $api(`/tracks/${id}`, {
-    schema: Track,
+    schema: devOnly(Track),
   }),
 );
 
@@ -31,6 +32,6 @@ export const getTracksByIds = query(v.array(v.number()), (ids) => {
       ids: ids.join(","),
       limit: paginated_limit,
     },
-    schema: v.array(Track),
+    schema: devOnly(v.array(Track)),
   });
 });

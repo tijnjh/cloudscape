@@ -4,18 +4,19 @@ import { Paginated } from "$lib/schemas/paginated";
 import { Playlist } from "$lib/schemas/playlist";
 import { Track } from "$lib/schemas/track";
 import { User } from "$lib/schemas/user";
+import { devOnly } from "$lib/utils";
 import { $api, getPermalinkPath } from "./utils";
 import * as v from "valibot";
 
 export const resolveUser = query(v.string(), (user) =>
   $api(getPermalinkPath(user), {
-    schema: User,
+    schema: devOnly(User),
   }),
 );
 
 export const getUserById = query(v.number(), (id) =>
   $api(`/users/${id}`, {
-    schema: User,
+    schema: devOnly(User),
   }),
 );
 
@@ -28,7 +29,7 @@ export const getUserTracks = query(
     const res = await $api(`/users/${id}/tracks`, {
       params: { limit, offset },
       headers: { "Accept-Language": "en-US,en;q=0.5" },
-      schema: Collection(Track),
+      schema: devOnly(Collection(Track)),
     });
     return res.collection;
   },
@@ -42,7 +43,7 @@ export const getUserPlaylists = query(
   async ({ id, offset, limit }) => {
     const res = await $api(`/users/${id}/playlists`, {
       params: { limit, offset },
-      schema: Collection(Playlist),
+      schema: devOnly(Collection(Playlist)),
     });
     return res.collection;
   },
