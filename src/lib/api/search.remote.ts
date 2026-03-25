@@ -4,7 +4,7 @@ import { Paginated } from "$lib/schemas/paginated";
 import { Playlist } from "$lib/schemas/playlist";
 import { Track } from "$lib/schemas/track";
 import { User } from "$lib/schemas/user";
-import { devOnly } from "$lib/utils";
+import { devSchema } from "$lib/utils";
 import { $api } from "./utils";
 import * as v from "valibot";
 
@@ -16,7 +16,7 @@ export const searchTracks = query(
   async ({ query, offset, limit }) => {
     const response = await $api("/search/tracks", {
       params: { q: query, limit, offset },
-      schema: devOnly(Collection(Track)),
+      schema: devSchema(Collection(Track)),
     });
     return response.collection;
   },
@@ -30,7 +30,7 @@ export const searchPlaylists = query(
   async ({ query, offset, limit }) => {
     const response = await $api("/search/playlists", {
       params: { q: query, limit, offset },
-      schema: devOnly(Collection(Playlist)),
+      schema: devSchema(Collection(Playlist)),
     });
     return response.collection;
   },
@@ -44,7 +44,7 @@ export const searchUsers = query(
   async ({ query, offset, limit }) => {
     const response = await $api("/search/users", {
       params: { q: query, limit, offset },
-      schema: devOnly(Collection(User)),
+      schema: devSchema(Collection(User)),
     });
     return response.collection;
   },

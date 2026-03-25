@@ -1,6 +1,7 @@
 import { dev } from "$app/environment";
 import { IsInViewport, watch } from "runed";
 import type { Attachment } from "svelte/attachments";
+import * as v from "valibot";
 
 export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
   ref?: U | null;
@@ -13,7 +14,10 @@ export function whenInView(fn: VoidFunction): Attachment<HTMLElement> {
   };
 }
 
-export function devOnly<T>(arg: T) {
-  if (!dev) return undefined as T;
-  return arg;
+/**
+ * @param schema in dev mode this is used to validate the response, in prod this is used to infer the type
+ */
+export function devSchema<T extends v.GenericSchema>(schema: T) {
+  if (!dev) return undefined as unknown as T;
+  return schema;
 }

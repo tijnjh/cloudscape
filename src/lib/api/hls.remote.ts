@@ -1,5 +1,5 @@
 import { query } from "$app/server";
-import { devOnly } from "$lib/utils";
+import { devSchema } from "$lib/utils";
 import { getTrackById } from "./track.remote";
 import { getClientId, upfetch } from "./utils";
 import * as v from "valibot";
@@ -29,7 +29,7 @@ export const getTrackSource = query(v.number(), async (trackId) => {
       track_authorization: track.track_authorization,
       client_id: clientId,
     },
-    schema: devOnly(
+    schema: devSchema(
       v.object({
         url: v.union([v.string(), v.array(v.string())]),
       }),
