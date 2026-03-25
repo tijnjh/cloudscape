@@ -1,4 +1,4 @@
-import { isValidationError, up } from "up-fetch";
+import { isResponseValidationError, up } from "up-fetch";
 
 export const upfetch = up(fetch);
 
@@ -12,7 +12,7 @@ export const $api = up(fetch, async () => ({
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
   },
   onError: (error) => {
-    if (isValidationError(error)) {
+    if (isResponseValidationError(error)) {
       for (const issue of error.issues) {
         console.error(issue);
         throw 0; // prevent the error from flooding the console
