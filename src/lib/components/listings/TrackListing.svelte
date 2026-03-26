@@ -1,10 +1,14 @@
 <script lang="ts">
+  import { page } from "$app/state";
   import { favoriteTrackIds, global, nowPlaying } from "$lib/global.svelte";
   import type { Track } from "$lib/schemas/track";
   import GenericListing from "./GenericListing.svelte";
+  import { ChevronRightIcon, StarIcon, StarOffIcon } from "@lucide/svelte";
   import { haptic } from "ios-haptics";
 
   const { track }: { track: Track } = $props();
+
+  const isFavorited = $derived(favoriteTrackIds.current.includes(track.id));
 </script>
 
 <GenericListing
@@ -24,15 +28,14 @@
   badges={track.policy === "SNIP" ? ["30s only"] : []}
   actions={[
     {
-      label: favoriteTrackIds.current.includes(track.id)
-        ? "Unfavorite"
-        : "Favorite",
+      label: isFavorited ? "Unfavorite" : "Favorite",
+      icon: isFavorited ? StarOffIcon : StarIcon,
       onclick: () => {
         if (favoriteTrackIds.current.includes(track.id)) {
           favoriteTrackIds.current = favoriteTrackIds.current.filter(
             (id) => id !== track.id,
           );
-          haptic.confirm();
+          haptic();
           return;
         } else {
           favoriteTrackIds.current.push(track.id);
@@ -40,9 +43,12 @@
         }
       },
     },
-    {
-      label: "Go to Track",
-      href: `/${track.user.permalink}/${track.permalink}`,
-    },
+    page.route.id !== "/[user]/[track]"
+      ? {
+          label: "Go to Track",
+          icon: ChevronRightIcon,
+          href: `/${track.user.permalink}/${track.permalink}`,
+        }
+      : undefined,
   ]}
 />

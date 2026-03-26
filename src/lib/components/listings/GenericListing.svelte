@@ -8,19 +8,30 @@
     badges?: string[];
     subtitle: string;
     thumbnail: ListingThumbnailProps;
-    actions?: MergeExclusive<
-      { label: string; onclick: VoidFunction },
-      { label: string; href: string }
-    >[];
+    actions?: (
+      | MergeExclusive<
+          {
+            label: string;
+            icon: Component<LucideProps>;
+            onclick: VoidFunction;
+          },
+          {
+            label: string;
+            icon: Component<LucideProps>;
+            href: string;
+          }
+        >
+      | undefined
+    )[];
   };
 </script>
 
 <script lang="ts">
   import ListingThumbnail from "../ListingThumbnail.svelte";
   import Button from "../ui/Button.svelte";
-  import { EllipsisIcon } from "@lucide/svelte";
-  import { DropdownMenu, Button as BitsUiButton } from "bits-ui";
-  import { scale } from "svelte/transition";
+  import type { LucideProps } from "@lucide/svelte";
+  import { Button as BitsUiButton } from "bits-ui";
+  import type { Component } from "svelte";
 
   const {
     title,
@@ -58,36 +69,18 @@
   </BitsUiButton.Root>
 
   {#if actions}
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
+    {#each actions as action (action?.label)}
+      {#if action}
         <Button
+          icon={action.icon}
+          title={action.label}
+          onclick={action.onclick}
+          class="shrink-0"
+          href={action.href}
           variant="secondary"
-          icon={EllipsisIcon}
-          aria-label="More options"
           size="icon"
         />
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Portal>
-        <DropdownMenu.Content align="end" forceMount preventScroll={false}>
-          {#snippet child({ props, open, wrapperProps })}
-            <div {...wrapperProps}>
-              {#if open}
-                <div
-                  {...props}
-                  class="z-1000 flex origin-top-right flex-col gap-2 pt-2"
-                  transition:scale={{ start: 0.9, duration: 150 }}
-                >
-                  {#each actions as action (action.label)}
-                    <Button href={action.href} onclick={action.onclick}>
-                      {action.label}
-                    </Button>
-                  {/each}
-                </div>
-              {/if}
-            </div>
-          {/snippet}
-        </DropdownMenu.Content>
-      </DropdownMenu.Portal>
-    </DropdownMenu.Root>
+      {/if}
+    {/each}
   {/if}
 </div>
