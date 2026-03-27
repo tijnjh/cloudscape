@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from "$app/state";
+  import { getThemeFromImageUrl } from "$lib/api/palette.remote";
   import { resolvePlaylist } from "$lib/api/playlist.remote";
   import { getTracksByIds } from "$lib/api/track.remote";
   import AsyncView from "$lib/components/AsyncView.svelte";
@@ -7,6 +8,7 @@
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
   import { paginated_limit } from "$lib/constants";
+  import { global } from "$lib/global.svelte";
   import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
 
@@ -18,6 +20,21 @@
         playlist: page.params.playlist!,
       }),
   }));
+
+  const paletteQuery = createQuery(() => ({
+    queryKey: ["palette", playlistQuery.data?.id],
+    queryFn: () => getThemeFromImageUrl(playlistQuery.data!.artwork_url!),
+    enabled: !!playlistQuery.data,
+  }));
+
+  $effect(() => {
+    global.theme = paletteQuery.data ?? {};
+
+    console.log("ran", {
+      palette: paletteQuery.data,
+      playlist: playlistQuery.data,
+    });
+  });
 
   const playlistTracksQuery = createInfiniteQuery(() => ({
     queryKey: ["playlist-tracks", playlistQuery.data?.id],

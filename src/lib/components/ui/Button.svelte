@@ -11,7 +11,7 @@
     variants: {
       variant: {
         primary: "text-mist-200-800 bg-mist-900-100",
-        secondary: "bg-mist-300-700",
+        secondary: "bg-vibrant-or-mist-300-700",
       },
       size: {
         default: "px-4 py-2",

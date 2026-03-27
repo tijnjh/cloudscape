@@ -12,7 +12,7 @@
 {#if !global.showNowPlayingView}
   <div
     in:fly={{ y: 100 }}
-    class="bg-mist-300-700/75 fixed inset-x-2 bottom-2 z-9999999999 mx-auto rounded-2xl backdrop-blur-lg md:inset-x-4 md:bottom-4 md:max-w-xl"
+    class="bg-vibrant-or-mist-300-700/75 fixed inset-x-2 bottom-2 z-9999999999 mx-auto rounded-2xl backdrop-blur-lg transition-colors duration-700 md:inset-x-4 md:bottom-4 md:max-w-xl"
   >
     <div class="grid grid-cols-[1fr_auto] items-center gap-4 p-3">
       <button

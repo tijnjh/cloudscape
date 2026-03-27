@@ -14,5 +14,28 @@ body,
 html {
   color-scheme: light dark;
   scrollbar-gutter: stable;
-  @apply bg-mist-200-800;
+  @apply bg-muted-or-mist-200-800 transition-colors duration-700;
+}
+
+/* body::after {
+  background-color: light-dark(
+    var(--theme-color-lightVibrant),
+    var(--theme-color-darkVibrant)
+  );
+  @apply absolute -top-50 -left-100 -z-10 block size-300 rounded-full opacity-30 blur-[10rem] content-[''];
+} */
+
+@theme static {
+  --color-muted-or-mist-200-800: light-dark(
+    var(--theme-color-lightMuted, var(--color-mist-200)),
+    var(--theme-color-darkMuted, var(--color-mist-800))
+  );
+  --color-vibrant-or-mist-900-100: light-dark(
+    var(--theme-color-lightVibrant, var(--color-mist-900)),
+    var(--theme-color-darkVibrant, var(--color-mist-100))
+  );
+  --color-vibrant-or-mist-300-700: light-dark(
+    var(--theme-color-lightVibrant, var(--color-mist-300)),
+    var(--theme-color-darkVibrant, var(--color-mist-700))
+  );
 }

@@ -1,21 +1,17 @@
-<script module lang="ts">
+<script lang="ts">
   import type { IconProps } from "@lucide/svelte";
   import { cn } from "cnfn";
   import type { Component } from "svelte";
   import type { HTMLInputAttributes } from "svelte/elements";
 
-  export interface InputProps extends HTMLInputAttributes {
-    icon?: Component<IconProps>;
-  }
-</script>
-
-<script lang="ts">
   let {
     value = $bindable(),
     class: className,
     icon: Icon,
     ...props
-  }: InputProps = $props();
+  }: HTMLInputAttributes & {
+    icon?: Component<IconProps>;
+  } = $props();
 </script>
 
 <div
