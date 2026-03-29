@@ -1,9 +1,10 @@
 <script lang="ts">
   import { page } from "$app/state";
+  import favicon from "$lib/assets/favicon.svg";
   import NowPlayingBar from "$lib/components/NowPlayingBar.svelte";
   import NowPlayingView from "$lib/components/NowPlayingView.svelte";
   import Button from "$lib/components/ui/Button.svelte";
-  import "../app.css";
+  import "./layout.css";
   import { ChevronLeft } from "@lucide/svelte";
   import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
 
@@ -11,6 +12,8 @@
 
   const queryClient = new QueryClient();
 </script>
+
+<svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
 <QueryClientProvider client={queryClient}>
   {#if page.route.id !== "/"}

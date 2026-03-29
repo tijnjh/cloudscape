@@ -10,7 +10,7 @@
     },
     variants: {
       variant: {
-        primary: "text-mist-200-800 bg-mist-900-100",
+        primary: "bg-mist-900-100 text-mist-200-800",
         secondary: "bg-mist-300-700",
       },
       size: {

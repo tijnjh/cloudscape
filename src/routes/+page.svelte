@@ -78,7 +78,7 @@
           <h3 class="text-2xl font-medium">
             {selection.title}
           </h3>
-          {#each selection.items.collection as item}
+          {#each selection.items.collection as item (item.id)}
             {#if item.kind === "playlist"}
               <PlaylistListing playlist={item} />
             {:else if item.kind === "user"}

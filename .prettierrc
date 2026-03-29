@@ -1,10 +1,9 @@
 {
   "plugins": [
     "prettier-plugin-svelte",
-    "@trivago/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss"
+    "prettier-plugin-tailwindcss",
+    "@trivago/prettier-plugin-sort-imports"
   ],
-  "tailwindFunctions": ["tv"],
   "overrides": [
     {
       "files": "*.svelte",
@@ -12,5 +11,7 @@
         "parser": "svelte"
       }
     }
-  ]
+  ],
+  "tailwindFunctions": ["tv"],
+  "tailwindStylesheet": "./src/routes/layout.css"
 }
