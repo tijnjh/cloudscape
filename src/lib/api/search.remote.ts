@@ -15,9 +15,8 @@ export const searchTracks = query(
   }),
   async ({ query, offset, limit }) => {
     const response = await $api("/search/tracks", {
-      params: { q: query, limit, offset },
-      schema: devSchema(Collection(Track)),
-    });
+      searchParams: { q: query, limit, offset },
+    }).json(devSchema(Collection(Track)));
     return response.collection;
   },
 );
@@ -29,9 +28,8 @@ export const searchPlaylists = query(
   }),
   async ({ query, offset, limit }) => {
     const response = await $api("/search/playlists", {
-      params: { q: query, limit, offset },
-      schema: devSchema(Collection(Playlist)),
-    });
+      searchParams: { q: query, limit, offset },
+    }).json(devSchema(Collection(Playlist)));
     return response.collection;
   },
 );
@@ -43,9 +41,8 @@ export const searchUsers = query(
   }),
   async ({ query, offset, limit }) => {
     const response = await $api("/search/users", {
-      params: { q: query, limit, offset },
-      schema: devSchema(Collection(User)),
-    });
+      searchParams: { q: query, limit, offset },
+    }).json(devSchema(Collection(User)));
     return response.collection;
   },
 );
