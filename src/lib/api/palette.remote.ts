@@ -1,19 +1,9 @@
 import { query } from "$app/server";
-import type { Theme } from "$lib/types";
-import { Vibrant } from "node-vibrant/node";
+import { prominent } from "color.js";
 import * as v from "valibot";
 
 export const getThemeFromImageUrl = query(v.string(), async (url) => {
-  const palette = await Vibrant.from(url).getPalette();
-
-  const theme: Theme = {
-    vibrant: palette.Vibrant?.hex,
-    darkVibrant: palette.DarkVibrant?.hex,
-    lightVibrant: palette.LightVibrant?.hex,
-    muted: palette.Muted?.hex,
-    darkMuted: palette.DarkMuted?.hex,
-    lightMuted: palette.LightMuted?.hex,
-  };
-
-  return theme;
+  const color = await prominent(url, { amount: 2, format: "hex" });
+  console.log("got palette", color);
+  return color;
 });

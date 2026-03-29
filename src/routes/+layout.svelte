@@ -16,23 +16,22 @@
   const queryClient = new QueryClient();
 
   function setThemeVariables() {
-    console.log("func was calle dbrah", global.theme.darkMuted);
-    for (const [key, value] of Object.entries(global.theme)) {
-      document.documentElement.style.setProperty(
-        `--theme-color-${key}`,
-        value ?? "",
-      );
-    }
+    console.log("func was called", global.accentColor);
+
+    if (!global.accentColor) return;
+
+    document.documentElement.style.setProperty(
+      "--theme-color-accent",
+      global.accentColor,
+    );
   }
 
   function resetThemeVariables() {
-    for (const key of Object.keys(global.theme)) {
-      document.documentElement.style.setProperty(`--theme-color-${key}`, "");
-    }
+    document.documentElement.style.setProperty("--theme-color-accent", "");
   }
 
   watch(
-    () => global.theme,
+    () => global.accentColor,
     (theme) => {
       console.log("theme changed", theme);
       setThemeVariables();
@@ -56,6 +55,7 @@
 </script>
 
 <QueryClientProvider client={queryClient}>
+  {JSON.stringify(global.accentColor)}
   {#if page.route.id !== "/"}
     <div
       class="from-mist-muted-200-800 to-mist-300-700/0 fixed inset-x-0 top-0 z-40 mx-auto flex max-w-5xl justify-between bg-linear-to-b p-4 transition-colors duration-700"

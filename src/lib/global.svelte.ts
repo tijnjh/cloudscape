@@ -1,5 +1,4 @@
 import type { Track } from "./schemas/track";
-import type { Theme } from "./types";
 import { PersistedState } from "runed";
 
 export const nowPlaying = new PersistedState<Track | null>("now-playing", null);
@@ -9,11 +8,11 @@ interface Global {
   showNowPlayingView: boolean;
   isPaused: boolean;
 
-  theme: Theme;
+  accentColor: string | undefined;
 }
 
 export const global = $state<Global>({
   showNowPlayingView: false,
   isPaused: true,
-  theme: {},
+  accentColor: undefined,
 });

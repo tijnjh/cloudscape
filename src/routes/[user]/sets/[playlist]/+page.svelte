@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { getThemeFromImageUrl } from "$lib/api/palette.remote";
   import { resolvePlaylist } from "$lib/api/playlist.remote";
   import { getTracksByIds } from "$lib/api/track.remote";
   import AsyncView from "$lib/components/AsyncView.svelte";
@@ -10,6 +9,7 @@
   import { paginated_limit } from "$lib/constants";
   import { global } from "$lib/global.svelte";
   import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
+  import { prominent } from "color.js";
   import dedent from "dedent";
 
   const playlistQuery = createQuery(() => ({
@@ -21,19 +21,14 @@
       }),
   }));
 
-  const paletteQuery = createQuery(() => ({
-    queryKey: ["palette", playlistQuery.data?.id],
-    queryFn: () => getThemeFromImageUrl(playlistQuery.data!.artwork_url!),
-    enabled: !!playlistQuery.data,
-  }));
-
   $effect(() => {
-    global.theme = paletteQuery.data ?? {};
+    const promise = async () => {
+      global.accentColor = (await prominent(playlistQuery.data!.artwork_url!, {
+        format: "hex",
+      })) as string;
+    };
 
-    console.log("ran", {
-      palette: paletteQuery.data,
-      playlist: playlistQuery.data,
-    });
+    promise();
   });
 
   const playlistTracksQuery = createInfiniteQuery(() => ({

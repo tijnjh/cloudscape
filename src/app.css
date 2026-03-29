@@ -27,15 +27,15 @@ html {
 
 @theme static {
   --color-muted-or-mist-200-800: light-dark(
-    var(--theme-color-lightMuted, var(--color-mist-200)),
-    var(--theme-color-darkMuted, var(--color-mist-800))
+    var(--theme-color-accent, var(--color-mist-200)),
+    var(--theme-color-accent, var(--color-mist-800))
   );
   --color-vibrant-or-mist-900-100: light-dark(
-    var(--theme-color-lightVibrant, var(--color-mist-900)),
-    var(--theme-color-darkVibrant, var(--color-mist-100))
+    var(--theme-color-accent, var(--color-mist-900)),
+    var(--theme-color-accent, var(--color-mist-100))
   );
   --color-vibrant-or-mist-300-700: light-dark(
-    var(--theme-color-lightVibrant, var(--color-mist-300)),
-    var(--theme-color-darkVibrant, var(--color-mist-700))
+    var(--theme-color-accent, var(--color-mist-300)),
+    var(--theme-color-accent, var(--color-mist-700))
   );
 }
