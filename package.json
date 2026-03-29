@@ -1,25 +1,26 @@
 {
-  "type": "module",
+  "name": "cloudscape",
   "private": true,
+  "version": "0.0.1",
+  "type": "module",
   "license": "AGPL-3.0",
   "engines": {
     "node": "22"
   },
   "scripts": {
+    "dev": "vite dev",
     "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "dev": "vite dev",
-    "prepare": "svelte-kit sync || echo ''",
-    "preview": "vite preview",
-    "start": "bun ./build",
-    "format": "prettier --write .",
-    "lint": "prettier --check . && eslint ."
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "^5.2.8",
     "@tanstack/svelte-query": "^6.1.10",
-    "bits-ui": "^2.16.3",
+    "bits-ui": "^2.16.4",
     "cnfn": "^5.5.1",
     "dedent": "^1.7.2",
     "hls.js": "^1.6.15",
@@ -34,7 +35,7 @@
   "devDependencies": {
     "@eslint/compat": "^2.0.3",
     "@eslint/js": "^10.0.1",
-    "@lucide/svelte": "^1.0.1",
+    "@lucide/svelte": "^1.7.0",
     "@sveltejs/kit": "^2.55.0",
     "@sveltejs/vite-plugin-svelte": "7.0.0",
     "@tailwindcss/vite": "^4.2.2",
@@ -47,13 +48,13 @@
     "prettier": "^3.8.1",
     "prettier-plugin-svelte": "^3.5.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "svelte": "^5.55.0",
+    "svelte": "^5.55.1",
     "svelte-adapter-bun": "^1.0.1",
     "svelte-check": "^4.4.5",
     "tailwindcss": "^4.2.2",
     "type-fest": "^5.5.0",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.57.2",
-    "vite": "^8.0.2"
+    "vite": "^8.0.3"
   }
 }
