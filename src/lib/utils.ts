@@ -23,5 +23,11 @@ export function devSchema<T extends v.GenericSchema>(
 ): v.InferOutput<T> {
   if (!dev) return undefined as unknown as T;
 
-  return v.parse(schema, input);
+  try {
+    const result = v.parse(schema, input);
+    return result;
+  } catch (e) {
+    console.error("Schema validation error:", e);
+    throw e;
+  }
 }

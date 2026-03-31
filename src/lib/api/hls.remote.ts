@@ -1,5 +1,4 @@
 import { query } from "$app/server";
-import { devSchema } from "$lib/utils";
 import { getTrackById } from "./track.remote";
 import { getClientId } from "./utils";
 import { Result } from "better-result";
@@ -30,19 +29,14 @@ export const getTrackSource = query(v.number(), async (trackId) => {
     return Result.err(new Error("failed to find hls transcoding"));
   }
 
-  const { url } = await ky(transcoding.url, {
+  const { url } = await ky<{
+    url: string | string[];
+  }>(transcoding.url, {
     searchParams: {
       track_authorization: track.value.track_authorization,
       client_id: clientId,
     },
-  })
-    .json()
-    .then((r) =>
-      devSchema(
-        v.object({ url: v.union([v.string(), v.array(v.string())]) }),
-        r,
-      ),
-    );
+  }).json();
 
   return Result.ok(Array.isArray(url) ? url[0] : url);
 });

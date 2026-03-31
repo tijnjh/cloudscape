@@ -4,25 +4,16 @@ import { Paginated } from "$lib/schemas/paginated";
 import { Playlist } from "$lib/schemas/playlist";
 import { Track } from "$lib/schemas/track";
 import { User } from "$lib/schemas/user";
-import { devSchema } from "$lib/utils";
 import { $api, getPermalinkPath } from "./utils";
 import { Result } from "better-result";
 import * as v from "valibot";
 
 export const resolveUser = query(v.string(), (user) =>
-  Result.tryPromise(() =>
-    $api(getPermalinkPath(user))
-      .json()
-      .then((r) => devSchema(User, r)),
-  ),
+  Result.tryPromise(() => $api(getPermalinkPath(user)).json<User>()),
 );
 
 export const getUserById = query(v.number(), (id) =>
-  Result.tryPromise(() =>
-    $api(`/users/${id}`)
-      .json()
-      .then((r) => devSchema(User, r)),
-  ),
+  Result.tryPromise(() => $api(`/users/${id}`).json<User>()),
 );
 
 export const getUserTracks = query(
@@ -35,9 +26,7 @@ export const getUserTracks = query(
       $api(`/users/${id}/tracks`, {
         searchParams: { limit, offset },
         headers: { "Accept-Language": "en-US,en;q=0.5" },
-      })
-        .json()
-        .then((r) => devSchema(Collection(Track), r)),
+      }).json<Collection<Track>>(),
     ),
 );
 
@@ -50,8 +39,6 @@ export const getUserPlaylists = query(
     Result.tryPromise(() =>
       $api(`/users/${id}/playlists`, {
         searchParams: { limit, offset },
-      })
-        .json()
-        .then((r) => devSchema(Collection(Playlist), r)),
+      }).json<Collection<Playlist>>(),
     ),
 );
