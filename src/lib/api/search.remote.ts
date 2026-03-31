@@ -18,7 +18,9 @@ export const searchTracks = query(
     Result.tryPromise(() =>
       $api("/search/tracks", {
         searchParams: { q: query, limit, offset },
-      }).json(devSchema(Collection(Track))),
+      })
+        .json()
+        .then((r) => devSchema(Collection(Track), r)),
     ),
 );
 
@@ -31,7 +33,9 @@ export const searchPlaylists = query(
     Result.tryPromise(() =>
       $api("/search/playlists", {
         searchParams: { q: query, limit, offset },
-      }).json(devSchema(Collection(Playlist))),
+      })
+        .json()
+        .then((r) => devSchema(Collection(Playlist), r)),
     ),
 );
 
@@ -44,6 +48,8 @@ export const searchUsers = query(
     Result.tryPromise(() =>
       $api("/search/users", {
         searchParams: { q: query, limit, offset },
-      }).json(devSchema(Collection(User))),
+      })
+        .json()
+        .then((r) => devSchema(Collection(User), r)),
     ),
 );

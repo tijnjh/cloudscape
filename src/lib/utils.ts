@@ -17,7 +17,11 @@ export function whenInView(fn: VoidFunction): Attachment<HTMLElement> {
 /**
  * @param schema in dev mode this is used to validate the response, in prod this is used to infer the type
  */
-export function devSchema<T extends v.GenericSchema>(schema: T) {
+export function devSchema<T extends v.GenericSchema>(
+  schema: T,
+  input: unknown = undefined,
+): v.InferOutput<T> {
   if (!dev) return undefined as unknown as T;
-  return schema;
+
+  return v.parse(schema, input);
 }

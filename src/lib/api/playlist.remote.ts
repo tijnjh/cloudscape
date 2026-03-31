@@ -12,10 +12,14 @@ export const resolvePlaylist = query(
   }),
   ({ user, playlist }) =>
     Result.tryPromise(() =>
-      $api(getPermalinkPath(user, "sets", playlist)).json(devSchema(Playlist)),
+      $api(getPermalinkPath(user, "sets", playlist))
+        .json()
+        .then((r) => devSchema(Playlist, r)),
     ),
 );
 
 export const getPlaylistById = query(v.number(), (id) =>
-  Result.tryPromise(() => $api(`/playlists/${id}`).json(devSchema(Playlist))),
+  Result.tryPromise(() => $api(`/playlists/${id}`).json()).then((r) =>
+    devSchema(Playlist, r),
+  ),
 );

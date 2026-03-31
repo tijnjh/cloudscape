@@ -1,10 +1,10 @@
-import ky from "../../../node_modules/ky/source";
+import ky from "ky";
 
 let clientId: string;
 let clientIdExpiry: number;
 
 export const $api = ky.extend({
-  baseUrl: "https://api-v2.soundcloud.com",
+  prefixUrl: "https://api-v2.soundcloud.com",
   searchParams: {
     client_id: await getClientId(),
   },

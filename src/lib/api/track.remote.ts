@@ -13,12 +13,18 @@ export const resolveTrack = query(
   }),
   ({ user, track }) =>
     Result.tryPromise(() =>
-      $api(getPermalinkPath(user, track)).json(devSchema(Track)),
+      $api(getPermalinkPath(user, track))
+        .json()
+        .then((r) => devSchema(Track, r)),
     ),
 );
 
 export const getTrackById = query(v.number(), (id) =>
-  Result.tryPromise(() => $api(`/tracks/${id}`).json(devSchema(Track))),
+  Result.tryPromise(() =>
+    $api(`/tracks/${id}`)
+      .json()
+      .then((r) => devSchema(Track, r)),
+  ),
 );
 
 export const getTracksByIds = query(v.array(v.number()), (ids) => {
@@ -32,6 +38,8 @@ export const getTracksByIds = query(v.array(v.number()), (ids) => {
         ids: ids.join(","),
         limit: paginated_limit,
       },
-    }).json(devSchema(v.array(Track))),
+    })
+      .json()
+      .then((r) => devSchema(v.array(Track), r)),
   );
 });

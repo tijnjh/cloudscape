@@ -10,11 +10,19 @@ import { Result } from "better-result";
 import * as v from "valibot";
 
 export const resolveUser = query(v.string(), (user) =>
-  Result.tryPromise(() => $api(getPermalinkPath(user)).json(devSchema(User))),
+  Result.tryPromise(() =>
+    $api(getPermalinkPath(user))
+      .json()
+      .then((r) => devSchema(User, r)),
+  ),
 );
 
 export const getUserById = query(v.number(), (id) =>
-  Result.tryPromise(() => $api(`/users/${id}`).json(devSchema(User))),
+  Result.tryPromise(() =>
+    $api(`/users/${id}`)
+      .json()
+      .then((r) => devSchema(User, r)),
+  ),
 );
 
 export const getUserTracks = query(
@@ -27,7 +35,9 @@ export const getUserTracks = query(
       $api(`/users/${id}/tracks`, {
         searchParams: { limit, offset },
         headers: { "Accept-Language": "en-US,en;q=0.5" },
-      }).json(devSchema(Collection(Track))),
+      })
+        .json()
+        .then((r) => devSchema(Collection(Track), r)),
     ),
 );
 
@@ -40,6 +50,8 @@ export const getUserPlaylists = query(
     Result.tryPromise(() =>
       $api(`/users/${id}/playlists`, {
         searchParams: { limit, offset },
-      }).json(devSchema(Collection(Playlist))),
+      })
+        .json()
+        .then((r) => devSchema(Collection(Playlist), r)),
     ),
 );

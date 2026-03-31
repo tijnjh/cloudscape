@@ -11,14 +11,18 @@ import * as v from "valibot";
 
 export const getSelections = query(() =>
   Result.tryPromise(() =>
-    $api("/mixed-selections").json(
-      devSchema(Collection(Selection(v.union([Playlist, User])))),
-    ),
+    $api("/mixed-selections")
+      .json()
+      .then((r) =>
+        devSchema(Collection(Selection(v.union([Playlist, User]))), r),
+      ),
   ),
 );
 
 export const getRelatedTracks = query(v.number(), (id) =>
   Result.tryPromise(() =>
-    $api(`/tracks/${id}/related`).json(devSchema(Collection(Track))),
+    $api(`/tracks/${id}/related`)
+      .json()
+      .then((r) => devSchema(Collection(Track), r)),
   ),
 );

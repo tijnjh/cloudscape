@@ -1,9 +1,9 @@
 import { query } from "$app/server";
 import { devSchema } from "$lib/utils";
-import ky from "../../../node_modules/ky/source";
 import { getTrackById } from "./track.remote";
 import { getClientId } from "./utils";
 import { Result } from "better-result";
+import ky from "ky";
 import * as v from "valibot";
 
 export const getTrackSource = query(v.number(), async (trackId) => {
@@ -35,13 +35,14 @@ export const getTrackSource = query(v.number(), async (trackId) => {
       track_authorization: track.value.track_authorization,
       client_id: clientId,
     },
-  }).json(
-    devSchema(
-      v.object({
-        url: v.union([v.string(), v.array(v.string())]),
-      }),
-    ),
-  );
+  })
+    .json()
+    .then((r) =>
+      devSchema(
+        v.object({ url: v.union([v.string(), v.array(v.string())]) }),
+        r,
+      ),
+    );
 
   return Result.ok(Array.isArray(url) ? url[0] : url);
 });
