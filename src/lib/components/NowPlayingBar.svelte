@@ -3,7 +3,6 @@
   import ListingThumbnail from "./ListingThumbnail.svelte";
   import Button from "./ui/Button.svelte";
   import { PauseIcon, PlayIcon } from "@lucide/svelte";
-  import { haptic } from "ios-haptics";
   import { fly } from "svelte/transition";
 
   const StatusIcon = $derived(global.isPaused ? PlayIcon : PauseIcon);
@@ -31,7 +30,6 @@
         size="icon"
         variant="secondary"
         onclick={() => {
-          haptic();
           global.isPaused = !global.isPaused;
         }}
       >

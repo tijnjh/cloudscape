@@ -13,7 +13,6 @@
   import { cn } from "cnfn";
   // @ts-expect-error they don't have types (yet)
   import Hls from "hls.js/light";
-  import { haptic } from "ios-haptics";
 
   $effect(() => {
     if (nowPlaying.current) {
@@ -108,11 +107,9 @@
               favoriteTrackIds.current = favoriteTrackIds.current.filter(
                 (id) => id !== nowPlaying.current?.id,
               );
-              haptic.confirm();
               return;
             } else {
               favoriteTrackIds.current.push(nowPlaying.current.id);
-              haptic.confirm();
             }
           }}
         >

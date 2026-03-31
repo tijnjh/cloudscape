@@ -4,7 +4,6 @@
   import type { Track } from "$lib/schemas/track";
   import GenericListing from "./GenericListing.svelte";
   import { ChevronRightIcon, StarIcon, StarOffIcon } from "@lucide/svelte";
-  import { haptic } from "ios-haptics";
 
   const { track }: { track: Track } = $props();
 
@@ -35,11 +34,9 @@
           favoriteTrackIds.current = favoriteTrackIds.current.filter(
             (id) => id !== track.id,
           );
-          haptic();
           return;
         } else {
           favoriteTrackIds.current.push(track.id);
-          haptic.confirm();
         }
       },
     },
