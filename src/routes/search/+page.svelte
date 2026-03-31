@@ -49,7 +49,12 @@
         query: debouncedQ.current,
         offset: pageParam * paginated_limit,
         limit: paginated_limit,
-      });
+      }).then((r) =>
+        r.match({
+          ok: (v) => v.collection,
+          err: () => [],
+        }),
+      );
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>

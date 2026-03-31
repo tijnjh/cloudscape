@@ -59,7 +59,7 @@
 
       const relatedTracks = await getRelatedTracks(nowPlaying.current.id);
 
-      return relatedTracks.collection;
+      return relatedTracks.andThen((r) => r.collection);
     },
   }));
 </script>

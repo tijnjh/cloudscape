@@ -3,6 +3,7 @@ import { devSchema } from "$lib/utils";
 import ky from "../../../node_modules/ky/source";
 import { getTrackById } from "./track.remote";
 import { getClientId } from "./utils";
+import { Result } from "better-result";
 import * as v from "valibot";
 
 export const getTrackSource = query(v.number(), async (trackId) => {
@@ -10,10 +11,14 @@ export const getTrackSource = query(v.number(), async (trackId) => {
   const clientId = await getClientId();
 
   if (!track) {
-    throw new Error("failed to find track");
+    return Result.err(new Error("failed to find track"));
   }
 
-  const hlsTranscodings = track.media.transcodings.filter(
+  if (track.isErr()) {
+    return track.error;
+  }
+
+  const hlsTranscodings = track.value.media.transcodings.filter(
     (t) => t.format.protocol === "hls",
   );
 
@@ -22,12 +27,12 @@ export const getTrackSource = query(v.number(), async (trackId) => {
     hlsTranscodings.find((t) => t.format.mime_type === "audio/mpeg");
 
   if (!transcoding) {
-    throw new Error("failed to find hls transcoding");
+    return Result.err(new Error("failed to find hls transcoding"));
   }
 
   const { url } = await ky(transcoding.url, {
     searchParams: {
-      track_authorization: track.track_authorization,
+      track_authorization: track.value.track_authorization,
       client_id: clientId,
     },
   }).json(
@@ -38,5 +43,5 @@ export const getTrackSource = query(v.number(), async (trackId) => {
     ),
   );
 
-  return Array.isArray(url) ? url[0] : url;
+  return Result.ok(Array.isArray(url) ? url[0] : url);
 });

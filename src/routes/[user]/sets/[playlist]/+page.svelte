@@ -28,7 +28,7 @@
       const endIdx = startIdx + paginated_limit;
       const idsChunk = allIds.slice(startIdx, endIdx);
 
-      return getTracksByIds(idsChunk);
+      return getTracksByIds(idsChunk).then((r) => r.unwrap());
     },
     initialPageParam: 0,
     getNextPageParam: (_, allPages) => {

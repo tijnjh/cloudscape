@@ -6,16 +6,19 @@ import { Track } from "$lib/schemas/track";
 import { User } from "$lib/schemas/user";
 import { devSchema } from "$lib/utils";
 import { $api } from "./utils";
+import { Result } from "better-result";
 import * as v from "valibot";
 
-export const getSelections = query(async () => {
-  const res = await $api("/mixed-selections").json(
-    devSchema(Collection(Selection(v.union([Playlist, User])))),
-  );
-
-  return res.collection;
-});
+export const getSelections = query(() =>
+  Result.tryPromise(() =>
+    $api("/mixed-selections").json(
+      devSchema(Collection(Selection(v.union([Playlist, User])))),
+    ),
+  ),
+);
 
 export const getRelatedTracks = query(v.number(), (id) =>
-  $api(`/tracks/${id}/related`).json(devSchema(Collection(Track))),
+  Result.tryPromise(() =>
+    $api(`/tracks/${id}/related`).json(devSchema(Collection(Track))),
+  ),
 );

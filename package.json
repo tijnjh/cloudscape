@@ -21,6 +21,7 @@
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "^5.2.8",
     "@tanstack/svelte-query": "^6.1.10",
+    "better-result": "^2.7.0",
     "bits-ui": "^2.16.4",
     "cnfn": "^5.5.1",
     "dedent": "^1.7.2",

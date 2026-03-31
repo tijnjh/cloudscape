@@ -3,6 +3,7 @@ import { paginated_limit } from "$lib/constants";
 import { Track } from "$lib/schemas/track";
 import { devSchema } from "$lib/utils";
 import { $api, getPermalinkPath } from "./utils";
+import { Result } from "better-result";
 import * as v from "valibot";
 
 export const resolveTrack = query(
@@ -11,22 +12,26 @@ export const resolveTrack = query(
     track: v.string(),
   }),
   ({ user, track }) =>
-    $api(getPermalinkPath(user, track)).json(devSchema(Track)),
+    Result.tryPromise(() =>
+      $api(getPermalinkPath(user, track)).json(devSchema(Track)),
+    ),
 );
 
 export const getTrackById = query(v.number(), (id) =>
-  $api(`/tracks/${id}`).json(devSchema(Track)),
+  Result.tryPromise(() => $api(`/tracks/${id}`).json(devSchema(Track))),
 );
 
 export const getTracksByIds = query(v.array(v.number()), (ids) => {
   if (!ids.length) {
-    return [];
+    return Result.ok([]);
   }
 
-  return $api("/tracks", {
-    searchParams: {
-      ids: ids.join(","),
-      limit: paginated_limit,
-    },
-  }).json(devSchema(v.array(Track)));
+  return Result.tryPromise(() =>
+    $api("/tracks", {
+      searchParams: {
+        ids: ids.join(","),
+        limit: paginated_limit,
+      },
+    }).json(devSchema(v.array(Track))),
+  );
 });

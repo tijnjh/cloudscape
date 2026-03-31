@@ -2,6 +2,7 @@ import { query } from "$app/server";
 import { Playlist } from "$lib/schemas/playlist";
 import { devSchema } from "$lib/utils";
 import { $api, getPermalinkPath } from "./utils";
+import { Result } from "better-result";
 import * as v from "valibot";
 
 export const resolvePlaylist = query(
@@ -10,9 +11,11 @@ export const resolvePlaylist = query(
     playlist: v.string(),
   }),
   ({ user, playlist }) =>
-    $api(getPermalinkPath(user, "sets", playlist)).json(devSchema(Playlist)),
+    Result.tryPromise(() =>
+      $api(getPermalinkPath(user, "sets", playlist)).json(devSchema(Playlist)),
+    ),
 );
 
 export const getPlaylistById = query(v.number(), (id) =>
-  $api(`/playlists/${id}`).json(devSchema(Playlist)),
+  Result.tryPromise(() => $api(`/playlists/${id}`).json(devSchema(Playlist))),
 );

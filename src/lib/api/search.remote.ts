@@ -6,6 +6,7 @@ import { Track } from "$lib/schemas/track";
 import { User } from "$lib/schemas/user";
 import { devSchema } from "$lib/utils";
 import { $api } from "./utils";
+import { Result } from "better-result";
 import * as v from "valibot";
 
 export const searchTracks = query(
@@ -13,12 +14,12 @@ export const searchTracks = query(
     ...Paginated.entries,
     query: v.string(),
   }),
-  async ({ query, offset, limit }) => {
-    const response = await $api("/search/tracks", {
-      searchParams: { q: query, limit, offset },
-    }).json(devSchema(Collection(Track)));
-    return response.collection;
-  },
+  ({ query, offset, limit }) =>
+    Result.tryPromise(() =>
+      $api("/search/tracks", {
+        searchParams: { q: query, limit, offset },
+      }).json(devSchema(Collection(Track))),
+    ),
 );
 
 export const searchPlaylists = query(
@@ -26,12 +27,12 @@ export const searchPlaylists = query(
     ...Paginated.entries,
     query: v.string(),
   }),
-  async ({ query, offset, limit }) => {
-    const response = await $api("/search/playlists", {
-      searchParams: { q: query, limit, offset },
-    }).json(devSchema(Collection(Playlist)));
-    return response.collection;
-  },
+  ({ query, offset, limit }) =>
+    Result.tryPromise(() =>
+      $api("/search/playlists", {
+        searchParams: { q: query, limit, offset },
+      }).json(devSchema(Collection(Playlist))),
+    ),
 );
 
 export const searchUsers = query(
@@ -39,10 +40,10 @@ export const searchUsers = query(
     ...Paginated.entries,
     query: v.string(),
   }),
-  async ({ query, offset, limit }) => {
-    const response = await $api("/search/users", {
-      searchParams: { q: query, limit, offset },
-    }).json(devSchema(Collection(User)));
-    return response.collection;
-  },
+  ({ query, offset, limit }) =>
+    Result.tryPromise(() =>
+      $api("/search/users", {
+        searchParams: { q: query, limit, offset },
+      }).json(devSchema(Collection(User))),
+    ),
 );
