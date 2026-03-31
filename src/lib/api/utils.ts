@@ -1,35 +1,23 @@
-import { isResponseValidationError, up } from "up-fetch";
+import ky from "../../../node_modules/ky/source";
 
-export const upfetch = up(fetch);
+let clientId: string;
+let clientIdExpiry: number;
 
-export const $api = up(fetch, async () => ({
+export const $api = ky.extend({
   baseUrl: "https://api-v2.soundcloud.com",
-  params: {
+  searchParams: {
     client_id: await getClientId(),
   },
   headers: {
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
   },
-  onError: (error) => {
-    if (isResponseValidationError(error)) {
-      for (const issue of error.issues) {
-        console.error(issue);
-        throw 0; // prevent the error from flooding the console
-      }
-    }
-  },
-}));
-
-let clientId: string;
-let clientIdExpiry: number;
+});
 
 export async function getClientId() {
   if (clientId && Date.now() < clientIdExpiry) return clientId;
 
-  const html = await upfetch("https://soundcloud.com", {
-    parseResponse: (r) => r.text(),
-  });
+  const html = await ky("https://soundcloud.com").text();
 
   const scriptUrls = [
     ...html.matchAll(
@@ -42,9 +30,7 @@ export async function getClientId() {
   }
 
   for (const scriptUrl of scriptUrls) {
-    const script = await upfetch(scriptUrl, {
-      parseResponse: (r) => r.text(),
-    });
+    const script = await ky(scriptUrl).text();
 
     const id = script.match(/client_id:"([A-Za-z0-9]{32})"/)?.[1];
 
