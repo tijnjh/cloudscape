@@ -25,7 +25,6 @@
     "cnfn": "^5.5.1",
     "dedent": "^1.7.2",
     "hls.js": "^1.6.15",
-    "ios-haptics": "^0.1.4",
     "ky": "2.0.0-0",
     "runed": "^0.37.1",
     "tailwind-color-pairings": "^0.1.2",
