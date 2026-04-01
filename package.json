@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "^5.2.8",
-    "@tanstack/svelte-query": "^6.1.11",
+    "@tanstack/svelte-query": "^6.1.12",
     "better-result": "^2.7.0",
     "bits-ui": "^2.16.5",
     "cnfn": "^5.5.1",
