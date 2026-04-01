@@ -3,6 +3,7 @@
   import { scApi } from "$lib/api/utils";
   import { getTrackSource } from "$lib/api/utils.remote";
   import { favoriteTrackIds, global, nowPlaying } from "$lib/global.svelte";
+  import { Hls } from "$lib/hls";
   import { Collection } from "$lib/schemas/collection";
   import { Track } from "$lib/schemas/track";
   import AsyncResultQueryView from "./AsyncResultQueryView.svelte";
@@ -12,8 +13,6 @@
   import { XIcon } from "@lucide/svelte";
   import { createQuery } from "@tanstack/svelte-query";
   import { cn } from "cnfn";
-  // @ts-expect-error they don't have types (yet)
-  import Hls from "hls.js/light";
 
   $effect(() => {
     if (nowPlaying.current) {
@@ -38,8 +37,8 @@
     }
   });
 
-  const applySource = (track: Track) => (element: HTMLAudioElement) =>
-    void getTrackSource(track.id).then((url) => {
+  const applySource = (track: Track) => (element: HTMLAudioElement) => {
+    getTrackSource(track.id).then((url) => {
       if (!Hls.isSupported()) {
         throw new Error("hls is not supported");
       }
@@ -48,6 +47,7 @@
       hls.loadSource(url);
       hls.attachMedia(element);
     });
+  };
 
   onNavigate(() => {
     global.showNowPlayingView = false;

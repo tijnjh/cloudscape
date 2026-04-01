@@ -14,7 +14,7 @@ export const scProxy = query(
     return upfetch(path, {
       baseUrl: "https://api-v2.soundcloud.com",
       params: {
-        client_id: await getClientId(),
+        client_id: (await getClientId()).unwrap(),
         ...params,
       },
       headers: {
@@ -30,55 +30,56 @@ let clientId: string;
 let clientIdExpiry: number;
 
 export const getClientId = query(async () => {
-  if (clientId && Date.now() < clientIdExpiry) return clientId;
+  if (clientId && Date.now() < clientIdExpiry) return Result.ok(clientId);
 
-  const html = await upfetch("https://soundcloud.com", {
-    parseResponse: (r) => r.text(),
-  });
+  const html = await Result.tryPromise(() =>
+    upfetch("https://soundcloud.com", {
+      parseResponse: (r) => r.text(),
+    }),
+  );
+
+  if (html.isErr()) {
+    return Result.err(new Error("failed to fetch soundcloud homepage"));
+  }
 
   const scriptUrls = [
-    ...html.matchAll(
+    ...html.value.matchAll(
       /<script crossorigin src="(https:\/\/a-v2\.sndcdn\.com\/assets\/[^"]+\.js)"><\/script>/g,
     ),
   ].map((m) => m[1]);
 
   if (scriptUrls.length === 0) {
-    throw new Error("script not found");
+    return Result.err(new Error("script not found"));
   }
 
   for (const scriptUrl of scriptUrls) {
-    const script = await upfetch(scriptUrl, {
-      parseResponse: (r) => r.text(),
-    });
+    const script = await Result.tryPromise(() =>
+      upfetch(scriptUrl, {
+        parseResponse: (r) => r.text(),
+      }),
+    );
 
-    const id = script.match(/client_id:"([A-Za-z0-9]{32})"/)?.[1];
+    if (script.isErr()) continue;
+
+    const id = script.value.match(/client_id:"([A-Za-z0-9]{32})"/)?.[1];
 
     if (id) {
       clientId = id;
       clientIdExpiry = Date.now() + 30 * 60 * 1000;
-      return clientId;
+      return Result.ok(clientId);
     }
   }
 
-  throw new Error("client id not found");
+  return Result.err(new Error("client id not found"));
 });
 
 export const getTrackSource = query(v.number(), async (trackId) => {
-  const track = await scApi(`/tracks/${trackId}`, {
-    schema: Track,
-  });
+  const track = (await scApi(`/tracks/${trackId}`, { schema: Track })).unwrap();
+  const clientId = (await getClientId()).unwrap();
 
-  const clientId = await getClientId();
+  if (!track) throw new Error("failed to find track");
 
-  if (!track) {
-    return Result.err(new Error("failed to find track"));
-  }
-
-  if (track.isErr()) {
-    return track.error;
-  }
-
-  const hlsTranscodings = track.value.media.transcodings.filter(
+  const hlsTranscodings = track.media.transcodings.filter(
     (t) => t.format.protocol === "hls",
   );
 
@@ -87,12 +88,12 @@ export const getTrackSource = query(v.number(), async (trackId) => {
     hlsTranscodings.find((t) => t.format.mime_type === "audio/mpeg");
 
   if (!transcoding) {
-    return Result.err(new Error("failed to find hls transcoding"));
+    throw new Error("failed to find hls transcoding");
   }
 
   const { url } = await upfetch(transcoding.url, {
     params: {
-      track_authorization: track.value.track_authorization,
+      track_authorization: track.track_authorization,
       client_id: clientId,
     },
     schema: v.object({
@@ -100,5 +101,5 @@ export const getTrackSource = query(v.number(), async (trackId) => {
     }),
   });
 
-  return Result.ok(Array.isArray(url) ? url[0] : url);
+  return Array.isArray(url) ? url[0] : url;
 });
