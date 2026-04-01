@@ -20,7 +20,7 @@
 {#if query.isLoading}
   <Spinner />
 {:else if query.data?.isErr()}
-  <div>Failed brah</div>
+  <div>{query.data.error}</div>
 {:else if query.data?.isOk()}
   <div in:fly={{ y: 16 }} class={cn("flex flex-col gap-4", className)}>
     {@render content(query.data.value!)}

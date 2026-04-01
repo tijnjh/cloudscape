@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
-  import { getRelatedTracks } from "$lib/api/discovery.remote";
-  import { getTrackSource } from "$lib/api/hls.remote";
+  import { scApi } from "$lib/api/utils";
+  import { getTrackSource } from "$lib/api/utils.remote";
   import { favoriteTrackIds, global, nowPlaying } from "$lib/global.svelte";
-  import type { Track } from "$lib/schemas/track";
-  import AsyncView from "./AsyncView.svelte";
+  import { Collection } from "$lib/schemas/collection";
+  import { Track } from "$lib/schemas/track";
+  import AsyncResultQueryView from "./AsyncResultQueryView.svelte";
   import TrackListing from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
   import Button from "./ui/Button.svelte";
@@ -54,13 +55,11 @@
 
   const relatedTracksQuery = createQuery(() => ({
     queryKey: ["related", nowPlaying.current?.id],
-    queryFn: async () => {
-      if (!nowPlaying.current) return [];
-
-      const relatedTracks = await getRelatedTracks(nowPlaying.current.id);
-
-      return relatedTracks.andThen((r) => r.collection);
-    },
+    queryFn: () =>
+      scApi(`/tracks/${nowPlaying.current!.id}/related`, {
+        schema: Collection(Track),
+      }),
+    enabled: !!nowPlaying.current,
   }));
 </script>
 
@@ -136,22 +135,19 @@
   <div class="mt-8 flex w-full flex-col gap-4 md:h-dvh md:max-w-sm">
     <h2 class="text-xl font-medium">Related Tracks</h2>
 
-    <AsyncView
-      isLoading={relatedTracksQuery.isLoading}
-      data={relatedTracksQuery.data}
-    >
+    <AsyncResultQueryView query={relatedTracksQuery}>
       {#snippet content(data)}
-        {#if data?.length === 0}
+        {#if data?.collection.length === 0}
           <span class="text-mist-900-100/25 text-xl font-medium">
             No related tracks found...
           </span>
         {:else if data}
-          {#each data as track (track.id)}
+          {#each data.collection as track (track.id)}
             <TrackListing {track} />
           {/each}
         {/if}
       {/snippet}
-    </AsyncView>
+    </AsyncResultQueryView>
   </div>
 
   <Button

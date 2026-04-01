@@ -1,17 +1,14 @@
 <script lang="ts">
-  import {
-    searchTracks,
-    searchPlaylists,
-    searchUsers,
-  } from "$lib/api/search.remote";
+  import { scApi } from "$lib/api/utils";
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
   import Button from "$lib/components/ui/Button.svelte";
   import Input from "$lib/components/ui/Input.svelte";
-  import { paginated_limit } from "$lib/constants";
-  import type { Playlist } from "$lib/schemas/playlist";
-  import type { Track } from "$lib/schemas/track";
-  import type { User } from "$lib/schemas/user";
+  import { PAGINATION_LIMIT } from "$lib/constants";
+  import { Collection } from "$lib/schemas/collection";
+  import { Playlist } from "$lib/schemas/playlist";
+  import { Track } from "$lib/schemas/track";
+  import { User } from "$lib/schemas/user";
   import { SearchIcon } from "@lucide/svelte";
   import { createInfiniteQuery } from "@tanstack/svelte-query";
   import { Debounced } from "runed";
@@ -39,26 +36,29 @@
     queryFn: async ({ pageParam }) => {
       if (!debouncedQ.current) return [] as Listing[];
 
-      const searchFn = match(params.kind)
-        .with("tracks", () => searchTracks)
-        .with("playlists", () => searchPlaylists)
-        .with("users", () => searchUsers)
+      const [kind, schema] = match(params.kind)
+        .with("tracks", () => ["tracks", Track] as const)
+        .with("playlists", () => ["playlists", Playlist] as const)
+        .with("users", () => ["users", User] as const)
         .exhaustive();
 
-      return searchFn({
-        query: debouncedQ.current,
-        offset: pageParam * paginated_limit,
-        limit: paginated_limit,
-      }).then((r) =>
-        r.match({
-          ok: (v) => v.collection,
-          err: () => [],
-        }),
-      );
+      const res = await scApi(`/search/${kind}`, {
+        schema: Collection(schema),
+        params: {
+          q: debouncedQ.current,
+          offset: pageParam * PAGINATION_LIMIT,
+          limit: PAGINATION_LIMIT,
+        },
+      });
+
+      return res.match({
+        ok: (v) => v.collection,
+        err: () => [],
+      });
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>
-      lastPage.length < paginated_limit ? allPages.length : undefined,
+      lastPage.length < PAGINATION_LIMIT ? allPages.length : undefined,
   }));
 </script>
 

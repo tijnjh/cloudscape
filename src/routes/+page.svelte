@@ -1,25 +1,47 @@
 <script lang="ts">
-  import { getSelections } from "$lib/api/discovery.remote";
-  import { getTracksByIds } from "$lib/api/track.remote";
+  import { scApi } from "$lib/api/utils";
   import Main from "$lib/components/Main.svelte";
   import PlaylistListing from "$lib/components/listings/PlaylistListing.svelte";
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
   import UserListing from "$lib/components/listings/UserListing.svelte";
   import Button from "$lib/components/ui/Button.svelte";
   import Input from "$lib/components/ui/Input.svelte";
+  import { PAGINATION_LIMIT } from "$lib/constants";
   import { favoriteTrackIds } from "$lib/global.svelte";
-  import AsyncResultQueryView from "../AsyncResultQueryView.svelte";
+  import { Collection } from "$lib/schemas/collection";
+  import { Playlist } from "$lib/schemas/playlist";
+  import { Selection } from "$lib/schemas/selection";
+  import { Track } from "$lib/schemas/track";
+  import { User } from "$lib/schemas/user";
+  import AsyncResultQueryView from "../lib/components/AsyncResultQueryView.svelte";
   import { SearchIcon } from "@lucide/svelte";
   import { createQuery } from "@tanstack/svelte-query";
+  import { Result } from "better-result";
+  import * as v from "valibot";
 
   const selectionsQuery = createQuery(() => ({
     queryKey: ["selections"],
-    queryFn: () => getSelections(),
+    queryFn: () =>
+      scApi("/mixed-selections", {
+        schema: Collection(Selection(v.union([Playlist, User]))),
+      }),
   }));
 
   const favoritesQuery = createQuery(() => ({
     queryKey: ["favorites", favoriteTrackIds],
-    queryFn: () => getTracksByIds(favoriteTrackIds.current),
+    queryFn: async () => {
+      if (!favoriteTrackIds.current.length) {
+        return Result.ok([]);
+      }
+
+      return await scApi("/tracks", {
+        params: {
+          ids: favoriteTrackIds.current.join(","),
+          limit: PAGINATION_LIMIT,
+        },
+        schema: v.array(Track),
+      });
+    },
   }));
 </script>
 

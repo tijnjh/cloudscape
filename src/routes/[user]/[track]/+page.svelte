@@ -1,19 +1,19 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { resolveTrack } from "$lib/api/track.remote";
+  import { getPermalinkPath, scApi } from "$lib/api/utils";
   import HeroSection from "$lib/components/HeroSection.svelte";
   import Main from "$lib/components/Main.svelte";
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
-  import AsyncResultQueryView from "../../../AsyncResultQueryView.svelte";
+  import { Track } from "$lib/schemas/track";
+  import AsyncResultQueryView from "../../../lib/components/AsyncResultQueryView.svelte";
   import { createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
 
   const trackQuery = createQuery(() => ({
     queryKey: ["track", page.params.track],
     queryFn: () =>
-      resolveTrack({
-        track: page.params.track!,
-        user: page.params.user!,
+      scApi(getPermalinkPath(page.params.user!, page.params.track!), {
+        schema: Track,
       }),
   }));
 
