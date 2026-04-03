@@ -1,4 +1,3 @@
-import { dev } from "$app/environment";
 import { up } from "up-fetch";
 
 let clientId: string;
