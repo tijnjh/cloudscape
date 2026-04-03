@@ -9,11 +9,15 @@ import { $api, getPermalinkPath } from "./utils";
 import * as v from "valibot";
 
 export const resolveUser = query(v.string(), (user) =>
-  $api(getPermalinkPath(user)).json(devSchema(User)),
+  $api(getPermalinkPath(user), {
+    schema: devSchema(User),
+  }),
 );
 
 export const getUserById = query(v.number(), (id) =>
-  $api(`/users/${id}`).json(devSchema(User)),
+  $api(`/users/${id}`, {
+    schema: devSchema(User),
+  }),
 );
 
 export const getUserTracks = query(
@@ -23,9 +27,10 @@ export const getUserTracks = query(
   }),
   async ({ id, offset, limit }) => {
     const res = await $api(`/users/${id}/tracks`, {
-      searchParams: { limit, offset },
+      params: { limit, offset },
       headers: { "Accept-Language": "en-US,en;q=0.5" },
-    }).json(devSchema(Collection(Track)));
+      schema: devSchema(Collection(Track)),
+    });
     return res.collection;
   },
 );
@@ -37,8 +42,9 @@ export const getUserPlaylists = query(
   }),
   async ({ id, offset, limit }) => {
     const res = await $api(`/users/${id}/playlists`, {
-      searchParams: { limit, offset },
-    }).json(devSchema(Collection(Playlist)));
+      params: { limit, offset },
+      schema: devSchema(Collection(Playlist)),
+    });
     return res.collection;
   },
 );

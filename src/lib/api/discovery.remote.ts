@@ -9,13 +9,15 @@ import { $api } from "./utils";
 import * as v from "valibot";
 
 export const getSelections = query(async () => {
-  const res = await $api("/mixed-selections").json(
-    devSchema(Collection(Selection(v.union([Playlist, User])))),
-  );
+  const res = await $api("/mixed-selections", {
+    schema: devSchema(Collection(Selection(v.union([Playlist, User])))),
+  });
 
   return res.collection;
 });
 
 export const getRelatedTracks = query(v.number(), (id) =>
-  $api(`/tracks/${id}/related`).json(devSchema(Collection(Track))),
+  $api(`/tracks/${id}/related`, {
+    schema: devSchema(Collection(Track)),
+  }),
 );

@@ -1,23 +1,25 @@
-import ky from "../../../node_modules/ky/source";
+import { dev } from "$app/environment";
+import { up } from "up-fetch";
 
 let clientId: string;
 let clientIdExpiry: number;
 
-export const $api = ky.extend({
+export const upfetch = up(fetch);
+
+export const $api = up(fetch, async () => ({
   baseUrl: "https://api-v2.soundcloud.com",
-  searchParams: {
+  params: {
     client_id: await getClientId(),
   },
   headers: {
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
   },
-});
-
+}));
 export async function getClientId() {
   if (clientId && Date.now() < clientIdExpiry) return clientId;
 
-  const html = await ky("https://soundcloud.com").text();
+  const html = await (await fetch("https://soundcloud.com")).text();
 
   const scriptUrls = [
     ...html.matchAll(
@@ -30,7 +32,7 @@ export async function getClientId() {
   }
 
   for (const scriptUrl of scriptUrls) {
-    const script = await ky(scriptUrl).text();
+    const script = await (await fetch(scriptUrl)).text();
 
     const id = script.match(/client_id:"([A-Za-z0-9]{32})"/)?.[1];
 
