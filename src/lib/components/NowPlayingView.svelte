@@ -3,6 +3,7 @@
   import { getRelatedTracks } from "$lib/api/discovery.remote";
   import { getTrackSource } from "$lib/api/hls.remote";
   import { favoriteTrackIds, global, nowPlaying } from "$lib/global.svelte";
+  import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
   import AsyncView from "./AsyncView.svelte";
   import TrackListing from "./listings/TrackListing.svelte";
@@ -11,8 +12,6 @@
   import { XIcon } from "@lucide/svelte";
   import { createQuery } from "@tanstack/svelte-query";
   import { cn } from "cnfn";
-  // @ts-expect-error they don't have types (yet)
-  import Hls from "hls.js/light";
 
   $effect(() => {
     if (nowPlaying.current) {
