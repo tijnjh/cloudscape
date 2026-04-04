@@ -13,6 +13,7 @@
 
 <script lang="ts">
   import UserListing from "./listings/UserListing.svelte";
+  import Collapsible from "./ui/Collapsible.svelte";
   import { cn } from "cnfn";
 
   const {
@@ -65,7 +66,9 @@
 {/if}
 
 {#if description}
-  <p class="text-mist-600-400 whitespace-pre-wrap">
-    {description}
-  </p>
+  <Collapsible summary="Description">
+    <p class="text-mist-600-400 whitespace-pre-wrap">
+      {description}
+    </p>
+  </Collapsible>
 {/if}
