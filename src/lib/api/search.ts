@@ -4,6 +4,20 @@ import { Playlist } from "$lib/schemas/playlist";
 import { Track } from "$lib/schemas/track";
 import { User } from "$lib/schemas/user";
 import { $api } from "./utils";
+import * as v from "valibot";
+
+export async function searchAnything({
+  query,
+  offset,
+  limit,
+}: {
+  query: string;
+} & Paginated) {
+  return await $api("/search", {
+    params: { q: query, limit, offset },
+    schema: Collection(v.union([Track, Playlist, User])),
+  });
+}
 
 export async function searchTracks({
   query,

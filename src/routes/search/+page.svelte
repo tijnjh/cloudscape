@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { searchTracks, searchPlaylists, searchUsers } from "$lib/api/search";
+  import {
+    searchTracks,
+    searchPlaylists,
+    searchUsers,
+    searchAnything,
+  } from "$lib/api/search";
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
   import Button from "$lib/components/ui/Button.svelte";
@@ -18,7 +23,10 @@
   const params = useSearchParams(
     v.object({
       q: v.optional(v.string(), ""),
-      kind: v.optional(v.picklist(["tracks", "playlists", "users"]), "tracks"),
+      kind: v.optional(
+        v.picklist(["all", "tracks", "playlists", "users"]),
+        "tracks",
+      ),
     }),
     {
       noScroll: true,
@@ -39,6 +47,7 @@
         .with("tracks", () => searchTracks)
         .with("playlists", () => searchPlaylists)
         .with("users", () => searchUsers)
+        .with("all", () => searchAnything)
         .exhaustive();
 
       return searchFn({
@@ -76,7 +85,7 @@
     </form>
 
     <div class="mx-auto flex w-full max-w-xl gap-2">
-      {#each ["tracks", "playlists", "users"] as const as kind (kind)}
+      {#each ["all", "tracks", "playlists", "users"] as const as kind (kind)}
         {#key params.kind}
           <Button
             variant={params.kind === kind ? "primary" : "secondary"}
