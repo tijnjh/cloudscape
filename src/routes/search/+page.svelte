@@ -25,7 +25,7 @@
       q: v.optional(v.string(), ""),
       kind: v.optional(
         v.picklist(["all", "tracks", "playlists", "users"]),
-        "tracks",
+        "all",
       ),
     }),
     {
