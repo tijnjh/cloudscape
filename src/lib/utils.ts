@@ -7,3 +7,9 @@ export function whenInView(fn: VoidFunction): Attachment<HTMLElement> {
     watch(() => inViewport.current, fn);
   };
 }
+
+export const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});

@@ -69,6 +69,8 @@
         <HeroSection
           pictureSrc={user.avatar_url}
           title={user.username}
+          description={user.description}
+          badges={[user.verified && "Verified"]}
           roundedPicture
         />
       {/snippet}

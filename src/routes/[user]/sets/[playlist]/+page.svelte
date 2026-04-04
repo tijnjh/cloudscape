@@ -7,6 +7,7 @@
   import Main from "$lib/components/Main.svelte";
   import QueryView from "$lib/components/QueryView.svelte";
   import { paginated_limit } from "$lib/constants";
+  import { dateFormatter } from "$lib/utils";
   import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
 
@@ -58,10 +59,17 @@
   {#snippet left()}
     <QueryView query={playlistQuery}>
       {#snippet content(playlist)}
+        {@const releaseDate = playlist.release_date
+          ? dateFormatter.format(new Date(playlist.release_date))
+          : undefined}
+
         <HeroSection
           pictureSrc={playlist.artwork_url}
           title={playlist.title}
           user={playlist.user}
+          description={dedent`${playlist.track_count} tracks
+            ${releaseDate ?? ""}
+            ${playlist.label_name ?? ""}`.trim()}
         />
       {/snippet}
     </QueryView>

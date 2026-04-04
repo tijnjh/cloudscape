@@ -4,6 +4,8 @@
   export interface HeroSectionProps {
     pictureSrc?: string | null;
     title: string;
+    badges?: (string | false)[];
+    description?: string | null;
     user?: User;
     roundedPicture?: boolean;
   }
@@ -16,6 +18,8 @@
   const {
     pictureSrc,
     title,
+    description,
+    badges,
     user,
     roundedPicture = false,
   }: HeroSectionProps = $props();
@@ -37,10 +41,34 @@
   />
 {/if}
 
-<h1 class="text-2xl font-medium">{title}</h1>
+<div class="flex items-center gap-2">
+  <h1 class="text-2xl font-medium">{title}</h1>
+  {#if badges}
+    <div class="flex gap-2">
+      {#each badges as badge (badge)}
+        {#if badge}
+          <div
+            class="bg-mist-300-700 text-mist-600-400 rounded-full px-2 py-0.5 text-sm whitespace-nowrap"
+          >
+            {badge}
+          </div>
+        {/if}
+      {/each}
+    </div>
+  {/if}
+</div>
 
 {#if user}
-  <div class="mb-8 flex flex-col gap-4">
+  <div class="flex flex-col gap-4">
     <UserListing {user} />
   </div>
 {/if}
+
+{#if description}
+  <p class="text-mist-600-400 whitespace-pre-wrap">
+    {description}
+  </p>
+{/if}
+
+<!-- Add some spacing after the hero section -->
+<div class="mb-8"></div>

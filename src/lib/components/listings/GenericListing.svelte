@@ -5,7 +5,7 @@
 
   export type GenericListingProps = ButtonRootProps & {
     title: string;
-    badges?: string[];
+    badges?: (string | false)[];
     subtitle: string;
     thumbnail: ListingThumbnailProps;
     actions?: (
@@ -55,11 +55,13 @@
         <h3 class="truncate">{title}</h3>
 
         {#each badges as badge (badge)}
-          <div
-            class="bg-mist-300-700 text-mist-600-400 rounded-full px-2 py-0.5 text-sm whitespace-nowrap"
-          >
-            {badge}
-          </div>
+          {#if badge}
+            <div
+              class="bg-mist-300-700 text-mist-600-400 rounded-full px-2 py-0.5 text-sm whitespace-nowrap"
+            >
+              {badge}
+            </div>
+          {/if}
         {/each}
       </div>
       <p class="truncate opacity-50">

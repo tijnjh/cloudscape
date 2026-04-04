@@ -14,4 +14,5 @@
     class: "rounded-full",
   }}
   href={`/${user.permalink}`}
+  badges={[user.verified && "Verified"]}
 />
