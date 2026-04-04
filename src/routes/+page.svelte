@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getSelections } from "$lib/api/discovery";
   import { getTracksByIds } from "$lib/api/track";
-  import AsyncView from "$lib/components/AsyncView.svelte";
   import Main from "$lib/components/Main.svelte";
   import QueryView from "$lib/components/QueryView.svelte";
   import PlaylistListing from "$lib/components/listings/PlaylistListing.svelte";
