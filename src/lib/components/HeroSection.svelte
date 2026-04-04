@@ -69,6 +69,3 @@
     {description}
   </p>
 {/if}
-
-<!-- Add some spacing after the hero section -->
-<div class="mb-8"></div>
