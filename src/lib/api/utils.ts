@@ -5,21 +5,8 @@ import * as v from "valibot";
 
 export const upfetch = up(fetch);
 
-type Kind = "tracks" | "playlists" | "users";
-
-type AvailableEndpoints =
-  | `/${Kind}/${number}`
-  | `/mixed-selections`
-  | `/resolve?url=${string}`
-  | `/users/${number}/tracks`
-  | `/users/${number}/playlists`
-  | `/tracks`
-  | `/${"tracks" | "playlist" | "users"}/${number}`
-  | `/tracks/${number}/related`
-  | `/search/${"tracks" | "playlists" | "users"}`;
-
 export async function $api<S extends v.GenericSchema>(
-  path: AvailableEndpoints,
+  path: string,
   {
     schema,
     params,
