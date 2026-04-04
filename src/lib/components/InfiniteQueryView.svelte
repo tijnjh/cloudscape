@@ -3,7 +3,8 @@
   import type { Track } from "$lib/schemas/track";
   import type { User } from "$lib/schemas/user";
   import { whenInView } from "$lib/utils";
-  import AsyncView from "./AsyncView.svelte";
+  import Alert from "./Alert.svelte";
+  import Spinner from "./Spinner.svelte";
   import PlaylistListing from "./listings/PlaylistListing.svelte";
   import TrackListing from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
@@ -12,6 +13,7 @@
     CreateInfiniteQueryResult,
     InfiniteData,
   } from "@tanstack/svelte-query";
+  import { fly } from "svelte/transition";
 
   const {
     query,
@@ -41,9 +43,13 @@
   });
 </script>
 
-<AsyncView isLoading={query.isLoading} data={sortedPages}>
-  {#snippet content(data)}
-    {#each data as page (page)}
+{#if query.isLoading}
+  <Spinner />
+{:else if query.isError}
+  <Alert message={query.error.message ?? "An error occurred"} />
+{:else}
+  <div in:fly={{ y: 16 }} class="flex flex-col gap-4">
+    {#each sortedPages as page (page)}
       {#each page as result (result.id)}
         {#if result.kind === "track"}
           <TrackListing track={result as Track} />
@@ -58,8 +64,8 @@
         <span class="mt-4 text-mist-100-900/25 text-lg">Nothing here...</span>
       {/if}
     {/each}
-  {/snippet}
-</AsyncView>
+  </div>
+{/if}
 
 {#if query.hasNextPage}
   <Button
