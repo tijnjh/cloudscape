@@ -1,11 +1,11 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { resolvePlaylist } from "$lib/api/playlist.remote";
-  import { getTracksByIds } from "$lib/api/track.remote";
-  import AsyncView from "$lib/components/AsyncView.svelte";
+  import { resolvePlaylist } from "$lib/api/playlist";
+  import { getTracksByIds } from "$lib/api/track";
   import HeroSection from "$lib/components/HeroSection.svelte";
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
+  import QueryView from "$lib/components/QueryView.svelte";
   import { paginated_limit } from "$lib/constants";
   import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
@@ -56,15 +56,15 @@
 
 <Main>
   {#snippet left()}
-    <AsyncView data={playlistQuery.data} isLoading={playlistQuery.isPending}>
+    <QueryView query={playlistQuery}>
       {#snippet content(playlist)}
         <HeroSection
-          pictureSrc={playlist!.artwork_url}
-          title={playlist!.title}
-          user={playlist!.user}
+          pictureSrc={playlist.artwork_url}
+          title={playlist.title}
+          user={playlist.user}
         />
       {/snippet}
-    </AsyncView>
+    </QueryView>
   {/snippet}
 
   {#snippet right()}

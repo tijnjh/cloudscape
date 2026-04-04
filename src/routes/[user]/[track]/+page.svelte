@@ -1,9 +1,9 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { resolveTrack } from "$lib/api/track.remote";
-  import AsyncView from "$lib/components/AsyncView.svelte";
+  import { resolveTrack } from "$lib/api/track";
   import HeroSection from "$lib/components/HeroSection.svelte";
   import Main from "$lib/components/Main.svelte";
+  import QueryView from "$lib/components/QueryView.svelte";
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
   import { createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
@@ -34,22 +34,22 @@
 
 <Main>
   {#snippet left()}
-    <AsyncView data={trackQuery.data} isLoading={trackQuery.isPending}>
+    <QueryView query={trackQuery}>
       {#snippet content(track)}
         <HeroSection
-          pictureSrc={track!.artwork_url}
-          title={track!.title}
-          user={track!.user}
+          pictureSrc={track.artwork_url}
+          title={track.title}
+          user={track.user}
         />
       {/snippet}
-    </AsyncView>
+    </QueryView>
   {/snippet}
 
   {#snippet right()}
-    <AsyncView data={trackQuery.data} isLoading={trackQuery.isPending}>
+    <QueryView query={trackQuery}>
       {#snippet content(track)}
-        <TrackListing track={track!} />
+        <TrackListing {track} />
       {/snippet}
-    </AsyncView>
+    </QueryView>
   {/snippet}
 </Main>

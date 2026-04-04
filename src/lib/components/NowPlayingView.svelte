@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
-  import { getRelatedTracks } from "$lib/api/discovery.remote";
-  import { getTrackSource } from "$lib/api/hls.remote";
+  import { getRelatedTracks } from "$lib/api/discovery";
+  import { getTrackSource } from "$lib/api/utils.remote";
   import { favoriteTrackIds, global, nowPlaying } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
-  import AsyncView from "./AsyncView.svelte";
+  import QueryView from "./QueryView.svelte";
   import TrackListing from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
   import Button from "./ui/Button.svelte";
@@ -36,8 +36,8 @@
     }
   });
 
-  const applySource = (track: Track) => (element: HTMLAudioElement) =>
-    void getTrackSource(track.id).then((url) => {
+  const applySource = (track: Track) => (element: HTMLAudioElement) => {
+    getTrackSource(track.id).then((url) => {
       if (!Hls.isSupported()) {
         throw new Error("hls is not supported");
       }
@@ -46,6 +46,7 @@
       hls.loadSource(url);
       hls.attachMedia(element);
     });
+  };
 
   onNavigate(() => {
     global.showNowPlayingView = false;
@@ -135,12 +136,9 @@
   <div class="mt-8 flex w-full flex-col gap-4 md:h-dvh md:max-w-sm">
     <h2 class="text-xl font-medium">Related Tracks</h2>
 
-    <AsyncView
-      isLoading={relatedTracksQuery.isLoading}
-      data={relatedTracksQuery.data}
-    >
+    <QueryView query={relatedTracksQuery}>
       {#snippet content(data)}
-        {#if data?.length === 0}
+        {#if data.length === 0}
           <span class="text-mist-900-100/25 text-xl font-medium">
             No related tracks found...
           </span>
@@ -150,7 +148,7 @@
           {/each}
         {/if}
       {/snippet}
-    </AsyncView>
+    </QueryView>
   </div>
 
   <Button

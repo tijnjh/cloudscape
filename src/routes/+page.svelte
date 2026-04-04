@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { getSelections } from "$lib/api/discovery.remote";
-  import { getTracksByIds } from "$lib/api/track.remote";
+  import { getSelections } from "$lib/api/discovery";
+  import { getTracksByIds } from "$lib/api/track";
   import AsyncView from "$lib/components/AsyncView.svelte";
   import Main from "$lib/components/Main.svelte";
+  import QueryView from "$lib/components/QueryView.svelte";
   import PlaylistListing from "$lib/components/listings/PlaylistListing.svelte";
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
   import UserListing from "$lib/components/listings/UserListing.svelte";
@@ -56,25 +57,19 @@
         Your Favorites
       </h2>
 
-      <AsyncView
-        data={favoritesQuery.data}
-        isLoading={favoritesQuery.isPending}
-      >
-        {#snippet content(data)}
-          {#each data as favorite (favorite.id)}
+      <QueryView query={favoritesQuery}>
+        {#snippet content(favorites)}
+          {#each favorites as favorite (favorite.id)}
             <TrackListing track={favorite} />
           {/each}
         {/snippet}
-      </AsyncView>
+      </QueryView>
     {/if}
   {/snippet}
   {#snippet right()}
-    <AsyncView
-      data={selectionsQuery.data}
-      isLoading={selectionsQuery.isPending}
-    >
+    <QueryView query={selectionsQuery}>
       {#snippet content(data)}
-        {#each data as selection (selection.items)}
+        {#each data.collection as selection (selection.items)}
           <h3 class="text-2xl font-medium">
             {selection.title}
           </h3>
@@ -90,6 +85,6 @@
           <span class="mt-4 text-mist-900-100/25 text-lg">Nothing here...</span>
         {/each}
       {/snippet}
-    </AsyncView>
+    </QueryView>
   {/snippet}
 </Main>

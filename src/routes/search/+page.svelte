@@ -1,9 +1,5 @@
 <script lang="ts">
-  import {
-    searchTracks,
-    searchPlaylists,
-    searchUsers,
-  } from "$lib/api/search.remote";
+  import { searchTracks, searchPlaylists, searchUsers } from "$lib/api/search";
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
   import Button from "$lib/components/ui/Button.svelte";
@@ -49,7 +45,7 @@
         query: debouncedQ.current,
         offset: pageParam * paginated_limit,
         limit: paginated_limit,
-      });
+      }).then((r) => r.collection);
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>
