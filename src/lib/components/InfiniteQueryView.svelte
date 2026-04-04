@@ -3,7 +3,7 @@
   import type { Track } from "$lib/schemas/track";
   import type { User } from "$lib/schemas/user";
   import { whenInView } from "$lib/utils";
-  import Alert from "./Alert.svelte";
+  import ErrorDisplay from "./ErrorDisplay.svelte";
   import Spinner from "./Spinner.svelte";
   import PlaylistListing from "./listings/PlaylistListing.svelte";
   import TrackListing from "./listings/TrackListing.svelte";
@@ -46,7 +46,7 @@
 {#if query.isLoading}
   <Spinner />
 {:else if query.isError}
-  <Alert message={query.error.message ?? "An error occurred"} />
+  <ErrorDisplay error={query.error} />
 {:else}
   <div in:fly={{ y: 16 }} class="flex flex-col gap-4">
     {#each sortedPages as page (page)}

@@ -1,6 +1,6 @@
 <script lang="ts" generics="T">
   import Spinner from "$lib/components/Spinner.svelte";
-  import Alert from "./Alert.svelte";
+  import ErrorDisplay from "./ErrorDisplay.svelte";
   import type { CreateQueryResult } from "@tanstack/svelte-query";
   import { cn, type ClassValue } from "cnfn";
   import type { Snippet } from "svelte";
@@ -20,7 +20,7 @@
 {#if query.isLoading}
   <Spinner />
 {:else if query.isError}
-  <Alert message={query.error.message ?? "An error occurred"} />
+  <ErrorDisplay error={query.error} />
 {:else if query.data}
   <div in:fly={{ y: 16 }} class={cn("flex flex-col gap-4", className)}>
     {@render content(query.data)}

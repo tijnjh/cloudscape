@@ -1,7 +1,10 @@
 <script lang="ts">
   import { CircleAlertIcon } from "@lucide/svelte";
+  import { serializeError } from "serialize-error";
 
-  const { message }: { message: string } = $props();
+  const { error }: { error: unknown } = $props();
+
+  const message = $derived(serializeError(error));
 </script>
 
 <div class="rounded-lg @container bg-rose-500/20 text-rose-800-200 p-4">
