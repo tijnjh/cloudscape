@@ -18,7 +18,7 @@
 <QueryClientProvider client={queryClient}>
   {#if page.route.id !== "/"}
     <div
-      class="from-mist-200-800 to-mist-300-700/0 fixed inset-x-0 top-0 z-40 mx-auto flex max-w-5xl justify-between bg-linear-to-b p-4"
+      class="fixed inset-x-0 top-0 z-40 mx-auto flex max-w-5xl justify-between bg-linear-to-b from-mist-200-800 to-mist-300-700/0 p-4"
     >
       <Button
         variant="secondary"

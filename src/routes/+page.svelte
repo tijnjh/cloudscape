@@ -72,7 +72,7 @@
           {/each}
           <br />
         {:else}
-          <span class="mt-4 text-mist-900-100/25 text-lg">Nothing here...</span>
+          <span class="mt-4 text-lg text-mist-900-100/25">Nothing here...</span>
         {/each}
       {/snippet}
     </QueryView>

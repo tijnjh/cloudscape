@@ -88,7 +88,7 @@
       />
     {:else}
       <div
-        class="bg-mist-300-700 mt-12 aspect-square w-full rounded-xl md:max-w-md"
+        class="mt-12 aspect-square w-full rounded-xl bg-mist-300-700 md:max-w-md"
       ></div>
     {/if}
 
@@ -139,7 +139,7 @@
     <QueryView query={relatedTracksQuery}>
       {#snippet content(data)}
         {#if data.length === 0}
-          <span class="text-mist-900-100/25 text-xl font-medium">
+          <span class="text-xl font-medium text-mist-900-100/25">
             No related tracks found...
           </span>
         {:else if data}

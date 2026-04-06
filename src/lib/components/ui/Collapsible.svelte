@@ -12,11 +12,11 @@
 
 <details class="relative overflow-hidden">
   <summary
-    class="bg-mist-300-700 mb-2 w-fit px-4 py-1 cursor-pointer rounded-md"
+    class="mb-2 w-fit cursor-pointer rounded-md bg-mist-300-700 px-4 py-1"
   >
     {summary}
   </summary>
-  <div class="pt-2 mb-32">
+  <div class="mb-32 pt-2">
     {@render children()}
   </div>
 </details>

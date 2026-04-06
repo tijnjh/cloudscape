@@ -24,5 +24,5 @@
     onerror={() => (hasFailed = true)}
   />
 {:else}
-  <div class="bg-mist-300-700 aspect-square size-12 rounded"></div>
+  <div class="aspect-square size-12 rounded bg-mist-300-700"></div>
 {/if}
