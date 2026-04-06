@@ -7,13 +7,12 @@
   } from "$lib/api/search";
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
+  import SearchBar from "$lib/components/SearchBar.svelte";
   import Button from "$lib/components/ui/Button.svelte";
-  import Input from "$lib/components/ui/Input.svelte";
   import { paginated_limit } from "$lib/constants";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
   import type { User } from "$lib/schemas/user";
-  import { SearchIcon } from "@lucide/svelte";
   import { createInfiniteQuery } from "@tanstack/svelte-query";
   import { Debounced } from "runed";
   import { useSearchParams } from "runed/kit";
@@ -68,21 +67,7 @@
 
 <Main>
   {#snippet left()}
-    <form
-      onsubmit={(e) => {
-        e.preventDefault();
-        searchQuery.refetch();
-      }}
-      class="mx-auto flex w-full max-w-xl gap-2"
-    >
-      <Input
-        type="text"
-        bind:value={params.q}
-        class="w-full"
-        placeholder="Search"
-        icon={SearchIcon}
-      />
-    </form>
+    <SearchBar />
 
     <div class="mx-auto flex w-full max-w-xl gap-2">
       {#each ["all", "tracks", "playlists", "users"] as const as kind (kind)}

@@ -17,3 +17,15 @@ export async function getRelatedTracks(id: number) {
     schema: Collection(Track),
   });
 }
+
+export async function getSearchSuggestions(query: string) {
+  return await $api("/search/queries", {
+    params: { q: query },
+    schema: Collection(
+      v.object({
+        output: v.string(),
+        query: v.string(),
+      }),
+    ),
+  });
+}

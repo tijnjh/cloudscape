@@ -3,13 +3,12 @@
   import { getTracksByIds } from "$lib/api/track";
   import Main from "$lib/components/Main.svelte";
   import QueryView from "$lib/components/QueryView.svelte";
+  import SearchBar from "$lib/components/SearchBar.svelte";
   import PlaylistListing from "$lib/components/listings/PlaylistListing.svelte";
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
   import UserListing from "$lib/components/listings/UserListing.svelte";
   import Button from "$lib/components/ui/Button.svelte";
-  import Input from "$lib/components/ui/Input.svelte";
   import { favoriteTrackIds } from "$lib/global.svelte";
-  import { SearchIcon } from "@lucide/svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
   const selectionsQuery = createQuery(() => ({
@@ -37,15 +36,7 @@
         </Button>
       </div>
 
-      <form action="search" class="w-full">
-        <Input
-          type="text"
-          name="q"
-          placeholder="Search for artists, tracks or playlists..."
-          class="w-full"
-          icon={SearchIcon}
-        />
-      </form>
+      <SearchBar />
     </div>
 
     {#if favoriteTrackIds.current.length > 0}
