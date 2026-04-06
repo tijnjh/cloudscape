@@ -29,7 +29,7 @@ export async function getUserTracks({
   // set VITE_ALTERNATIVE_USER_TRACKS_API=true to use another server for this endpoint
   if (import.meta.env.VITE_ALTERNATIVE_USER_TRACKS_API === "true") {
     const res = await $fetch({
-      input: `https://sc.maid.zone/_/api/user/${id}/tracks?pagination=limit%3D${10}%26offset%3D${offset}`,
+      input: `https://sc.maid.zone/_/api/user/${id}/tracks?pagination=limit%3D${limit}%26offset%3D${offset}`,
     });
     return res as Collection<Track>;
   }
