@@ -1,0 +1,189 @@
+diff --git a/node_modules/eslint-plugin-tailwindcss/lib/rules/classnames-order.js b/node_modules/eslint-plugin-tailwindcss/lib/rules/classnames-order.js
+index cd0d2b0..9797bc8 100644
+--- a/node_modules/eslint-plugin-tailwindcss/lib/rules/classnames-order.js
++++ b/node_modules/eslint-plugin-tailwindcss/lib/rules/classnames-order.js
+@@ -89,7 +89,7 @@ module.exports = {
+       if (arg === null) {
+         originalClassNamesValue = astUtil.extractValueFromNode(node);
+         const range = astUtil.extractRangeFromNode(node);
+-        if (node.type === 'TextAttribute') {
++        if (node.type === 'TextAttribute' || node.type === 'SvelteAttribute') {
+           start = range[0];
+           end = range[1];
+         } else {
+@@ -221,6 +221,7 @@ module.exports = {
+     const scriptVisitor = {
+       JSXAttribute: attributeVisitor,
+       TextAttribute: attributeVisitor,
++      SvelteAttribute: attributeVisitor,
+       CallExpression: callExpressionVisitor,
+       TaggedTemplateExpression: function (node) {
+         if (!tags.includes(node.tag.name ?? node.tag.object?.name ?? node.tag.callee?.name)) {
+diff --git a/node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-negative-arbitrary-values.js b/node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-negative-arbitrary-values.js
+index eb3790e..a707495 100644
+--- a/node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-negative-arbitrary-values.js
++++ b/node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-negative-arbitrary-values.js
+@@ -177,6 +177,7 @@ module.exports = {
+     const scriptVisitor = {
+       JSXAttribute: attributeVisitor,
+       TextAttribute: attributeVisitor,
++      SvelteAttribute: attributeVisitor,
+       CallExpression: callExpressionVisitor,
+       TaggedTemplateExpression: function (node) {
+         if (!tags.includes(node.tag.name ?? node.tag.object?.name ?? node.tag.callee?.name)) {
+diff --git a/node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-shorthand.js b/node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-shorthand.js
+index ebe2f19..86c0c9e 100644
+--- a/node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-shorthand.js
++++ b/node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-shorthand.js
+@@ -169,7 +169,7 @@ module.exports = {
+       if (arg === null) {
+         originalClassNamesValue = astUtil.extractValueFromNode(node);
+         const range = astUtil.extractRangeFromNode(node);
+-        if (node.type === 'TextAttribute') {
++        if (node.type === 'TextAttribute' || node.type === 'SvelteAttribute') {
+           start = range[0];
+           end = range[1];
+         } else {
+@@ -533,6 +533,7 @@ module.exports = {
+     const scriptVisitor = {
+       JSXAttribute: attributeVisitor,
+       TextAttribute: attributeVisitor,
++      SvelteAttribute: attributeVisitor,
+       CallExpression: callExpressionVisitor,
+       TaggedTemplateExpression: function (node) {
+         if (!tags.includes(node.tag.name ?? node.tag.object?.name ?? node.tag.callee?.name)) {
+diff --git a/node_modules/eslint-plugin-tailwindcss/lib/rules/migration-from-tailwind-2.js b/node_modules/eslint-plugin-tailwindcss/lib/rules/migration-from-tailwind-2.js
+index 01abb90..2db767d 100644
+--- a/node_modules/eslint-plugin-tailwindcss/lib/rules/migration-from-tailwind-2.js
++++ b/node_modules/eslint-plugin-tailwindcss/lib/rules/migration-from-tailwind-2.js
+@@ -93,7 +93,7 @@ module.exports = {
+       if (arg === null) {
+         originalClassNamesValue = astUtil.extractValueFromNode(node);
+         const range = astUtil.extractRangeFromNode(node);
+-        if (node.type === 'TextAttribute') {
++        if (node.type === 'TextAttribute' || node.type === 'SvelteAttribute') {
+           start = range[0];
+           end = range[1];
+         } else {
+@@ -288,6 +288,7 @@ module.exports = {
+     const scriptVisitor = {
+       JSXAttribute: attributeVisitor,
+       TextAttribute: attributeVisitor,
++      SvelteAttribute: attributeVisitor,
+       CallExpression: callExpressionVisitor,
+       TaggedTemplateExpression: function (node) {
+         if (!tags.includes(node.tag.name ?? node.tag.object?.name ?? node.tag.callee?.name)) {
+diff --git a/node_modules/eslint-plugin-tailwindcss/lib/rules/no-contradicting-classname.js b/node_modules/eslint-plugin-tailwindcss/lib/rules/no-contradicting-classname.js
+index f5069c0..e717702 100644
+--- a/node_modules/eslint-plugin-tailwindcss/lib/rules/no-contradicting-classname.js
++++ b/node_modules/eslint-plugin-tailwindcss/lib/rules/no-contradicting-classname.js
+@@ -201,6 +201,7 @@ module.exports = {
+     const scriptVisitor = {
+       JSXAttribute: attributeVisitor,
+       TextAttribute: attributeVisitor,
++      SvelteAttribute: attributeVisitor,
+       CallExpression: callExpressionVisitor,
+       TaggedTemplateExpression: function (node) {
+         if (!tags.includes(node.tag.name ?? node.tag.object?.name ?? node.tag.callee?.name)) {
+diff --git a/node_modules/eslint-plugin-tailwindcss/lib/rules/no-custom-classname.js b/node_modules/eslint-plugin-tailwindcss/lib/rules/no-custom-classname.js
+index ca4e5da..3b85715 100644
+--- a/node_modules/eslint-plugin-tailwindcss/lib/rules/no-custom-classname.js
++++ b/node_modules/eslint-plugin-tailwindcss/lib/rules/no-custom-classname.js
+@@ -171,6 +171,7 @@ module.exports = {
+     const scriptVisitor = {
+       JSXAttribute: attributeVisitor,
+       TextAttribute: attributeVisitor,
++      SvelteAttribute: attributeVisitor,
+       CallExpression: callExpressionVisitor,
+       TaggedTemplateExpression: function (node) {
+         if (!tags.includes(node.tag.name ?? node.tag.object?.name ?? node.tag.callee?.name)) {
+diff --git a/node_modules/eslint-plugin-tailwindcss/lib/rules/no-unnecessary-arbitrary-value.js b/node_modules/eslint-plugin-tailwindcss/lib/rules/no-unnecessary-arbitrary-value.js
+index 47b3c27..01dae59 100644
+--- a/node_modules/eslint-plugin-tailwindcss/lib/rules/no-unnecessary-arbitrary-value.js
++++ b/node_modules/eslint-plugin-tailwindcss/lib/rules/no-unnecessary-arbitrary-value.js
+@@ -94,7 +94,7 @@ module.exports = {
+       if (arg === null) {
+         originalClassNamesValue = astUtil.extractValueFromNode(node);
+         const range = astUtil.extractRangeFromNode(node);
+-        if (node.type === 'TextAttribute') {
++        if (node.type === 'TextAttribute' || node.type === 'SvelteAttribute') {
+           start = range[0];
+           end = range[1];
+         } else {
+@@ -321,6 +321,7 @@ module.exports = {
+     const scriptVisitor = {
+       JSXAttribute: attributeVisitor,
+       TextAttribute: attributeVisitor,
++      SvelteAttribute: attributeVisitor,
+       CallExpression: callExpressionVisitor,
+       TaggedTemplateExpression: function (node) {
+         if (!tags.includes(node.tag.name)) {
+diff --git a/node_modules/eslint-plugin-tailwindcss/lib/util/ast.js b/node_modules/eslint-plugin-tailwindcss/lib/util/ast.js
+index a6ed24d..041123c 100644
+--- a/node_modules/eslint-plugin-tailwindcss/lib/util/ast.js
++++ b/node_modules/eslint-plugin-tailwindcss/lib/util/ast.js
+@@ -28,24 +28,27 @@ function calleeToString(calleeNode) {
+  * @returns {Boolean}
+  */
+ function isClassAttribute(node, classRegex) {
+-  if (!node.name) {
+-    return false;
+-  }
+-  let name = '';
++  let name;
+   switch (node.type) {
+     case 'TextAttribute':
+       name = node.name;
+       break;
+     case 'JSXAttribute':
+-      if (node.name.type === 'JSXNamespacedName') {
++      if (node.name?.type === 'JSXNamespacedName') {
+         const ns = node.name.namespace.name || '';
+         name = (ns.length ? ns + ':' : '') + node.name.name.name;
+       } else {
+-        name = node.name.name;
++        name = node.name?.name;
+       }
+       break;
++    case 'SvelteAttribute':
++      name = node.key.name;
++      break;
+     default:
+-      name = node.name.name;
++      name = node.name?.name;
++  }
++  if (!name) {
++    return false;
+   }
+   return new RegExp(classRegex).test(name);
+ }
+@@ -136,6 +139,9 @@ function isLiteralAttributeValue(node) {
+   if (node.type === 'TextAttribute' && node.name === 'class' && typeof node.value === 'string') {
+     return true;
+   }
++  if (node.type === 'SvelteAttribute') {
++    return node.value[0]?.type === 'SvelteLiteral';
++  }
+   if (node.value) {
+     switch (node.value.type) {
+       case 'Literal':
+@@ -191,6 +197,9 @@ function extractRangeFromNode(node) {
+   if (node.type === 'TextAttribute' && node.name === 'class') {
+     return [node.valueSpan.fullStart.offset, node.valueSpan.end.offset];
+   }
++  if (node.type === 'SvelteAttribute') {
++    return node.value[0]?.range;
++  }
+   if (node.value === undefined) {
+     return [0, 0];
+   }
+@@ -206,6 +215,9 @@ function extractValueFromNode(node) {
+   if (node.type === 'TextAttribute' && node.name === 'class') {
+     return node.value;
+   }
++  if (node.type === 'SvelteAttribute') {
++    return node.value[0]?.value;
++  }
+   if (node.value === undefined) {
+     return node.value;
+   }

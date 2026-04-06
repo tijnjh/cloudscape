@@ -3,6 +3,7 @@ import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
 import prettier from "eslint-config-prettier";
 import svelte from "eslint-plugin-svelte";
+import tailwindcss from "eslint-plugin-tailwindcss";
 import { defineConfig } from "eslint/config";
 import globals from "globals";
 import path from "node:path";
@@ -12,6 +13,7 @@ const gitignorePath = path.resolve(import.meta.dirname, ".gitignore");
 
 export default defineConfig(
   includeIgnoreFile(gitignorePath),
+  tailwindcss.configs["flat/recommended"],
   js.configs.recommended,
   ts.configs.recommended,
   svelte.configs.recommended,
@@ -20,6 +22,12 @@ export default defineConfig(
   {
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
+    },
+    settings: {
+      tailwindcss: {
+        config: `${import.meta.dirname}/src/routes/layout.css`,
+        functions: ["cn", "tv"],
+      },
     },
     rules: {
       // typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
