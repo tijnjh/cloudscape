@@ -1,3 +1,5 @@
+<!-- TODO: use https://bits-ui.com/docs/components/collapsible -->
+
 <script lang="ts">
   import type { Snippet } from "svelte";
 
