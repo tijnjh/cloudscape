@@ -67,7 +67,7 @@
 
 <Main>
   {#snippet left()}
-    <SearchBar />
+    <SearchBar value={params.q} />
 
     <div class="mx-auto flex w-full max-w-xl gap-2">
       {#each ["all", "tracks", "playlists", "users"] as const as kind (kind)}

@@ -5,14 +5,14 @@
   import { createQuery } from "@tanstack/svelte-query";
   import { Debounced } from "runed";
 
-  let searchInput = $state<string>();
+  let { value = $bindable() }: { value?: string } = $props();
 
-  const debouncedSearchInput = new Debounced(() => searchInput);
+  const debouncedValue = new Debounced(() => value);
 
   const searchSuggestionsQuery = createQuery(() => ({
-    queryKey: ["search-suggestions", debouncedSearchInput.current],
-    queryFn: () => getSearchSuggestions(debouncedSearchInput.current!),
-    enabled: !!debouncedSearchInput.current,
+    queryKey: ["search-suggestions", debouncedValue.current],
+    queryFn: () => getSearchSuggestions(debouncedValue.current!),
+    enabled: !!debouncedValue.current,
   }));
 </script>
 
@@ -25,7 +25,7 @@
     id="search-input"
     list="search-suggestions"
     icon={SearchIcon}
-    bind:value={searchInput}
+    bind:value
   />
   <datalist id="search-suggestions">
     {#if searchSuggestionsQuery.data}
