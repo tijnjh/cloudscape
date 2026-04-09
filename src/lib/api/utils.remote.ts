@@ -8,13 +8,7 @@ export const $fetch = query(
     input: v.union([v.string(), v.instance(Request), v.instance(URL)]),
     init: v.optional(v.object({}) as v.GenericSchema<RequestInit>),
   }),
-  async ({ input, init }) => {
-    const res = await fetch(input, init);
-
-    console.log(res);
-
-    return res.json();
-  },
+  async ({ input, init }) => await fetch(input, init),
 );
 
 let clientId: string;

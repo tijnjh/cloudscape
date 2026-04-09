@@ -16,8 +16,7 @@ export async function $api<S extends v.GenericSchema>(
     headers?: Record<string, string>;
   },
 ) {
-  const response = await upfetch(path, {
-    baseUrl: "/api",
+  const response = await upfetch(`/api${path}`, {
     params,
     headers,
   });
