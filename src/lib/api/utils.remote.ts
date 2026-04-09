@@ -17,32 +17,10 @@ export const $fetch = query(
   },
 );
 
-export const scProxy = query(
-  v.object({
-    path: v.string(),
-    params: v.optional(v.record(v.string(), v.unknown())),
-    headers: v.optional(v.record(v.string(), v.string())),
-  }),
-  async ({ path, params, headers }) => {
-    return upfetch(path, {
-      baseUrl: "https://api-v2.soundcloud.com",
-      params: {
-        client_id: await getClientId(),
-        ...params,
-      },
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
-        ...headers,
-      },
-    });
-  },
-);
-
 let clientId: string;
 let clientIdExpiry: number;
 
-export const getTrackSource = query(v.number(), async (trackId) => {
+export const getTrackSource = query(v.number(), async (trackId: number) => {
   const track = await getTrackById(trackId);
   const clientId = await getClientId();
 

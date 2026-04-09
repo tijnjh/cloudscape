@@ -1,5 +1,4 @@
 import { dev } from "$app/environment";
-import { scProxy } from "./utils.remote";
 import { up } from "up-fetch";
 import * as v from "valibot";
 
@@ -17,7 +16,11 @@ export async function $api<S extends v.GenericSchema>(
     headers?: Record<string, string>;
   },
 ) {
-  const response = await scProxy({ path, params, headers });
+  const response = await upfetch(path, {
+    baseUrl: "/api",
+    params,
+    headers,
+  });
 
   if (dev) {
     const { success, output, issues } = v.safeParse(schema, response);
