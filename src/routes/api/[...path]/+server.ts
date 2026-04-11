@@ -1,15 +1,17 @@
-import { upfetch } from "$lib/api/utils.js";
-import { getClientId } from "$lib/api/utils.remote.js";
+import { getClientId } from "$lib/api/utils";
 import type { RequestHandler } from "./$types";
 import { json } from "@sveltejs/kit";
+import { up } from "up-fetch";
 
 export const GET: RequestHandler = async (e) => {
   const pathname = e.url.pathname.replace("/api", "");
 
-  const response = await upfetch(pathname, {
+  const response = await up(e.fetch)(pathname, {
     baseUrl: "https://api-v2.soundcloud.com",
     params: {
-      client_id: await getClientId(),
+      client_id: await getClientId((url) =>
+        e.fetch(url).then((res) => res.text()),
+      ),
       ...Object.fromEntries(e.url.searchParams),
     },
     headers: {

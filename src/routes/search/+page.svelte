@@ -5,16 +5,18 @@
     searchUsers,
     searchAnything,
   } from "$lib/api/search";
-  import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
+  import ResourceView from "$lib/components/ResourceView.svelte";
   import SearchBar from "$lib/components/SearchBar.svelte";
+  import PlaylistListing from "$lib/components/listings/PlaylistListing.svelte";
+  import TrackListing from "$lib/components/listings/TrackListing.svelte";
+  import UserListing from "$lib/components/listings/UserListing.svelte";
   import Button from "$lib/components/ui/Button.svelte";
   import { paginated_limit } from "$lib/constants";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
   import type { User } from "$lib/schemas/user";
-  import { createInfiniteQuery } from "@tanstack/svelte-query";
-  import { Debounced } from "runed";
+  import { Debounced, resource } from "runed";
   import { useSearchParams } from "runed/kit";
   import { match } from "ts-pattern";
   import * as v from "valibot";
@@ -37,28 +39,21 @@
 
   type Listing = Track | Playlist | User;
 
-  const searchQuery = createInfiniteQuery(() => ({
-    queryKey: ["search", debouncedQ.current, params.kind],
-    queryFn: async ({ pageParam }) => {
-      if (!debouncedQ.current) return [] as Listing[];
+  const searchQuery = resource([() => debouncedQ.current], async () => {
+    if (!debouncedQ.current) return [] as Listing[];
 
-      const searchFn = match(params.kind)
-        .with("tracks", () => searchTracks)
-        .with("playlists", () => searchPlaylists)
-        .with("users", () => searchUsers)
-        .with("all", () => searchAnything)
-        .exhaustive();
+    const searchFn = match(params.kind)
+      .with("tracks", () => searchTracks)
+      .with("playlists", () => searchPlaylists)
+      .with("users", () => searchUsers)
+      .with("all", () => searchAnything)
+      .exhaustive();
 
-      return searchFn({
-        query: debouncedQ.current,
-        offset: pageParam * paginated_limit,
-        limit: paginated_limit,
-      }).then((r) => r.collection);
-    },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length < paginated_limit ? allPages.length : undefined,
-  }));
+    return searchFn({
+      query: debouncedQ.current,
+      limit: paginated_limit,
+    }).then((r) => r.collection);
+  });
 </script>
 
 <svelte:head>
@@ -88,6 +83,18 @@
   {/snippet}
 
   {#snippet right()}
-    <InfiniteQueryView query={searchQuery} />
+    <ResourceView resource={searchQuery}>
+      {#snippet content(data)}
+        {#each data as result (result.id)}
+          {#if result.kind === "track"}
+            <TrackListing track={result as Track} />
+          {:else if result.kind === "playlist"}
+            <PlaylistListing playlist={result as Playlist} />
+          {:else if result.kind === "user"}
+            <UserListing user={result as User} />
+          {/if}
+        {/each}
+      {/snippet}
+    </ResourceView>
   {/snippet}
 </Main>

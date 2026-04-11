@@ -1,17 +1,18 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
   import { getRelatedTracks } from "$lib/api/discovery";
-  import { getTrackSource } from "$lib/api/utils.remote";
+  import { getTrackSource } from "$lib/api/utils";
   import { favoriteTrackIds, global, nowPlaying } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
   import QueryView from "./QueryView.svelte";
+  import ResourceView from "./ResourceView.svelte";
   import TrackListing from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
   import Button from "./ui/Button.svelte";
   import { XIcon } from "@lucide/svelte";
-  import { createQuery } from "@tanstack/svelte-query";
   import { cn } from "cnfn";
+  import { resource } from "runed";
 
   $effect(() => {
     if (nowPlaying.current) {
@@ -52,16 +53,16 @@
     global.showNowPlayingView = false;
   });
 
-  const relatedTracksQuery = createQuery(() => ({
-    queryKey: ["related", nowPlaying.current?.id],
-    queryFn: async () => {
+  const relatedTracksResource = resource(
+    [() => nowPlaying.current?.id],
+    async () => {
       if (!nowPlaying.current) return [];
 
       const relatedTracks = await getRelatedTracks(nowPlaying.current.id);
 
       return relatedTracks.collection;
     },
-  }));
+  );
 </script>
 
 <svelte:window
@@ -136,7 +137,7 @@
   <div class="mt-8 flex w-full flex-col gap-4 md:h-dvh md:max-w-sm">
     <h2 class="text-xl font-medium">Related Tracks</h2>
 
-    <QueryView query={relatedTracksQuery}>
+    <ResourceView resource={relatedTracksResource}>
       {#snippet content(data)}
         {#if data.length === 0}
           <span class="text-xl font-medium text-mist-900-100/25">
@@ -148,7 +149,7 @@
           {/each}
         {/if}
       {/snippet}
-    </QueryView>
+    </ResourceView>
   </div>
 
   <Button
