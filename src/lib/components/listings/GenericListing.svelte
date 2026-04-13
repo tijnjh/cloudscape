@@ -1,37 +1,36 @@
 <script module lang="ts">
   import type { ListingThumbnailProps } from "../ListingThumbnail.svelte";
+  import type { LucideProps } from "@lucide/svelte";
   import type { ButtonRootProps } from "bits-ui";
+  import type { Component } from "svelte";
   import type { MergeExclusive } from "type-fest";
+
+  export type Action = MergeExclusive<
+    {
+      label: string;
+      icon: Component<LucideProps>;
+      onclick: VoidFunction;
+    },
+    {
+      label: string;
+      icon: Component<LucideProps>;
+      href: string;
+    }
+  >;
 
   export type GenericListingProps = ButtonRootProps & {
     title: string;
     badges?: (string | false)[];
     subtitle: string;
     thumbnail: ListingThumbnailProps;
-    actions?: (
-      | MergeExclusive<
-          {
-            label: string;
-            icon: Component<LucideProps>;
-            onclick: VoidFunction;
-          },
-          {
-            label: string;
-            icon: Component<LucideProps>;
-            href: string;
-          }
-        >
-      | undefined
-    )[];
+    actions?: Action[];
   };
 </script>
 
 <script lang="ts">
   import ListingThumbnail from "../ListingThumbnail.svelte";
-  import Button from "../ui/Button.svelte";
-  import type { LucideProps } from "@lucide/svelte";
+  import Menu from "../Menu.svelte";
   import { Button as BitsUiButton } from "bits-ui";
-  import type { Component } from "svelte";
 
   const {
     title,
@@ -71,18 +70,6 @@
   </BitsUiButton.Root>
 
   {#if actions}
-    {#each actions as action (action?.label)}
-      {#if action}
-        <Button
-          icon={action.icon}
-          title={action.label}
-          onclick={action.onclick}
-          class="shrink-0"
-          href={action.href}
-          variant="secondary"
-          size="icon"
-        />
-      {/if}
-    {/each}
+    <Menu {actions} {title} {subtitle} />
   {/if}
 </div>
