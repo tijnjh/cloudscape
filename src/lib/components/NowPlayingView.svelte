@@ -75,7 +75,7 @@
 
 <div
   class={cn(
-    "bg-mist-300-700/75 fixed inset-x-0 z-50 grid h-full grid-cols-1 place-items-center gap-x-8 overflow-y-scroll p-4 backdrop-blur-lg transition-[top] duration-300 md:grid-cols-2",
+    "bg-mist-300-700/75 fixed inset-x-0 z-30 grid h-full grid-cols-1 place-items-center gap-x-8 overflow-y-scroll p-4 backdrop-blur-lg transition-[top] duration-300 md:grid-cols-2",
     global.showNowPlayingView ? "top-0" : "top-full",
   )}
 >
