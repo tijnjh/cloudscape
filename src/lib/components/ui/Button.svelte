@@ -5,7 +5,7 @@
   export const buttonVariants = tv({
     slots: {
       base: [
-        "flex cursor-pointer items-center justify-center gap-2 rounded-full transition-transform",
+        "flex cursor-pointer items-center justify-center gap-2 truncate rounded-full transition-transform",
       ],
     },
     variants: {
@@ -31,6 +31,7 @@
   export type ButtonProps = ButtonRootProps &
     VariantProps<typeof buttonVariants> & {
       icon?: Component<IconProps>;
+      iconPosition?: "leading" | "trailing";
     };
 </script>
 
@@ -45,6 +46,7 @@
     variant,
     size,
     icon: Icon,
+    iconPosition = "leading",
     class: className,
     ...props
   }: ButtonProps = $props();
@@ -55,9 +57,13 @@
 </script>
 
 <Button.Root class={classes.base({ class: cn(className) })} {...props}>
-  {#if Icon}
+  {#if iconPosition === "leading"}
     <Icon size={16} strokeWidth={3} class="shrink-0" />
   {/if}
 
   {@render children?.()}
+
+  {#if iconPosition === "trailing"}
+    <Icon size={16} strokeWidth={3} class="shrink-0" />
+  {/if}
 </Button.Root>
