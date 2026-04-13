@@ -5,31 +5,36 @@ import * as v from "valibot";
 
 export const upfetch = up(fetch);
 
-export async function $api<S extends v.GenericSchema>(
+export async function $api<T = unknown>(
   path: string,
   {
     schema,
     params,
     headers,
   }: {
-    schema: S;
+    schema?: v.GenericSchema<T>;
     params?: Record<string, unknown>;
     headers?: Record<string, string>;
-  },
+  } = {},
 ) {
   const response = await scProxy({ path, params, headers });
 
-  if (dev) {
-    const { success, output, issues } = v.safeParse(schema, response);
+  if (schema) {
+    if (dev) {
+      const { success, output, issues } = v.safeParse(schema, response);
 
-    if (!success) {
-      throw new Error(v.summarize(issues));
+      if (!success) {
+        console.error(issues);
+        throw new Error(v.summarize(issues));
+      }
+
+      return output;
     }
 
-    return output;
+    return response as v.InferOutput<typeof schema>;
   }
 
-  return response as v.InferOutput<S>;
+  return response as T;
 }
 
 export function getPermalinkPath(...permalinks: string[]) {
