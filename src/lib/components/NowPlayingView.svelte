@@ -2,11 +2,14 @@
   import { onNavigate } from "$app/navigation";
   import { getRelatedTracks } from "$lib/api/discovery";
   import { getTrackSource } from "$lib/api/utils.remote";
-  import { favoriteTrackIds, global, nowPlaying } from "$lib/global.svelte";
+  import { global, nowPlaying } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
+  import Menu from "./Menu.svelte";
   import QueryView from "./QueryView.svelte";
-  import TrackListing from "./listings/TrackListing.svelte";
+  import TrackListing, {
+    getTrackListingMenuActions,
+  } from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
   import Button from "./ui/Button.svelte";
   import { XIcon } from "@lucide/svelte";
@@ -94,29 +97,13 @@
 
     {#if nowPlaying.current}
       <hgroup class="flex flex-col gap-4">
-        <h1 class="text-2xl font-medium">
-          {nowPlaying.current?.title}
-        </h1>
+        <div class="flex items-center justify-between gap-4">
+          <h1 class="text-2xl font-medium">
+            {nowPlaying.current?.title}
+          </h1>
 
-        <Button
-          class="w-fit"
-          onclick={() => {
-            if (!nowPlaying.current) return;
-
-            if (favoriteTrackIds.current.includes(nowPlaying.current.id)) {
-              favoriteTrackIds.current = favoriteTrackIds.current.filter(
-                (id) => id !== nowPlaying.current?.id,
-              );
-              return;
-            } else {
-              favoriteTrackIds.current.push(nowPlaying.current.id);
-            }
-          }}
-        >
-          {favoriteTrackIds.current.includes(nowPlaying.current?.id)
-            ? "Unfavorite"
-            : "Favorite"}
-        </Button>
+          <Menu actions={getTrackListingMenuActions(nowPlaying.current)} />
+        </div>
 
         <UserListing user={nowPlaying.current.user} />
       </hgroup>
