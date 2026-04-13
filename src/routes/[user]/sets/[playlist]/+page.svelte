@@ -45,7 +45,7 @@
   <title>{playlistQuery.data?.title}</title>
   <meta
     name="description"
-    content={dedent`${playlistQuery.data?.user.username}
+    content={dedent`${playlistQuery.data?.user?.username}
                ${playlistQuery.data?.track_count} tracks
                ${playlistQuery.data?.created_at}
            `}
