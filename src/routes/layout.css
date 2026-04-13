@@ -1,6 +1,7 @@
 @import "@fontsource/atkinson-hyperlegible";
 @import "tailwindcss";
 @import "tailwind-color-pairings";
+@import "tw-animate-css";
 
 @theme {
   --font-sans: "Atkinson Hyperlegible", sans-serif;
