@@ -1,8 +1,10 @@
 <script module lang="ts">
-  import type { IconProps } from "@lucide/svelte";
+  import Button from "./Button.svelte";
+  import { type IconProps, XIcon } from "@lucide/svelte";
   import { cn } from "cnfn";
   import type { Component } from "svelte";
   import type { HTMLInputAttributes } from "svelte/elements";
+  import { scale } from "svelte/transition";
 
   export interface InputProps extends HTMLInputAttributes {
     icon?: Component<IconProps>;
@@ -29,4 +31,17 @@
   {/if}
 
   <input {...props} bind:value class="h-full grow outline-none" />
+
+  {#if value}
+    <div transition:scale={{ start: 0.75, duration: 150 }}>
+      <Button
+        type="button"
+        onclick={() => (value = "")}
+        size="icon"
+        class="mr-2 size-6 shrink-0"
+      >
+        <XIcon size={12} strokeWidth={3} />
+      </Button>
+    </div>
+  {/if}
 </div>
