@@ -19,7 +19,7 @@
       },
       disabled: {
         true: "cursor-not-allowed opacity-50",
-        false: "active:scale-90 active:opacity-50",
+        false: "hover:opacity-80 active:scale-90 active:opacity-50",
       },
     },
     defaultVariants: {

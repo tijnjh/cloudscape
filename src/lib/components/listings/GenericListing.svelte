@@ -45,7 +45,11 @@
 <div class="flex items-center gap-4 text-left">
   <BitsUiButton.Root
     {...props}
-    class="flex w-full min-w-0 gap-4 text-left transition-transform active:scale-95 active:opacity-50"
+    class={[
+      "flex w-full min-w-0 isolate cursor-pointer gap-4 text-left relative transition-transform active:scale-95 active:opacity-50",
+      "before:-z-10 before:content-[''] before:absolute before:-inset-2 before:rounded-[10px] before:bg-mist-300-700",
+      "before:opacity-0 hover:before:opacity-100 before:transition-[opacity,scale] before:scale-90 hover:before:scale-100",
+    ]}
   >
     <ListingThumbnail {...thumbnail} />
 
