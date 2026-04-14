@@ -1,19 +1,20 @@
 <script lang="ts">
-  import { getSearchSuggestions } from "$lib/api/discovery";
+  // import { getSearchSuggestions } from "$lib/api/discovery";
   import Input from "./ui/Input.svelte";
   import { SearchIcon } from "@lucide/svelte";
-  import { createQuery } from "@tanstack/svelte-query";
-  import { Debounced } from "runed";
+
+  // import { createQuery } from "@tanstack/svelte-query";
+  // import { Debounced } from "runed";
 
   let { value = $bindable() }: { value?: string } = $props();
 
-  const debouncedValue = new Debounced(() => value);
+  // const debouncedValue = new Debounced(() => value);
 
-  const searchSuggestionsQuery = createQuery(() => ({
-    queryKey: ["search-suggestions", debouncedValue.current],
-    queryFn: () => getSearchSuggestions(debouncedValue.current!),
-    enabled: !!debouncedValue.current,
-  }));
+  // const searchSuggestionsQuery = createQuery(() => ({
+  //   queryKey: ["search-suggestions", debouncedValue.current],
+  //   queryFn: () => getSearchSuggestions(debouncedValue.current!),
+  //   enabled: !!debouncedValue.current,
+  // }));
 </script>
 
 <form action="search" class="w-full">
@@ -23,15 +24,15 @@
     placeholder="Search for artists, tracks or playlists..."
     class="w-full"
     id="search-input"
-    list="search-suggestions"
+    // list="search-suggestions"
     icon={SearchIcon}
     bind:value
   />
-  <datalist id="search-suggestions">
+  <!-- <datalist id="search-suggestions">
     {#if searchSuggestionsQuery.data}
       {#each searchSuggestionsQuery.data.collection as suggestion (suggestion.query)}
         <option>{suggestion.query}</option>
       {/each}
     {/if}
-  </datalist>
+  </datalist> -->
 </form>
