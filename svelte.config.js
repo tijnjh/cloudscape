@@ -1,5 +1,5 @@
+import adapter from "@sveltejs/adapter-static";
 import { relative, sep } from "node:path";
-import adapter from "svelte-adapter-bun";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -12,12 +12,11 @@ const config = {
 
       return isExternalLibrary ? undefined : true;
     },
-    experimental: {
-      async: true,
-    },
   },
   kit: {
-    adapter: adapter(),
+    adapter: adapter({
+      fallback: "index.html",
+    }),
     experimental: {
       remoteFunctions: true,
     },

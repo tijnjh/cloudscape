@@ -1,5 +1,5 @@
 import { dev } from "$app/environment";
-import { scProxy } from "./utils.remote";
+import { PUBLIC_API_URL } from "$env/static/public";
 import { up } from "up-fetch";
 import * as v from "valibot";
 
@@ -17,7 +17,13 @@ export async function $api<T = unknown>(
     headers?: Record<string, string>;
   } = {},
 ) {
-  const response = await scProxy({ path, params, headers });
+  // const response = await scProxy({ path, params, headers });
+
+  const response = await upfetch(path, {
+    baseUrl: PUBLIC_API_URL,
+    params,
+    headers,
+  });
 
   if (schema) {
     if (dev) {
