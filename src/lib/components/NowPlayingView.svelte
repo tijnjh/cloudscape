@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
   import { getRelatedTracks } from "$lib/api/discovery";
-  import { getTrackSource } from "$lib/api/utils.remote";
+  import { getTrackSource } from "$lib/api/track";
   import { global, nowPlaying } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
