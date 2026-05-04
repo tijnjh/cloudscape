@@ -17,8 +17,6 @@ export async function $api<T = unknown>(
     headers?: Record<string, string>;
   } = {},
 ) {
-  // const response = await scProxy({ path, params, headers });
-
   const response = await upfetch(path, {
     baseUrl: PUBLIC_API_URL,
     params,

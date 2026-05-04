@@ -36,9 +36,10 @@ export async function getTracksByIds(ids: number[]) {
   });
 }
 
-export async function getTrackSource(id: number) {
-  const res = await $api<{ url: string }>(PUBLIC_TRACK_SOURCE_ENDPOINT, {
-    params: { id },
+export async function getTrackSource(permalink: string) {
+  return await $api<string>(`${PUBLIC_TRACK_SOURCE_ENDPOINT}/${permalink}`, {
+    params: {
+      redirect_parts: true,
+    },
   });
-  return res.url;
 }
