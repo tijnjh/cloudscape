@@ -1,4 +1,3 @@
-import { PUBLIC_TRACK_SOURCE_ENDPOINT } from "$env/static/public";
 import { paginated_limit } from "$lib/constants";
 import { Track } from "$lib/schemas/track";
 import { $api, getPermalinkPath } from "./utils";
@@ -33,13 +32,5 @@ export async function getTracksByIds(ids: number[]) {
       limit: paginated_limit,
     },
     schema: v.array(Track),
-  });
-}
-
-export async function getTrackSource(permalink: string) {
-  return await $api<string>(`${PUBLIC_TRACK_SOURCE_ENDPOINT}/${permalink}`, {
-    params: {
-      redirect_parts: true,
-    },
   });
 }

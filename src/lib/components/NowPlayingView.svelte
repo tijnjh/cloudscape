@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
+  import { PUBLIC_TRACK_SOURCE_ENDPOINT } from "$env/static/public";
   import { getRelatedTracks } from "$lib/api/discovery";
-  import { getTrackSource } from "$lib/api/track";
   import { isPaused, nowPlaying, showNowPlayingView } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
@@ -40,15 +40,14 @@
   });
 
   const applySource = (track: Track) => (element: HTMLAudioElement) => {
-    getTrackSource(track.user.permalink + "/" + track.permalink).then((url) => {
-      if (!Hls.isSupported()) {
-        throw new Error("hls is not supported");
-      }
+    const url = `${PUBLIC_TRACK_SOURCE_ENDPOINT}/${track.user.permalink}/${track.permalink}`;
 
-      const hls = new Hls();
-      hls.loadSource(url);
-      hls.attachMedia(element);
-    });
+    if (!Hls.isSupported()) {
+      throw new Error("hls is not supported");
+    }
+    const hls = new Hls();
+    hls.loadSource(url);
+    hls.attachMedia(element);
   };
 
   onNavigate(() => {
