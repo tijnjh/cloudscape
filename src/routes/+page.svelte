@@ -8,7 +8,7 @@
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
   import UserListing from "$lib/components/listings/UserListing.svelte";
   import Button from "$lib/components/ui/Button.svelte";
-  import { favoriteTrackIds } from "$lib/global.svelte";
+  import { favoriteTrackIds, selectedInstance } from "$lib/global.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
   const selectionsQuery = createQuery(() => ({
@@ -31,9 +31,17 @@
     <div class="flex w-full flex-col items-start gap-4">
       <div class="flex w-full items-center justify-between">
         <h1 class="text-3xl font-medium">Cloudscape</h1>
-        <Button variant="secondary" href="https://tijn.dev/cloudscape">
-          View on GitHub
-        </Button>
+        <div class="flex items-center gap-2">
+          <Button variant="secondary" href="/select-instance">
+            {selectedInstance.current
+              ? new URL(selectedInstance.current).host
+              : "Select Server"}
+          </Button>
+
+          <Button variant="secondary" href="https://tijn.dev/cloudscape">
+            Source
+          </Button>
+        </div>
       </div>
 
       <SearchBar />

@@ -6,3 +6,7 @@ export const nowPlaying = new PersistedState<Track | null>("now-playing", null);
 export const favoriteTrackIds = new PersistedState<number[]>("favorites", []);
 export const showNowPlayingView = new ReactiveValue(false);
 export const isPaused = new ReactiveValue(true);
+export const selectedInstance = new PersistedState<string | undefined>(
+  "selected-instance",
+  undefined,
+);

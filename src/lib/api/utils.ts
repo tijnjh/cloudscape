@@ -1,5 +1,7 @@
 import { dev } from "$app/environment";
-import { PUBLIC_API_URL } from "$env/static/public";
+import { goto } from "$app/navigation";
+import { resolve } from "$app/paths";
+import { selectedInstance } from "$lib/global.svelte";
 import { up } from "up-fetch";
 import * as v from "valibot";
 
@@ -17,8 +19,12 @@ export async function $api<T = unknown>(
     headers?: Record<string, string>;
   } = {},
 ) {
+  if (!selectedInstance.current) {
+    goto(resolve("/select-instance"));
+  }
+
   const response = await upfetch(path, {
-    baseUrl: PUBLIC_API_URL,
+    baseUrl: `${selectedInstance.current}/_/api/v2`,
     params,
     headers,
   });
