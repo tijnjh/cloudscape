@@ -43,8 +43,9 @@
             <Button
               onclick={() => {
                 selectedInstance.current = instance.URL;
-                goto(resolve("/"));
-                reload();
+                goto(resolve("/")).then(() => {
+                  reload();
+                });
               }}
               variant={isSelected ? "primary" : "secondary"}
             >
