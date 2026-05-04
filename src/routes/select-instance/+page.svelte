@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { getSoundcloakInstances } from "$lib/api/other";
@@ -19,6 +20,11 @@
   }
 
   const dn = new Intl.DisplayNames("en", { type: "region" });
+
+  function reload() {
+    if (!browser) return;
+    location.reload();
+  }
 </script>
 
 <Main>
@@ -38,6 +44,7 @@
               onclick={() => {
                 selectedInstance.current = instance.URL;
                 goto(resolve("/"));
+                reload();
               }}
               variant={isSelected ? "primary" : "secondary"}
             >
