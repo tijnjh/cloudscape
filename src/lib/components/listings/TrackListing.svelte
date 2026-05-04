@@ -72,7 +72,8 @@
         label: "Copy track URL",
         icon: ClipboardIcon,
         onclick: () => {
-          navigator.clipboard?.writeText(track.permalink_url);
+          const url = `${page.url.protocol}//${page.url.host}/${track.user.permalink}/${track.permalink}`;
+          navigator.clipboard?.writeText(url);
         },
       },
     ];
