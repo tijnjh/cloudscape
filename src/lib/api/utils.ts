@@ -20,7 +20,7 @@ export async function $api<T = unknown>(
   } = {},
 ) {
   if (!selectedInstance.current) {
-    goto(resolve("/select-instance"));
+    throw goto(resolve("/select-instance"));
   }
 
   const response = await upfetch(path, {
