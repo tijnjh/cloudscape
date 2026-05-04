@@ -2,7 +2,7 @@
   import { onNavigate } from "$app/navigation";
   import { getRelatedTracks } from "$lib/api/discovery";
   import { getTrackSource } from "$lib/api/track";
-  import { global, nowPlaying } from "$lib/global.svelte";
+  import { isPaused, nowPlaying, showNowPlayingView } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
   import Menu from "./Menu.svelte";
@@ -18,7 +18,7 @@
 
   $effect(() => {
     if (nowPlaying.current) {
-      global.isPaused = true;
+      isPaused.current = true;
 
       if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -40,7 +40,7 @@
   });
 
   const applySource = (track: Track) => (element: HTMLAudioElement) => {
-    getTrackSource(track.id).then((url) => {
+    getTrackSource(track.user.permalink + "/" + track.permalink).then((url) => {
       if (!Hls.isSupported()) {
         throw new Error("hls is not supported");
       }
@@ -52,7 +52,7 @@
   };
 
   onNavigate(() => {
-    global.showNowPlayingView = false;
+    showNowPlayingView.current = false;
   });
 
   const relatedTracksQuery = createQuery(() => ({
@@ -71,7 +71,7 @@
   onkeydown={(e) => {
     if (e.key === "Escape") {
       e.preventDefault();
-      global.showNowPlayingView = false;
+      showNowPlayingView.current = false;
     }
   }}
 />
@@ -79,7 +79,7 @@
 <div
   class={cn(
     "bg-mist-300-700/75 fixed inset-x-0 z-30 grid h-full grid-cols-1 place-items-center gap-x-8 overflow-y-scroll p-4 backdrop-blur-lg transition-[top] duration-300 md:grid-cols-2",
-    global.showNowPlayingView ? "top-0" : "top-full",
+    showNowPlayingView.current ? "top-0" : "top-full",
   )}
 >
   <div class="flex w-full flex-col gap-4 max-md:mt-16 md:max-w-sm">
@@ -112,7 +112,7 @@
     {#key nowPlaying.current}
       <audio
         class="h-10"
-        bind:paused={global.isPaused}
+        bind:paused={isPaused.current}
         controls
         {@attach nowPlaying.current && applySource(nowPlaying.current)}
       >
@@ -140,7 +140,7 @@
 
   <Button
     size="icon"
-    onclick={() => (global.showNowPlayingView = false)}
+    onclick={() => (showNowPlayingView.current = false)}
     class="sticky bottom-4 max-md:mt-16 md:absolute md:top-4 md:right-4"
     icon={XIcon}
   />

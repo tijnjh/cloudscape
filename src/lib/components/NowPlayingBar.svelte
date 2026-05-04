@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { global, nowPlaying } from "$lib/global.svelte";
+  import { showNowPlayingView, isPaused, nowPlaying } from "$lib/global.svelte";
   import ListingThumbnail from "./ListingThumbnail.svelte";
   import Button from "./ui/Button.svelte";
   import { PauseIcon, PlayIcon } from "@lucide/svelte";
   import { fly } from "svelte/transition";
 
-  const StatusIcon = $derived(global.isPaused ? PlayIcon : PauseIcon);
+  const StatusIcon = $derived(isPaused.current ? PlayIcon : PauseIcon);
 </script>
 
-{#if !global.showNowPlayingView}
+{#if !showNowPlayingView.current}
   <div
     in:fly={{ y: 100 }}
     class="fixed inset-x-2 bottom-2 z-30 mx-auto rounded-2xl bg-mist-300-700/75 backdrop-blur-lg md:inset-x-4 md:bottom-4 md:max-w-xl"
   >
     <div class="grid grid-cols-[1fr_auto] items-center gap-4 p-3">
       <button
-        onclick={() => (global.showNowPlayingView = true)}
+        onclick={() => (showNowPlayingView.current = true)}
         class="flex gap-4 truncate text-left"
       >
         <ListingThumbnail src={nowPlaying.current?.artwork_url} alt="" />
@@ -30,7 +30,7 @@
         size="icon"
         variant="secondary"
         onclick={() => {
-          global.isPaused = !global.isPaused;
+          isPaused.current = !isPaused.current;
         }}
       >
         <StatusIcon fill="currentColor" class="opacity-50" size={16} />
