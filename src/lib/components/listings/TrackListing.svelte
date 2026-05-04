@@ -80,7 +80,7 @@
 </script>
 
 <script lang="ts">
-  import { global, nowPlaying } from "$lib/global.svelte";
+  import { isPaused, nowPlaying } from "$lib/global.svelte";
   import type { Track } from "$lib/schemas/track";
   import GenericListing from "./GenericListing.svelte";
 
@@ -98,7 +98,7 @@
     nowPlaying.current = track;
 
     setTimeout(() => {
-      global.isPaused = false;
+      isPaused.current = false;
     }, 50);
   }}
   badges={track.policy === "SNIP" ? ["30s only"] : []}
