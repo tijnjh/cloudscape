@@ -1,3 +1,4 @@
+import { PUBLIC_DEFAULT_INSTANCE } from "$env/static/public";
 import { ReactiveValue } from "./reactive-value.svelte";
 import type { Track } from "./schemas/track";
 import { PersistedState } from "runed";
@@ -8,5 +9,5 @@ export const showNowPlayingView = new ReactiveValue(false);
 export const isPaused = new ReactiveValue(true);
 export const selectedInstance = new PersistedState<string | undefined>(
   "selected-instance",
-  undefined,
+  PUBLIC_DEFAULT_INSTANCE,
 );
