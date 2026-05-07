@@ -28,6 +28,7 @@ export const Track = v.strictObject({
         url: v.pipe(v.string(), v.url()),
         preset: v.picklist([
           "opus_0_0",
+          "aac_96k",
           "aac_160k",
           "mp3_0_0",
           "abr_sq",
@@ -51,7 +52,7 @@ export const Track = v.strictObject({
             'audio/ogg; codecs="opus"',
           ]),
         }),
-        quality: v.literal("sq"),
+        quality: v.picklist(["sq", "lq"]),
         is_legacy_transcoding: v.boolean(),
       }),
     ),
