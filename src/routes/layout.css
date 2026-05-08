@@ -59,6 +59,10 @@
   @apply touch-manipulation ring-base-200-800;
 }
 
+html {
+  color-scheme: light dark;
+}
+
 body,
 html {
   scrollbar-gutter: stable;
