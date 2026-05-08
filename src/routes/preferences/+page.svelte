@@ -13,6 +13,7 @@
     type BaseColor,
     type AccentColor,
   } from "$lib/theme";
+  import { DotIcon } from "@lucide/svelte";
   import type { PersistedState } from "runed";
 
   const selectedInstanceHostname = $derived.by(() => {
@@ -21,22 +22,27 @@
   });
 </script>
 
-{#snippet colorButton(
-  color: BaseColor | AccentColor,
-  remoteVar: PersistedState<BaseColor | AccentColor>,
+{#snippet colorSelector<C extends BaseColor | AccentColor>(
+  colors: C[],
+  selectedColorState: PersistedState<C>,
 )}
-  {@const isSelected = remoteVar.current === color}
-
-  <Button
-    class={["bg-(--color) ring-black/50 ring-offset-2", isSelected && "ring-2"]}
-    style="
-            --color: var(--color-{color}-500);
-          "
-    onclick={() => {
-      remoteVar.current = color;
-    }}
-    title={color}
-  ></Button>
+  <div class="flex flex-wrap gap-2">
+    {#each colors as color (color)}
+      {@const isSelected = selectedColorState.current === color}
+      <Button
+        class={[
+          "bg-(--color) ring-black/50 ring-offset-2",
+          isSelected && "ring-2",
+        ]}
+        style="--color: var(--color-{color}-500);"
+        onclick={() => {
+          selectedColorState.current = color;
+        }}
+        size="icon"
+        title={color}
+      ></Button>
+    {/each}
+  </div>
 {/snippet}
 
 <Main>
@@ -53,17 +59,13 @@
     <span>Base Colors</span>
 
     <div class="flex flex-wrap gap-2">
-      {#each baseColors as baseColor (baseColor)}
-        {@render colorButton(baseColor, selectedBaseColor)}
-      {/each}
+      {@render colorSelector(baseColors, selectedBaseColor)}
     </div>
 
     <span>Accent Colors</span>
 
     <div class="flex flex-wrap gap-2">
-      {#each accentColors as accentColor (accentColor)}
-        {@render colorButton(accentColor, selectedAccentColor)}
-      {/each}
+      {@render colorSelector(accentColors, selectedAccentColor)}
     </div>
   {/snippet}
   {#snippet right()}{/snippet}
