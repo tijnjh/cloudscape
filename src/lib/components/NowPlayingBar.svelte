@@ -11,7 +11,7 @@
 {#if !showNowPlayingView.current}
   <div
     in:fly={{ y: 100 }}
-    class="fixed inset-x-2 bottom-2 z-30 mx-auto rounded-2xl bg-mist-300-700/75 backdrop-blur-lg md:inset-x-4 md:bottom-4 md:max-w-xl"
+    class="fixed inset-x-2 bottom-2 z-30 mx-auto rounded-2xl bg-base-300-700/75 backdrop-blur-lg md:inset-x-4 md:bottom-4 md:max-w-xl"
   >
     <div class="grid grid-cols-[1fr_auto] items-center gap-4 p-3">
       <button
@@ -28,7 +28,6 @@
 
       <Button
         size="icon"
-        variant="secondary"
         onclick={() => {
           isPaused.current = !isPaused.current;
         }}

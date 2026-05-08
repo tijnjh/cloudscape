@@ -47,7 +47,7 @@
     {...props}
     class={[
       "flex w-full min-w-0 isolate cursor-pointer gap-4 text-left relative transition-transform active:scale-95 active:opacity-50",
-      "before:-z-10 before:content-[''] before:absolute before:-inset-2 before:rounded-[10px] before:bg-mist-300-700",
+      "before:-z-10 before:content-[''] before:absolute before:-inset-2 before:rounded-[10px] before:bg-base-300-700",
       "before:opacity-0 hover:before:opacity-100 before:transition-[opacity,scale] before:scale-90 hover:before:scale-100",
     ]}
   >
@@ -60,7 +60,7 @@
         {#each badges as badge (badge)}
           {#if badge}
             <div
-              class="rounded-full bg-mist-300-700 px-2 py-0.5 text-sm whitespace-nowrap text-mist-600-400"
+              class="rounded-full bg-accent-300-700 px-2 py-0.5 text-sm whitespace-nowrap text-accent-600-400"
             >
               {badge}
             </div>

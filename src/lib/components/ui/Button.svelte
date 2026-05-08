@@ -10,8 +10,8 @@
     },
     variants: {
       variant: {
-        primary: "bg-mist-900-100 text-mist-200-800",
-        secondary: "bg-mist-300-700",
+        primary: "bg-accent-500 text-base-200-800",
+        secondary: "bg-base-300-700",
       },
       size: {
         default: "px-4 py-2",

@@ -81,7 +81,7 @@
 
 <div
   class={cn(
-    "bg-mist-300-700/75 fixed inset-x-0 z-30 grid h-full grid-cols-1 place-items-center gap-x-8 overflow-y-scroll p-4 backdrop-blur-lg transition-[top] duration-300 md:grid-cols-2",
+    "bg-base-300-700/75 fixed inset-x-0 z-30 grid h-full grid-cols-1 place-items-center gap-x-8 overflow-y-scroll p-4 backdrop-blur-lg transition-[top] duration-300 md:grid-cols-2",
     showNowPlayingView.current ? "top-0" : "top-full",
   )}
 >
@@ -94,7 +94,7 @@
       />
     {:else}
       <div
-        class="mt-12 aspect-square w-full rounded-xl bg-mist-300-700 md:max-w-md"
+        class="mt-12 aspect-square w-full rounded-xl bg-base-300-700 md:max-w-md"
       ></div>
     {/if}
 
@@ -129,7 +129,7 @@
     <QueryView query={relatedTracksQuery}>
       {#snippet content(data)}
         {#if data.length === 0}
-          <span class="text-xl font-medium text-mist-900-100/25">
+          <span class="text-xl font-medium text-base-900-100/25">
             No related tracks found...
           </span>
         {:else if data}
