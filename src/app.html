@@ -22,13 +22,29 @@
          * @param {string} name
          * @param {string} value
          */
-        function setVar(name, value) {
+        function setProperty(name, value) {
           document.documentElement.style.setProperty(name, value);
         }
 
         for (const shade of shades) {
-          setVar(`--t-base-${shade}`, `var(--color-${baseColor}-${shade})`);
-          setVar(`--t-accent-${shade}`, `var(--color-${accentColor}-${shade})`);
+          const reversedShade = 1000 - shade;
+
+          setProperty(
+            `--t-base-${shade}`,
+            `var(--color-${baseColor}-${shade})`,
+          );
+          setProperty(
+            `--t-base-${shade}-${reversedShade}`,
+            `var(--color-${baseColor}-${shade}-${reversedShade})`,
+          );
+          setProperty(
+            `--t-accent-${shade}`,
+            `var(--color-${accentColor}-${shade})`,
+          );
+          setProperty(
+            `--t-accent-${shade}-${reversedShade}`,
+            `var(--color-${accentColor}-${shade}-${reversedShade})`,
+          );
         }
       }
     </script>
