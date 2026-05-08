@@ -1,7 +1,7 @@
 import { PUBLIC_DEFAULT_INSTANCE } from "$env/static/public";
 import { ReactiveValue } from "./reactive-value.svelte";
 import type { Track } from "./schemas/track";
-import type { AccentColor, BaseColor } from "./theme";
+import type { AccentColor, BaseColor, ThemeMode } from "./theme";
 import { PersistedState } from "runed";
 
 export const nowPlaying = new PersistedState<Track | null>("now-playing", null);
@@ -22,4 +22,9 @@ export const selectedBaseColor = new PersistedState<BaseColor>(
 export const selectedAccentColor = new PersistedState<AccentColor>(
   "selected-accent-color",
   "emerald",
+);
+
+export const selectedThemeMode = new PersistedState<ThemeMode>(
+  "selected-theme-mode",
+  "system",
 );

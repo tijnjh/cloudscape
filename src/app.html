@@ -13,8 +13,8 @@
         const baseColor = localStorage["selected-base-color"] || "mist";
         /** @type {string} */
         const accentColor = localStorage["selected-accent-color"] || "emerald";
-
-        console.log({ accentColor, baseColor });
+        /** @type {"light" | "dark" | "system"} */
+        const themeMode = localStorage["selected-theme-mode"] || "system";
 
         const shades = /** @type {const} */ ([
           50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
@@ -32,6 +32,11 @@
           setVar(`--t-base-${shade}`, `var(--color-${baseColor}-${shade})`);
           setVar(`--t-accent-${shade}`, `var(--color-${accentColor}-${shade})`);
         }
+
+        setVar(
+          "color-scheme",
+          themeMode === "system" ? "light dark" : themeMode,
+        );
       }
     </script>
 

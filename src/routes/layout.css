@@ -56,12 +56,11 @@
 }
 
 * {
-  @apply touch-manipulation ring-base-200 dark:ring-base-800;
+  @apply touch-manipulation ring-base-200-800;
 }
 
 body,
 html {
-  color-scheme: light dark;
   scrollbar-gutter: stable;
   @apply bg-base-200-800;
 }

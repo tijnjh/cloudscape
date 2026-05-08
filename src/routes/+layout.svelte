@@ -4,7 +4,11 @@
   import NowPlayingBar from "$lib/components/NowPlayingBar.svelte";
   import NowPlayingView from "$lib/components/NowPlayingView.svelte";
   import Button from "$lib/components/ui/Button.svelte";
-  import { selectedAccentColor, selectedBaseColor } from "$lib/global.svelte";
+  import {
+    selectedAccentColor,
+    selectedBaseColor,
+    selectedThemeMode,
+  } from "$lib/global.svelte";
   import { shades } from "$lib/theme";
   import "./layout.css";
   import { ChevronLeft } from "@lucide/svelte";
@@ -14,21 +18,30 @@
 
   const queryClient = new QueryClient();
 
-  function setVar(name: string, value: string) {
+  function setProperty(name: string, value: string) {
     document.documentElement.style.setProperty(name, value);
   }
 
   $effect(() => {
     for (const shade of shades) {
-      setVar(
+      setProperty(
         `--t-base-${shade}`,
         `var(--color-${selectedBaseColor.current}-${shade})`,
       );
-      setVar(
+      setProperty(
         `--t-accent-${shade}`,
         `var(--color-${selectedAccentColor.current}-${shade})`,
       );
     }
+  });
+
+  $effect(() => {
+    setProperty(
+      "color-scheme",
+      selectedThemeMode.current === "system"
+        ? "light dark"
+        : selectedThemeMode.current,
+    );
   });
 </script>
 

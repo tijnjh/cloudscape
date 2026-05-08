@@ -6,6 +6,7 @@
     selectedAccentColor,
     selectedBaseColor,
     selectedInstance,
+    selectedThemeMode,
   } from "$lib/global.svelte";
   import {
     baseColors,
@@ -13,8 +14,14 @@
     type BaseColor,
     type AccentColor,
   } from "$lib/theme";
-  import { DotIcon } from "@lucide/svelte";
+  import { Monitor, Moon, Sun } from "@lucide/svelte";
   import type { PersistedState } from "runed";
+
+  const themeModeOptions = [
+    { mode: "light", label: "Light", icon: Sun },
+    { mode: "dark", label: "Dark", icon: Moon },
+    { mode: "system", label: "System", icon: Monitor },
+  ] as const;
 
   const selectedInstanceHostname = $derived.by(() => {
     if (!selectedInstance.current) return;
@@ -55,6 +62,23 @@
     <hr class="h-px border-0 bg-base-400-600" />
 
     <h3 class="text-xl font-medium">Theme</h3>
+
+    <span>Mode</span>
+
+    <div class="flex flex-wrap gap-2">
+      {#each themeModeOptions as { mode, label, icon } (mode)}
+        {@const isSelected = selectedThemeMode.current === mode}
+        <Button
+          variant={isSelected ? "primary" : "secondary"}
+          {icon}
+          onclick={() => {
+            selectedThemeMode.current = mode;
+          }}
+        >
+          {label}
+        </Button>
+      {/each}
+    </div>
 
     <span>Base Colors</span>
 
