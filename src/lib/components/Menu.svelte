@@ -33,7 +33,13 @@
 </script>
 
 {#snippet trigger({ props }: { props: Record<string, unknown> })}
-  <Button variant="secondary" aria-label="More options" {...props}>
+  <Button
+    variant="secondary"
+    size="icon"
+    class="shrink-0"
+    aria-label="More options"
+    {...props}
+  >
     <EllipsisIcon size={16} />
   </Button>
 {/snippet}

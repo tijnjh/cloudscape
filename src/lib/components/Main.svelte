@@ -6,20 +6,26 @@
     children,
     left,
     right,
+    split = [50, 50],
     class: className,
   }: {
     children?: Snippet;
     left?: Snippet;
     right?: Snippet;
+    split?: [number, number];
     class?: ClassValue;
   } = $props();
+
+  const [leftSplit, rightSplit] = $derived(split);
+  const gridTemplateColumns = $derived(`${leftSplit}% ${rightSplit}%`);
 </script>
 
 <main
   class={cn(
-    "mx-auto mt-16 flex max-w-5xl flex-col md:grid md:grid-cols-2 md:gap-4",
+    "mx-auto mt-16 flex max-w-5xl flex-col md:grid md:gap-4",
     className,
   )}
+  style="grid-template-columns: {gridTemplateColumns}"
 >
   {#if left}
     <div class="top-16 flex h-fit flex-col gap-4 p-4 md:sticky">

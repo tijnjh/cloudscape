@@ -36,7 +36,7 @@
           <Button variant="secondary" href="https://tijn.dev/cloudscape">
             Source
           </Button>
-          <Button size="icon" icon={Settings2Icon} href="/preferences" />
+          <Button size="icon" icon={Settings2Icon} href="/_/preferences" />
         </div>
       </div>
 

@@ -45,7 +45,7 @@
     children,
     variant,
     size,
-    icon: Icon,
+    icon,
     iconPosition = "leading",
     class: className,
     ...props
@@ -56,14 +56,23 @@
   );
 </script>
 
+{#snippet iconSnippet()}
+  {@const Icon = icon}
+  <Icon
+    size={16}
+    strokeWidth={3}
+    class={["shrink-0", size !== "icon" && "opacity-67"]}
+  />
+{/snippet}
+
 <Button.Root class={classes.base({ class: cn(className) })} {...props}>
   {#if iconPosition === "leading"}
-    <Icon size={16} strokeWidth={3} class="shrink-0" />
+    {@render iconSnippet()}
   {/if}
 
   {@render children?.()}
 
   {#if iconPosition === "trailing"}
-    <Icon size={16} strokeWidth={3} class="shrink-0" />
+    {@render iconSnippet()}
   {/if}
 </Button.Root>

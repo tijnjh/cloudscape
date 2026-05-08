@@ -32,7 +32,7 @@
           isPaused.current = !isPaused.current;
         }}
       >
-        <StatusIcon fill="currentColor" class="opacity-50" size={16} />
+        <StatusIcon fill="currentColor" size={16} />
       </Button>
     </div>
   </div>
