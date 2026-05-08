@@ -1,25 +1,6 @@
-import type twColors from "tailwindcss/colors";
+import type validColors from "tailwindcss/colors";
 
-type Colors = Exclude<
-  keyof typeof twColors,
-  "inherit" | "current" | "transparent" | "black" | "white"
->;
-
-export type BaseColor = Extract<
-  Colors,
-  | "slate"
-  | "gray"
-  | "zinc"
-  | "neutral"
-  | "neutral"
-  | "stone"
-  | "taupe"
-  | "mauve"
-  | "mist"
-  | "olive"
->;
-
-export type AccentColor = Exclude<Colors, BaseColor>;
+type ValidColor = keyof typeof validColors;
 
 export const baseColors = [
   "slate",
@@ -31,7 +12,9 @@ export const baseColors = [
   "mauve",
   "mist",
   "olive",
-] as const satisfies BaseColor[];
+] as const satisfies ValidColor[];
+
+export type BaseColor = (typeof baseColors)[number];
 
 export const accentColors = [
   "red",
@@ -51,8 +34,6 @@ export const accentColors = [
   "fuchsia",
   "pink",
   "rose",
-] as const satisfies AccentColor[];
+] as const satisfies ValidColor[];
 
-export const shades = [
-  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
-] as const;
+export type AccentColor = (typeof baseColors)[number];
