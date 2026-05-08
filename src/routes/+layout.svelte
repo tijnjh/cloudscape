@@ -16,7 +16,7 @@
   const queryClient = new QueryClient();
 
   function setProperty(name: string, value: string) {
-    document.body.style.setProperty(name, value);
+    document.documentElement.style.setProperty(name, value);
   }
 
   $effect(() => {
