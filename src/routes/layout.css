@@ -9,6 +9,54 @@
   --font-sans: "Atkinson Hyperlegible", sans-serif;
 }
 
+:root {
+  --t-base-50-950: var(--t-base-50);
+  --t-base-100-900: var(--t-base-100);
+  --t-base-200-800: var(--t-base-200);
+  --t-base-300-700: var(--t-base-300);
+  --t-base-400-600: var(--t-base-400);
+  --t-base-600-400: var(--t-base-600);
+  --t-base-700-300: var(--t-base-700);
+  --t-base-800-200: var(--t-base-800);
+  --t-base-900-100: var(--t-base-900);
+  --t-base-950-50: var(--t-base-950);
+
+  --t-accent-50-950: var(--t-accent-50);
+  --t-accent-100-900: var(--t-accent-100);
+  --t-accent-200-800: var(--t-accent-200);
+  --t-accent-300-700: var(--t-accent-300);
+  --t-accent-400-600: var(--t-accent-400);
+  --t-accent-600-400: var(--t-accent-600);
+  --t-accent-700-300: var(--t-accent-700);
+  --t-accent-800-200: var(--t-accent-800);
+  --t-accent-900-100: var(--t-accent-900);
+  --t-accent-950-50: var(--t-accent-950);
+}
+
+.dark {
+  --t-base-50-950: var(--t-base-950);
+  --t-base-100-900: var(--t-base-900);
+  --t-base-200-800: var(--t-base-800);
+  --t-base-300-700: var(--t-base-700);
+  --t-base-400-600: var(--t-base-600);
+  --t-base-600-400: var(--t-base-400);
+  --t-base-700-300: var(--t-base-300);
+  --t-base-800-200: var(--t-base-200);
+  --t-base-900-100: var(--t-base-100);
+  --t-base-950-50: var(--t-base-50);
+
+  --t-accent-50-950: var(--t-accent-950);
+  --t-accent-100-900: var(--t-accent-900);
+  --t-accent-200-800: var(--t-accent-800);
+  --t-accent-300-700: var(--t-accent-700);
+  --t-accent-400-600: var(--t-accent-600);
+  --t-accent-600-400: var(--t-accent-400);
+  --t-accent-700-300: var(--t-accent-300);
+  --t-accent-800-200: var(--t-accent-200);
+  --t-accent-900-100: var(--t-accent-100);
+  --t-accent-950-50: var(--t-accent-50);
+}
+
 @theme inline {
   --color-base-50: var(--t-base-50);
   --color-base-100: var(--t-base-100);

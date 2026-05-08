@@ -27,23 +27,13 @@
         }
 
         for (const shade of shades) {
-          const reversedShade = 1000 - shade;
-
           setProperty(
             `--t-base-${shade}`,
             `var(--color-${baseColor}-${shade})`,
           );
           setProperty(
-            `--t-base-${shade}-${reversedShade}`,
-            `var(--color-${baseColor}-${shade}-${reversedShade})`,
-          );
-          setProperty(
             `--t-accent-${shade}`,
             `var(--color-${accentColor}-${shade})`,
-          );
-          setProperty(
-            `--t-accent-${shade}-${reversedShade}`,
-            `var(--color-${accentColor}-${shade}-${reversedShade})`,
           );
         }
       }

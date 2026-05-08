@@ -21,23 +21,13 @@
 
   $effect(() => {
     for (const shade of shades) {
-      const reversedShade = 1000 - shade;
-
       setProperty(
         `--t-base-${shade}`,
         `var(--color-${selectedBaseColor.current}-${shade})`,
       );
       setProperty(
-        `--t-base-${shade}-${reversedShade}`,
-        `var(--color-${selectedBaseColor.current}-${shade}-${reversedShade})`,
-      );
-      setProperty(
         `--t-accent-${shade}`,
         `var(--color-${selectedAccentColor.current}-${shade})`,
-      );
-      setProperty(
-        `--t-accent-${shade}-${reversedShade}`,
-        `var(--color-${selectedAccentColor.current}-${shade}-${reversedShade})`,
       );
     }
   });
@@ -47,7 +37,7 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<ModeWatcher />
+<ModeWatcher defaultMode="system" />
 
 <QueryClientProvider client={queryClient}>
   {#if page.route.id !== "/"}
