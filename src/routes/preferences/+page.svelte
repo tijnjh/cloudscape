@@ -7,12 +7,7 @@
     selectedBaseColor,
     selectedInstance,
   } from "$lib/global.svelte";
-  import {
-    baseColors,
-    accentColors,
-    type BaseColor,
-    type AccentColor,
-  } from "$lib/theme";
+  import { baseColors, accentColors, type ValidColor } from "$lib/theme";
   import { setMode, userPrefersMode } from "mode-watcher";
   import type { PersistedState } from "runed";
 
@@ -24,9 +19,9 @@
   const themeModes = ["light", "dark", "system"] as const;
 </script>
 
-{#snippet colorSelector<C extends BaseColor | AccentColor>(
-  colors: C[],
-  selectedColorState: PersistedState<C>,
+{#snippet colorSelector(
+  colors: ValidColor[],
+  selectedColorState: PersistedState<ValidColor>,
 )}
   <div class="flex flex-wrap gap-2">
     {#each colors as color (color)}

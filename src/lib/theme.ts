@@ -1,6 +1,9 @@
 import type validColors from "tailwindcss/colors";
 
-type ValidColor = keyof typeof validColors;
+export type ValidColor = Exclude<
+  keyof typeof validColors,
+  "inherit" | "current" | "transparent" | "black" | "white"
+>;
 
 export const baseColors = [
   "slate",
