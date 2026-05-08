@@ -33,16 +33,10 @@
       <div class="flex w-full items-center justify-between">
         <h1 class="text-3xl font-medium">Cloudscape</h1>
         <div class="flex items-center gap-2">
-          <Button
-            size="icon"
-            icon={Settings2Icon}
-            variant="secondary"
-            href="/preferences"
-          ></Button>
-
           <Button variant="secondary" href="https://tijn.dev/cloudscape">
             Source
           </Button>
+          <Button size="icon" icon={Settings2Icon} href="/preferences" />
         </div>
       </div>
 
@@ -82,7 +76,7 @@
           {/each}
           <br />
         {:else}
-          <span class="text-base-900-100/25 mt-4 text-lg">Nothing here...</span>
+          <span class="mt-4 text-lg text-base-900-100/25">Nothing here...</span>
         {/each}
       {/snippet}
     </QueryView>
