@@ -60,7 +60,7 @@
         {#each badges as badge (badge)}
           {#if badge}
             <div
-              class="rounded-full bg-accent-300-700 px-2 py-0.5 text-sm whitespace-nowrap text-accent-600-400"
+              class="rounded-full bg-accent-300-700/75 px-2 py-0.5 text-sm whitespace-nowrap text-accent-600-400"
             >
               {badge}
             </div>
