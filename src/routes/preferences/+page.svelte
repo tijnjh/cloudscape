@@ -31,18 +31,19 @@
   <div class="flex flex-wrap gap-2">
     {#each colors as color (color)}
       {@const isSelected = selectedColorState.current === color}
+
       <Button
-        class={[
-          "bg-(--color) ring-black/50 ring-offset-2",
-          isSelected && "ring-2",
-        ]}
-        style="--color: var(--color-{color}-500);"
+        style="--color: var(--color-{color}-500, var(--color-{color}));"
         onclick={() => {
           selectedColorState.current = color;
         }}
-        size="icon"
-        title={color}
-      ></Button>
+        variant={isSelected ? "primary" : "secondary"}
+      >
+        <div
+          class="size-3 rounded-full bg-(--color) outline-2 outline-base-300-700"
+        ></div>
+        {color}
+      </Button>
     {/each}
   </div>
 {/snippet}
