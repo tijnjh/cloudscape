@@ -13,15 +13,9 @@
     accentColors,
     type BaseColor,
     type AccentColor,
+    themeModes,
   } from "$lib/theme";
-  import { Monitor, Moon, Sun } from "@lucide/svelte";
   import type { PersistedState } from "runed";
-
-  const themeModeOptions = [
-    { mode: "light", label: "Light", icon: Sun },
-    { mode: "dark", label: "Dark", icon: Moon },
-    { mode: "system", label: "System", icon: Monitor },
-  ] as const;
 
   const selectedInstanceHostname = $derived.by(() => {
     if (!selectedInstance.current) return;
@@ -66,16 +60,16 @@
     <span>Mode</span>
 
     <div class="flex flex-wrap gap-2">
-      {#each themeModeOptions as { mode, label, icon } (mode)}
-        {@const isSelected = selectedThemeMode.current === mode}
+      {#each themeModes as themeMode (themeMode)}
+        {@const isSelected = selectedThemeMode.current === themeMode}
         <Button
           variant={isSelected ? "primary" : "secondary"}
-          {icon}
           onclick={() => {
-            selectedThemeMode.current = mode;
+            selectedThemeMode.current = themeMode;
           }}
+          class="capitalize"
         >
-          {label}
+          {themeMode}
         </Button>
       {/each}
     </div>
