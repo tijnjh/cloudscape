@@ -67,7 +67,7 @@
           {/if}
         {/each}
       </div>
-      <p class="truncate opacity-50">
+      <p class="truncate text-accent-600-400 opacity-75">
         {subtitle}
       </p>
     </div>
