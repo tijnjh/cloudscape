@@ -4,15 +4,12 @@
   import NowPlayingBar from "$lib/components/NowPlayingBar.svelte";
   import NowPlayingView from "$lib/components/NowPlayingView.svelte";
   import Button from "$lib/components/ui/Button.svelte";
-  import {
-    selectedAccentColor,
-    selectedBaseColor,
-    selectedThemeMode,
-  } from "$lib/global.svelte";
+  import { selectedAccentColor, selectedBaseColor } from "$lib/global.svelte";
   import { shades } from "$lib/theme";
   import "./layout.css";
   import { ChevronLeft } from "@lucide/svelte";
   import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
+  import { ModeWatcher } from "mode-watcher";
 
   const { children } = $props();
 
@@ -34,20 +31,13 @@
       );
     }
   });
-
-  $effect(() => {
-    setProperty(
-      "color-scheme",
-      selectedThemeMode.current === "system"
-        ? "light dark"
-        : selectedThemeMode.current,
-    );
-  });
 </script>
 
 <svelte:head>
   <link rel="icon" href={favicon} />
 </svelte:head>
+
+<ModeWatcher />
 
 <QueryClientProvider client={queryClient}>
   {#if page.route.id !== "/"}

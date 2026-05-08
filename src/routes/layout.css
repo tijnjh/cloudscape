@@ -59,12 +59,8 @@
   @apply touch-manipulation ring-base-200-800;
 }
 
-body {
-  color-scheme: light dark;
-  @apply bg-base-200-800;
-}
-
 body,
 html {
   scrollbar-gutter: stable;
+  @apply bg-base-200-800;
 }

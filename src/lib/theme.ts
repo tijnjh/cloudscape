@@ -56,11 +56,3 @@ export const accentColors = [
 export const shades = [
   50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
 ] as const;
-
-export type ThemeMode = "light" | "dark" | "system";
-
-export const themeModes = [
-  "light",
-  "dark",
-  "system",
-] as const satisfies ThemeMode[];

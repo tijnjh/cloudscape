@@ -6,21 +6,22 @@
     selectedAccentColor,
     selectedBaseColor,
     selectedInstance,
-    selectedThemeMode,
   } from "$lib/global.svelte";
   import {
     baseColors,
     accentColors,
     type BaseColor,
     type AccentColor,
-    themeModes,
   } from "$lib/theme";
+  import { setMode, userPrefersMode } from "mode-watcher";
   import type { PersistedState } from "runed";
 
   const selectedInstanceHostname = $derived.by(() => {
     if (!selectedInstance.current) return;
     return new URL(selectedInstance.current).hostname;
   });
+
+  const themeModes = ["light", "dark", "system"] as const;
 </script>
 
 {#snippet colorSelector<C extends BaseColor | AccentColor>(
@@ -61,12 +62,10 @@
 
     <div class="flex flex-wrap gap-2">
       {#each themeModes as themeMode (themeMode)}
-        {@const isSelected = selectedThemeMode.current === themeMode}
+        {@const isSelected = userPrefersMode.current === themeMode}
         <Button
           variant={isSelected ? "primary" : "secondary"}
-          onclick={() => {
-            selectedThemeMode.current = themeMode;
-          }}
+          onclick={() => setMode(themeMode)}
           class="capitalize"
         >
           {themeMode}
