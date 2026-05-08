@@ -37,3 +37,7 @@ export const accentColors = [
 ] as const satisfies ValidColor[];
 
 export type AccentColor = (typeof baseColors)[number];
+
+export const shades = [
+  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+] as const;
