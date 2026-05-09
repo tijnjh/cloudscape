@@ -22,6 +22,7 @@
           selectedColorState.current = color;
         }}
         variant={isSelected ? "primary" : "secondary"}
+        disabled={isSelected}
       >
         <div
           class="size-3 rounded-full bg-(--color) outline-2 outline-base-300-700"
@@ -41,6 +42,7 @@
     {@const isSelected = userPrefersMode.current === themeMode}
     <Button
       variant={isSelected ? "primary" : "secondary"}
+      disabled={isSelected}
       onclick={() => setMode(themeMode)}
       class="capitalize"
     >
@@ -49,13 +51,13 @@
   {/each}
 </div>
 
-<span>Base Colors</span>
+<span>Base color</span>
 
 <div class="flex flex-wrap gap-2">
   {@render colorSelector(baseColors, selectedBaseColor)}
 </div>
 
-<span>Accent Colors</span>
+<span>Accent color</span>
 
 <div class="flex flex-wrap gap-2">
   {@render colorSelector(accentColors, selectedAccentColor)}
