@@ -1,7 +1,5 @@
-import type validColors from "tailwindcss/colors";
-
 export type ValidColor = Exclude<
-  keyof typeof validColors,
+  keyof typeof import("tailwindcss/colors").default,
   "inherit" | "current" | "transparent" | "black" | "white"
 >;
 
