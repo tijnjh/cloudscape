@@ -8,7 +8,8 @@
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
   import UserListing from "$lib/components/listings/UserListing.svelte";
   import Button from "$lib/components/ui/Button.svelte";
-  import { favoriteTrackIds, selectedInstance } from "$lib/global.svelte";
+  import { favoriteTrackIds } from "$lib/global.svelte";
+  import { Settings2Icon } from "@lucide/svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
   const selectionsQuery = createQuery(() => ({
@@ -32,15 +33,10 @@
       <div class="flex w-full items-center justify-between">
         <h1 class="text-3xl font-medium">Cloudscape</h1>
         <div class="flex items-center gap-2">
-          <Button variant="secondary" href="/select-instance">
-            {selectedInstance.current
-              ? new URL(selectedInstance.current).host
-              : "Select Server"}
-          </Button>
-
           <Button variant="secondary" href="https://tijn.dev/cloudscape">
             Source
           </Button>
+          <Button size="icon" icon={Settings2Icon} href="/_/preferences" />
         </div>
       </div>
 
@@ -80,7 +76,7 @@
           {/each}
           <br />
         {:else}
-          <span class="mt-4 text-lg text-mist-900-100/25">Nothing here...</span>
+          <span class="mt-4 text-lg text-base-900-100/25">Nothing here...</span>
         {/each}
       {/snippet}
     </QueryView>

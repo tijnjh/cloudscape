@@ -22,7 +22,7 @@
 
 <div
   class={cn(
-    "bg-mist-300-700 relative flex h-10 items-center gap-2 overflow-clip rounded-full pl-4 ring-blue-500 focus-within:ring-2",
+    "bg-base-300-700 relative flex h-10 items-center gap-2 overflow-clip rounded-full pl-4 ring-blue-500 focus-within:ring-2",
     className,
   )}
 >

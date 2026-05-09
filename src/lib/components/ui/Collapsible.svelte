@@ -14,7 +14,7 @@
 
 <details class="relative overflow-hidden">
   <summary
-    class="mb-2 w-fit cursor-pointer rounded-md bg-mist-300-700 px-4 py-1"
+    class="mb-2 w-fit cursor-pointer rounded-md bg-base-300-700 px-4 py-1"
   >
     {summary}
   </summary>

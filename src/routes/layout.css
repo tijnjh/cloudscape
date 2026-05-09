@@ -1,19 +1,116 @@
 @import "@fontsource/atkinson-hyperlegible";
-@import "tailwindcss";
-@import "tailwind-color-pairings";
+@import "tailwindcss" theme(static);
+@import "tailwind-color-pairings" theme(static);
 @import "tw-animate-css";
+
+@variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: "Atkinson Hyperlegible", sans-serif;
 }
 
+:root {
+  --t-base-50-950: var(--t-base-50);
+  --t-base-100-900: var(--t-base-100);
+  --t-base-200-800: var(--t-base-200);
+  --t-base-300-700: var(--t-base-300);
+  --t-base-400-600: var(--t-base-400);
+  --t-base-600-400: var(--t-base-600);
+  --t-base-700-300: var(--t-base-700);
+  --t-base-800-200: var(--t-base-800);
+  --t-base-900-100: var(--t-base-900);
+  --t-base-950-50: var(--t-base-950);
+
+  --t-accent-50-950: var(--t-accent-50);
+  --t-accent-100-900: var(--t-accent-100);
+  --t-accent-200-800: var(--t-accent-200);
+  --t-accent-300-700: var(--t-accent-300);
+  --t-accent-400-600: var(--t-accent-400);
+  --t-accent-600-400: var(--t-accent-600);
+  --t-accent-700-300: var(--t-accent-700);
+  --t-accent-800-200: var(--t-accent-800);
+  --t-accent-900-100: var(--t-accent-900);
+  --t-accent-950-50: var(--t-accent-950);
+}
+
+.dark {
+  --t-base-50-950: var(--t-base-950);
+  --t-base-100-900: var(--t-base-900);
+  --t-base-200-800: var(--t-base-800);
+  --t-base-300-700: var(--t-base-700);
+  --t-base-400-600: var(--t-base-600);
+  --t-base-600-400: var(--t-base-400);
+  --t-base-700-300: var(--t-base-300);
+  --t-base-800-200: var(--t-base-200);
+  --t-base-900-100: var(--t-base-100);
+  --t-base-950-50: var(--t-base-50);
+
+  --t-accent-50-950: var(--t-accent-950);
+  --t-accent-100-900: var(--t-accent-900);
+  --t-accent-200-800: var(--t-accent-800);
+  --t-accent-300-700: var(--t-accent-700);
+  --t-accent-400-600: var(--t-accent-600);
+  --t-accent-600-400: var(--t-accent-400);
+  --t-accent-700-300: var(--t-accent-300);
+  --t-accent-800-200: var(--t-accent-200);
+  --t-accent-900-100: var(--t-accent-100);
+  --t-accent-950-50: var(--t-accent-50);
+}
+
+@theme inline {
+  --color-base-50: var(--t-base-50);
+  --color-base-100: var(--t-base-100);
+  --color-base-200: var(--t-base-200);
+  --color-base-300: var(--t-base-300);
+  --color-base-400: var(--t-base-400);
+  --color-base-500: var(--t-base-500);
+  --color-base-600: var(--t-base-600);
+  --color-base-700: var(--t-base-700);
+  --color-base-800: var(--t-base-800);
+  --color-base-900: var(--t-base-900);
+  --color-base-950: var(--t-base-950);
+
+  --color-base-50-950: var(--t-base-50-950);
+  --color-base-100-900: var(--t-base-100-900);
+  --color-base-200-800: var(--t-base-200-800);
+  --color-base-300-700: var(--t-base-300-700);
+  --color-base-400-600: var(--t-base-400-600);
+  --color-base-600-400: var(--t-base-600-400);
+  --color-base-700-300: var(--t-base-700-300);
+  --color-base-800-200: var(--t-base-800-200);
+  --color-base-900-100: var(--t-base-900-100);
+  --color-base-950-50: var(--t-base-950-50);
+
+  --color-accent-50: var(--t-accent-50);
+  --color-accent-100: var(--t-accent-100);
+  --color-accent-200: var(--t-accent-200);
+  --color-accent-300: var(--t-accent-300);
+  --color-accent-400: var(--t-accent-400);
+  --color-accent-500: var(--t-accent-500);
+  --color-accent-600: var(--t-accent-600);
+  --color-accent-700: var(--t-accent-700);
+  --color-accent-800: var(--t-accent-800);
+  --color-accent-900: var(--t-accent-900);
+  --color-accent-950: var(--t-accent-950);
+
+  --color-accent-50-950: var(--t-accent-50-950);
+  --color-accent-100-900: var(--t-accent-100-900);
+  --color-accent-200-800: var(--t-accent-200-800);
+  --color-accent-300-700: var(--t-accent-300-700);
+  --color-accent-400-600: var(--t-accent-400-600);
+  --color-accent-600-400: var(--t-accent-600-400);
+  --color-accent-700-300: var(--t-accent-700-300);
+  --color-accent-800-200: var(--t-accent-800-200);
+  --color-accent-900-100: var(--t-accent-900-100);
+  --color-accent-950-50: var(--t-accent-950-50);
+}
+
 * {
-  @apply touch-manipulation;
+  @apply touch-manipulation ring-base-200-800;
 }
 
 body,
 html {
-  color-scheme: light dark;
   scrollbar-gutter: stable;
-  @apply bg-mist-200-800;
+  @apply bg-base-200-800;
 }

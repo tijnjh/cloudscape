@@ -23,6 +23,7 @@
     "cnfn": "^5.5.1",
     "dedent": "^1.7.2",
     "hls.js": "^1.6.16",
+    "mode-watcher": "^1.1.0",
     "runed": "^0.37.1",
     "serialize-error": "^13.0.1",
     "tailwind-color-pairings": "^0.1.2",

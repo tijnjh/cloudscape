@@ -33,7 +33,13 @@
 </script>
 
 {#snippet trigger({ props }: { props: Record<string, unknown> })}
-  <Button variant="secondary" aria-label="More options" {...props}>
+  <Button
+    variant="secondary"
+    size="icon"
+    class="shrink-0"
+    aria-label="More options"
+    {...props}
+  >
     <EllipsisIcon size={16} />
   </Button>
 {/snippet}
@@ -83,7 +89,7 @@
     <Dialog.Portal>
       <Dialog.Overlay
         class={[
-          "fixed inset-0 z-40 bg-mist-950/50 backdrop-blur-lg duration-300",
+          "fixed inset-0 z-40 bg-base-950/50 backdrop-blur-lg duration-300",
           "data-[state=open]:animate-in data-[state=open]:fade-in",
           "data-[state=closed]:animate-out data-[state=closed]:fade-out",
         ]}
@@ -100,11 +106,11 @@
         <div
           class="flex h-full flex-col justify-center gap-2 overflow-scroll p-4"
         >
-          <h1 class="w-fit text-3xl font-medium text-mist-100">
+          <h1 class="w-fit text-3xl font-medium text-base-100">
             {title}
           </h1>
 
-          <p class="mb-4 w-fit text-lg text-mist-100">
+          <p class="mb-4 w-fit text-lg text-base-100">
             {subtitle}
           </p>
 
