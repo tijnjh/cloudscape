@@ -23,3 +23,8 @@ export const selectedAccentColor = new PersistedState<AccentColor>(
   "selected-accent-color",
   "emerald",
 );
+
+export const isBlackAccent = new PersistedState<boolean>(
+  "is-black-accent",
+  false,
+);

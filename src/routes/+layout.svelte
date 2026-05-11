@@ -1,10 +1,15 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { page } from "$app/state";
   import favicon from "$lib/assets/favicon.svg";
   import NowPlayingBar from "$lib/components/NowPlayingBar.svelte";
   import NowPlayingView from "$lib/components/NowPlayingView.svelte";
   import Button from "$lib/components/ui/Button.svelte";
-  import { selectedAccentColor, selectedBaseColor } from "$lib/global.svelte";
+  import {
+    isBlackAccent,
+    selectedAccentColor,
+    selectedBaseColor,
+  } from "$lib/global.svelte";
   import { shades } from "$lib/theme";
   import "./layout.css";
   import { ChevronLeft } from "@lucide/svelte";
@@ -15,8 +20,10 @@
 
   const queryClient = new QueryClient();
 
+  const doc = browser ? document.documentElement : undefined;
+
   function setProperty(name: string, value: string) {
-    document.documentElement.style.setProperty(name, value);
+    doc?.style.setProperty(name, value);
   }
 
   $effect(() => {
@@ -29,6 +36,14 @@
         `--t-accent-${shade}`,
         `var(--color-${selectedAccentColor.current}-${shade})`,
       );
+    }
+  });
+
+  $effect(() => {
+    if (isBlackAccent.current) {
+      doc?.classList.add("black-accent");
+    } else {
+      doc?.classList.remove("black-accent");
     }
   });
 </script>
