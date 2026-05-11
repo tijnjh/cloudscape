@@ -20,7 +20,7 @@
       }),
   }));
 
-  const playlistTracksQuery = createInfiniteQuery(() => ({
+  const playlistTracksQuery = createQuery(() => ({
     queryKey: ["playlist-tracks", playlistQuery.data?.id],
     queryFn: ({ pageParam = 0 }) => {
       const allIds = playlistQuery.data?.tracks?.map((track) => track.id) ?? [];

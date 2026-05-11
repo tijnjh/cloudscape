@@ -10,10 +10,11 @@
   import SearchBar from "$lib/components/SearchBar.svelte";
   import Button from "$lib/components/ui/Button.svelte";
   import { paginated_limit } from "$lib/constants";
+  import { Collection } from "$lib/schemas/collection";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
   import type { User } from "$lib/schemas/user";
-  import { createInfiniteQuery } from "@tanstack/svelte-query";
+  import { createQuery } from "@tanstack/svelte-query";
   import { Debounced } from "runed";
   import { useSearchParams } from "runed/kit";
   import { match } from "ts-pattern";
@@ -26,6 +27,7 @@
         v.picklist(["all", "tracks", "playlists", "users"]),
         "all",
       ),
+      page: v.optional(v.number(), 1),
     }),
     {
       noScroll: true,
@@ -37,10 +39,10 @@
 
   type Listing = Track | Playlist | User;
 
-  const searchQuery = createInfiniteQuery(() => ({
-    queryKey: ["search", debouncedQ.current, params.kind],
-    queryFn: async ({ pageParam }) => {
-      if (!debouncedQ.current) return [] as Listing[];
+  const searchQuery = createQuery<Collection<Listing>>(() => ({
+    queryKey: ["search", debouncedQ.current, params.kind, params.page],
+    queryFn: async () => {
+      if (!debouncedQ.current) return { collection: [] };
 
       const searchFn = match(params.kind)
         .with("tracks", () => searchTracks)
@@ -51,13 +53,11 @@
 
       return searchFn({
         query: debouncedQ.current,
-        offset: pageParam * paginated_limit,
+        offset: params.page * paginated_limit,
         limit: paginated_limit,
-      }).then((r) => r.collection);
+      });
     },
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length < paginated_limit ? allPages.length : undefined,
   }));
 </script>
 
