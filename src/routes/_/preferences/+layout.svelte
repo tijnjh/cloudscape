@@ -8,8 +8,8 @@
   const { children }: { children: Snippet } = $props();
 
   const tabs = [
-    { name: "instance", icon: ServerCogIcon },
     { name: "theme", icon: SwatchBookIcon },
+    { name: "instance", icon: ServerCogIcon },
   ];
 </script>
 
