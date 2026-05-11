@@ -21,18 +21,16 @@
     onclick: VoidFunction;
   },
 )}
-  <div class="flex flex-wrap gap-2">
-    <Button
-      style="--color: var(--color-{color}-500, var(--color-{color}));"
-      {onclick}
-      variant={isSelected ? "primary" : "secondary"}
-    >
-      <div
-        class="size-3 rounded-full bg-(--color) outline-2 outline-base-300-700"
-      ></div>
-      {color}
-    </Button>
-  </div>
+  <Button
+    style="--color: var(--color-{color}-500, var(--color-{color}));"
+    {onclick}
+    variant={isSelected ? "primary" : "secondary"}
+  >
+    <div
+      class="size-3 rounded-full bg-(--color) outline-2 outline-base-300-700"
+    ></div>
+    {color}
+  </Button>
 {/snippet}
 
 <h3 class="text-xl font-medium">Theme</h3>
