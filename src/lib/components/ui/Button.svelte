@@ -10,7 +10,7 @@
     },
     variants: {
       variant: {
-        primary: "bg-accent-500 text-base-200-800",
+        primary: "bg-accent text-base-200-800",
         secondary: "bg-base-300-700",
       },
       size: {

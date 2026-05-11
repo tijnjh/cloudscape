@@ -13,6 +13,7 @@
 
 <script lang="ts">
   import UserListing from "./listings/UserListing.svelte";
+  import Badge from "./ui/Badge.svelte";
   import Collapsible from "./ui/Collapsible.svelte";
   import { cn } from "cnfn";
 
@@ -48,11 +49,7 @@
     <div class="flex gap-2">
       {#each badges as badge (badge)}
         {#if badge}
-          <div
-            class="rounded-full bg-accent-300-700/75 px-2 py-0.5 text-sm whitespace-nowrap text-base-600-400"
-          >
-            {badge}
-          </div>
+          <Badge label={badge} />
         {/if}
       {/each}
     </div>

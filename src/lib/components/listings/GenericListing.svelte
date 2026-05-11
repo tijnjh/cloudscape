@@ -30,6 +30,7 @@
 <script lang="ts">
   import ListingThumbnail from "../ListingThumbnail.svelte";
   import Menu from "../Menu.svelte";
+  import Badge from "../ui/Badge.svelte";
   import { Button as BitsUiButton } from "bits-ui";
 
   const {
@@ -59,15 +60,11 @@
 
         {#each badges as badge (badge)}
           {#if badge}
-            <div
-              class="rounded-full bg-accent-300-700/75 px-2 py-0.5 text-sm whitespace-nowrap text-accent-600-400"
-            >
-              {badge}
-            </div>
+            <Badge label={badge} />
           {/if}
         {/each}
       </div>
-      <p class="truncate text-accent-600-400 opacity-75">
+      <p class="truncate text-accent/75">
         {subtitle}
       </p>
     </div>

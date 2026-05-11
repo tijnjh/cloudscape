@@ -1,6 +1,6 @@
 export type ValidColor = Exclude<
   keyof typeof import("tailwindcss/colors").default,
-  "inherit" | "current" | "transparent" | "black" | "white"
+  "inherit" | "current" | "transparent" | "white"
 >;
 
 export const baseColors = [
