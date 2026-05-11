@@ -44,6 +44,7 @@
     {@const isSelected = userPrefersMode.current === themeMode}
     <Button
       variant={isSelected ? "primary" : "secondary"}
+      disabled={isSelected}
       onclick={() => setMode(themeMode)}
       class="capitalize"
     >
