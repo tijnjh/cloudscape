@@ -7,11 +7,12 @@
   } from "$lib/global.svelte";
   import { baseColors, accentColors, type ValidColor } from "$lib/theme";
   import { setMode, userPrefersMode } from "mode-watcher";
+  import { match } from "ts-pattern";
 
   const themeModes = ["light", "dark", "system"] as const;
 </script>
 
-{#snippet colorSelector(
+{#snippet swatch(
   color: ValidColor,
   {
     isSelected,
@@ -21,16 +22,20 @@
     onclick: VoidFunction;
   },
 )}
-  <Button
-    style="
-      --color-400: var(--color-{color}-400, var(--color-{color}));
-      --color-500: var(--color-{color}-500, var(--color-{color}));
-    "
-    {onclick}
-    variant={isSelected ? "primary" : "secondary"}
-  >
+  {@const style = match(color)
+    .with(
+      "black",
+      () => "--swatch-color-light: #000; --swatch-color-dark: #fff;",
+    )
+    .otherwise(
+      () => `
+          --swatch-color-light: var(--color-${color}-500, var(--color-${color}));
+          --swatch-color-dark: var(--color-${color}-400, var(--color-${color}));
+        `,
+    )}
+  <Button {style} {onclick} variant={isSelected ? "primary" : "secondary"}>
     <div
-      class="size-3 rounded-full bg-(--color-500) outline-2 outline-base-300-700 dark:bg-(--color-400)"
+      class="size-3 rounded-full bg-(--swatch-color-light) outline-2 outline-base-300-700 dark:bg-(--swatch-color-dark)"
     ></div>
     {color}
   </Button>
@@ -56,7 +61,7 @@
 <span>Accent Colors</span>
 
 <div class="flex flex-wrap gap-2">
-  {@render colorSelector("black", {
+  {@render swatch("black", {
     isSelected: isBlackAccent.current === true,
     onclick: () => {
       isBlackAccent.current = !isBlackAccent.current;
@@ -64,7 +69,7 @@
   })}
 
   {#each accentColors as accentColor (accentColor)}
-    {@render colorSelector(accentColor, {
+    {@render swatch(accentColor, {
       isSelected:
         selectedAccentColor.current === accentColor && !isBlackAccent.current,
       onclick: () => {
@@ -79,7 +84,7 @@
 
 <div class="flex flex-wrap gap-2">
   {#each baseColors as baseColor (baseColor)}
-    {@render colorSelector(baseColor, {
+    {@render swatch(baseColor, {
       isSelected: selectedBaseColor.current === baseColor,
       onclick: () => {
         selectedBaseColor.current = baseColor;
