@@ -10,7 +10,6 @@
   import SearchBar from "$lib/components/SearchBar.svelte";
   import Button from "$lib/components/ui/Button.svelte";
   import { paginated_limit } from "$lib/constants";
-  import { Collection } from "$lib/schemas/collection";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
   import type { User } from "$lib/schemas/user";
@@ -20,7 +19,7 @@
   import { match } from "ts-pattern";
   import * as v from "valibot";
 
-  const params = useSearchParams(
+  const searchParams = useSearchParams(
     v.object({
       q: v.optional(v.string(), ""),
       kind: v.optional(
@@ -35,16 +34,21 @@
     },
   );
 
-  const debouncedQ = new Debounced(() => params.q);
+  const debouncedQ = new Debounced(() => searchParams.q);
 
   type Listing = Track | Playlist | User;
 
-  const searchQuery = createQuery<Collection<Listing>>(() => ({
-    queryKey: ["search", debouncedQ.current, params.kind, params.page],
+  const searchQuery = createQuery<Listing[]>(() => ({
+    queryKey: [
+      "search",
+      debouncedQ.current,
+      searchParams.kind,
+      searchParams.page,
+    ],
     queryFn: async () => {
-      if (!debouncedQ.current) return { collection: [] };
+      if (!debouncedQ.current) return [];
 
-      const searchFn = match(params.kind)
+      const searchFn = match(searchParams.kind)
         .with("tracks", () => searchTracks)
         .with("playlists", () => searchPlaylists)
         .with("users", () => searchUsers)
@@ -53,9 +57,9 @@
 
       return searchFn({
         query: debouncedQ.current,
-        offset: params.page * paginated_limit,
+        offset: (searchParams.page - 1) * paginated_limit,
         limit: paginated_limit,
-      });
+      }).then((r) => r.collection);
     },
     initialPageParam: 0,
   }));
@@ -67,16 +71,16 @@
 
 <Main>
   {#snippet left()}
-    <SearchBar value={params.q} />
+    <SearchBar value={searchParams.q} />
 
     <div class="mx-auto flex w-full max-w-xl gap-2">
       {#each ["all", "tracks", "playlists", "users"] as const as kind (kind)}
-        {#key params.kind}
+        {#key searchParams.kind}
           <Button
-            variant={params.kind === kind ? "primary" : "secondary"}
+            variant={searchParams.kind === kind ? "primary" : "secondary"}
             class="capitalize"
             onclick={() => {
-              params.kind = kind;
+              searchParams.kind = kind;
               searchQuery.refetch();
             }}
           >
@@ -88,6 +92,6 @@
   {/snippet}
 
   {#snippet right()}
-    <InfiniteQueryView query={searchQuery} />
+    <InfiniteQueryView bind:page={searchParams.page} query={searchQuery} />
   {/snippet}
 </Main>

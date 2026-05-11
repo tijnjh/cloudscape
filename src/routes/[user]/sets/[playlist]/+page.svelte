@@ -8,8 +8,16 @@
   import QueryView from "$lib/components/QueryView.svelte";
   import { paginated_limit } from "$lib/constants";
   import { dateFormatter } from "$lib/utils";
-  import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
+  import { createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
+  import { useSearchParams } from "runed/kit";
+  import * as v from "valibot";
+
+  const searchParams = useSearchParams(
+    v.object({
+      page: v.optional(v.number(), 1),
+    }),
+  );
 
   const playlistQuery = createQuery(() => ({
     queryKey: ["playlist", page.params.user, page.params.playlist],
@@ -21,24 +29,30 @@
   }));
 
   const playlistTracksQuery = createQuery(() => ({
-    queryKey: ["playlist-tracks", playlistQuery.data?.id],
-    queryFn: ({ pageParam = 0 }) => {
-      const allIds = playlistQuery.data?.tracks?.map((track) => track.id) ?? [];
+    queryKey: [
+      "playlist-tracks",
+      searchParams.page,
+      page.params.user,
+      page.params.playlist,
+    ],
+    queryFn: () => {
+      const start = (searchParams.page - 1) * paginated_limit;
+      const end = start + paginated_limit;
 
-      const startIdx = pageParam * paginated_limit;
-      const endIdx = startIdx + paginated_limit;
-      const idsChunk = allIds.slice(startIdx, endIdx);
+      const ids =
+        playlistQuery.data?.tracks?.slice(start, end).map(({ id }) => id) ?? [];
 
-      return getTracksByIds(idsChunk);
-    },
-    initialPageParam: 0,
-    getNextPageParam: (_, allPages) => {
-      const allIds = playlistQuery.data?.tracks?.map((track) => track.id) ?? [];
-      const totalChunks = Math.ceil(allIds.length / paginated_limit);
-
-      return allPages.length < totalChunks ? allPages.length : undefined;
+      return getTracksByIds(ids);
     },
   }));
+
+  const canAdvance = $derived.by(() => {
+    if (!playlistQuery.data) return false;
+    return (
+      (playlistQuery.data.track_count || 0) >
+      searchParams.page * paginated_limit
+    );
+  });
 </script>
 
 <svelte:head>
@@ -78,7 +92,7 @@
   {#snippet right()}
     <InfiniteQueryView
       query={playlistTracksQuery}
-      orderedIds={playlistQuery.data?.tracks?.map((track) => track.id)}
+      bind:page={searchParams.page}
     />
   {/snippet}
 </Main>

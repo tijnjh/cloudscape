@@ -10,7 +10,7 @@
   import type { Collection } from "$lib/schemas/collection";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
-  import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
+  import { createQuery } from "@tanstack/svelte-query";
   import { useSearchParams } from "runed/kit";
   import * as v from "valibot";
 
@@ -20,9 +20,10 @@
     enabled: !!page.params.user,
   }));
 
-  const params = useSearchParams(
+  const searchParams = useSearchParams(
     v.object({
       kind: v.optional(v.picklist(["tracks", "playlists"]), "tracks"),
+      page: v.optional(v.number(), 1),
     }),
     {
       noScroll: true,
@@ -30,16 +31,21 @@
     },
   );
 
-  const userDetailsQuery = createInfiniteQuery(() => ({
-    queryKey: ["user", userQuery.data?.id, params.kind],
-    queryFn: async ({ pageParam = 0 }) => {
+  const userDetailsQuery = createQuery(() => ({
+    queryKey: [
+      "user",
+      userQuery.data?.id,
+      searchParams.kind,
+      searchParams.page,
+    ],
+    queryFn: async () => {
       const data = {
         id: userQuery.data!.id,
-        offset: pageParam * paginated_limit,
+        offset: (searchParams.page - 1) * paginated_limit,
         limit: paginated_limit,
       };
       let results: Collection<Track | Playlist>;
-      switch (params.kind) {
+      switch (searchParams.kind) {
         case "playlists":
           results = await getUserPlaylists(data);
           break;
@@ -49,9 +55,6 @@
       }
       return results.collection;
     },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length === 0 ? undefined : allPages.length,
   }));
 </script>
 
@@ -81,15 +84,18 @@
     <div class="flex gap-2">
       {#each ["tracks", "playlists"] as const as kind (kind)}
         <Button
-          variant={params.kind === kind ? "primary" : "secondary"}
+          variant={searchParams.kind === kind ? "primary" : "secondary"}
           class="capitalize"
-          onclick={() => (params.kind = kind)}
+          onclick={() => {
+            searchParams.kind = kind;
+            searchParams.page = 1;
+          }}
         >
           {kind}
         </Button>
       {/each}
     </div>
 
-    <InfiniteQueryView query={userDetailsQuery} />
+    <InfiniteQueryView bind:page={searchParams.page} query={userDetailsQuery} />
   {/snippet}
 </Main>

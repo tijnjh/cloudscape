@@ -1,6 +1,4 @@
 <script lang="ts" generics="T extends Track | Playlist | User">
-  import { paginated_limit } from "$lib/constants";
-  import type { Collection } from "$lib/schemas/collection";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
   import type { User } from "$lib/schemas/user";
@@ -10,57 +8,57 @@
   import TrackListing from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
   import Button from "./ui/Button.svelte";
+  import { ArrowLeftIcon, ArrowRightIcon } from "@lucide/svelte";
   import type { CreateQueryResult } from "@tanstack/svelte-query";
-  import { useSearchParams } from "runed/kit";
   import { fly } from "svelte/transition";
-  import * as v from "valibot";
-
-  const params = useSearchParams(
-    v.object({
-      page: v.optional(v.number(), 1),
-    }),
-  );
 
   let {
     query,
+    page = $bindable(),
     orderedIds,
   }: {
-    query: CreateQueryResult<Collection<T>>;
+    query: CreateQueryResult<T[]>;
+    page: number;
     orderedIds?: number[];
   } = $props();
 
-  // const sortedPages = $derived.by(() => {
-  //   if (!orderedIds) {
-  //     return query.data?.collection ?? [];
-  //   }
+  const sortedResults = $derived.by(() => {
+    if (!orderedIds) return query.data ?? [];
+    if (!query.data) return [];
 
-  //   return query.data?.collection.map((page) => {
-  //     if (orderedIds.length === 0) return page;
-
-  //     return page.sort((a, b) => {
-  //       const ai = orderedIds.indexOf(a.id);
-  //       const bi = orderedIds.indexOf(b.id);
-  //       if (ai === -1 && bi === -1) return 0;
-  //       if (ai === -1) return 1;
-  //       if (bi === -1) return -1;
-  //       return ai - bi;
-  //     });
-  //   });
-  // });
+    return query.data.sort((a, b) => {
+      const ai = orderedIds.indexOf(a.id);
+      const bi = orderedIds.indexOf(b.id);
+      if (ai === -1 && bi === -1) return 0;
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+  });
 </script>
 
 {#snippet pagination()}
-  {@const totalPages = Math.ceil(
-    (query.data?.total_results ?? 0) / paginated_limit,
-  )}
   <div class="flex items-center justify-between">
-    <Button onclick={() => (params.page = params.page - 1)}>Previous</Button>
+    <Button
+      icon={ArrowLeftIcon}
+      size="icon"
+      disabled={query.isLoading || page === 1}
+      onclick={() => (page = page - 1)}
+      aria-label="Previous page"
+    />
 
     <div>
-      Page {params.page} of {totalPages}
+      Page {page}
     </div>
 
-    <Button onclick={() => (params.page = params.page + 1)}>Next</Button>
+    <Button
+      iconPosition="trailing"
+      size="icon"
+      icon={ArrowRightIcon}
+      disabled={query.isLoading}
+      onclick={() => (page = page + 1)}
+      aria-label="Next page"
+    />
   </div>
 {/snippet}
 
@@ -72,7 +70,7 @@
   <ErrorDisplay error={query.error} />
 {:else}
   <div in:fly={{ y: 16 }} class="flex flex-col gap-4">
-    {#each query.data?.collection as item (item)}
+    {#each sortedResults as item (item)}
       {#if item.kind === "track"}
         <TrackListing track={item as Track} />
       {:else if item.kind === "playlist"}
@@ -81,26 +79,9 @@
         <UserListing user={item as User} />
       {/if}
     {:else}
-      {#if !query.isLoading}
-        <span class="mt-4 text-lg text-base-100-900/25">Nothing here...</span>
-      {/if}
+      <span class="mt-4 text-lg text-accent/25">Nothing here... </span>
     {/each}
   </div>
+
   {@render pagination()}
 {/if}
-
-<!-- 
-{#if query.hasNextPage}
-  <Button
-    class="mt-8 w-full"
-    onclick={() => {
-      query.fetchNextPage();
-    }}
-    {@attach whenInView(() => {
-      if (query.isFetching) return;
-      query.fetchNextPage();
-    })}
-  >
-    Load more
-  </Button>
-{/if} -->
