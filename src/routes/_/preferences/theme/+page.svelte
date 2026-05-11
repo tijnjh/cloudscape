@@ -22,12 +22,15 @@
   },
 )}
   <Button
-    style="--color: var(--color-{color}-500, var(--color-{color}));"
+    style="
+      --color-400: var(--color-{color}-400, var(--color-{color}));
+      --color-500: var(--color-{color}-500, var(--color-{color}));
+    "
     {onclick}
     variant={isSelected ? "primary" : "secondary"}
   >
     <div
-      class="size-3 rounded-full bg-(--color) outline-2 outline-base-300-700"
+      class="size-3 rounded-full bg-(--color-500) outline-2 outline-base-300-700 dark:bg-(--color-400)"
     ></div>
     {color}
   </Button>
@@ -42,7 +45,6 @@
     {@const isSelected = userPrefersMode.current === themeMode}
     <Button
       variant={isSelected ? "primary" : "secondary"}
-      disabled={isSelected}
       onclick={() => setMode(themeMode)}
       class="capitalize"
     >
