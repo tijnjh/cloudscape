@@ -26,5 +26,5 @@ export const selectedAccentColor = new PersistedState<AccentColor>(
 
 export const isBlackAccent = new PersistedState<boolean>(
   "is-black-accent",
-  false,
+  true,
 );
