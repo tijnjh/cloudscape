@@ -9,16 +9,16 @@
   } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
+  import AsyncView from "./AsyncView.svelte";
   import Menu from "./Menu.svelte";
-  import QueryView from "./QueryView.svelte";
   import TrackListing, {
     getTrackListingMenuActions,
   } from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
   import Button from "./ui/Button.svelte";
   import { XIcon } from "@lucide/svelte";
-  import { createQuery } from "@tanstack/svelte-query";
   import { cn } from "cnfn";
+  import { resource } from "runed";
 
   $effect(() => {
     if (nowPlaying.current) {
@@ -58,16 +58,14 @@
     showNowPlayingView.current = false;
   });
 
-  const relatedTracksQuery = createQuery(() => ({
-    queryKey: ["related", nowPlaying.current?.id],
-    queryFn: async () => {
+  const relatedTracksResource = resource(
+    () => nowPlaying.current?.id,
+    async () => {
       if (!nowPlaying.current) return [];
-
       const relatedTracks = await getRelatedTracks(nowPlaying.current.id);
-
       return relatedTracks.collection;
     },
-  }));
+  );
 </script>
 
 <svelte:window
@@ -126,7 +124,7 @@
   <div class="mt-8 flex w-full flex-col gap-4 md:h-dvh md:max-w-sm">
     <h2 class="text-xl font-medium">Related Tracks</h2>
 
-    <QueryView query={relatedTracksQuery}>
+    <AsyncView resource={relatedTracksResource}>
       {#snippet content(data)}
         {#if data.length === 0}
           <span class="text-xl font-medium text-base-900-100/25">
@@ -138,7 +136,7 @@
           {/each}
         {/if}
       {/snippet}
-    </QueryView>
+    </AsyncView>
   </div>
 
   <Button

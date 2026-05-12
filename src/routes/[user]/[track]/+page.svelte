@@ -1,41 +1,41 @@
 <script lang="ts">
   import { page } from "$app/state";
   import { resolveTrack } from "$lib/api/track";
+  import AsyncView from "$lib/components/AsyncView.svelte";
   import HeroSection from "$lib/components/HeroSection.svelte";
   import Main from "$lib/components/Main.svelte";
-  import QueryView from "$lib/components/QueryView.svelte";
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
   import { dateFormatter } from "$lib/utils";
-  import { createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
+  import { resource } from "runed";
 
-  const trackQuery = createQuery(() => ({
-    queryKey: ["track", page.params.track],
-    queryFn: () =>
+  const trackResource = resource(
+    [() => page.params.user, () => page.params.track],
+    () =>
       resolveTrack({
         track: page.params.track!,
         user: page.params.user!,
       }),
-  }));
+  );
 </script>
 
 <svelte:head>
-  <title>{trackQuery.data?.title}</title>
+  <title>{trackResource.current?.title}</title>
   <meta
     name="description"
-    content={dedent`${trackQuery.data?.user.username}
-            ${trackQuery.data?.label_name}
-            ${trackQuery.data?.genre} - ${trackQuery.data?.release_date}
+    content={dedent`${trackResource.current?.user.username}
+            ${trackResource.current?.label_name}
+            ${trackResource.current?.genre} - ${trackResource.current?.release_date}
         `}
   />
 
-  <link rel="icon" href={trackQuery.data?.artwork_url} />
-  <meta name="og:image" content={trackQuery.data?.artwork_url} />
+  <link rel="icon" href={trackResource.current?.artwork_url} />
+  <meta name="og:image" content={trackResource.current?.artwork_url} />
 </svelte:head>
 
 <Main>
   {#snippet left()}
-    <QueryView query={trackQuery}>
+    <AsyncView resource={trackResource}>
       {#snippet content(track)}
         {@const releaseDate = track.release_date
           ? dateFormatter.format(new Date(track.release_date))
@@ -50,14 +50,14 @@
             ${track.label_name}`.trim()}
         />
       {/snippet}
-    </QueryView>
+    </AsyncView>
   {/snippet}
 
   {#snippet right()}
-    <QueryView query={trackQuery}>
+    <AsyncView resource={trackResource}>
       {#snippet content(track)}
         <TrackListing {track} />
       {/snippet}
-    </QueryView>
+    </AsyncView>
   {/snippet}
 </Main>

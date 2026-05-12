@@ -1,24 +1,24 @@
 <script lang="ts">
   import { page } from "$app/state";
   import { getUserPlaylists, getUserTracks, resolveUser } from "$lib/api/user";
+  import AsyncView from "$lib/components/AsyncView.svelte";
   import HeroSection from "$lib/components/HeroSection.svelte";
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
-  import QueryView from "$lib/components/QueryView.svelte";
   import Button from "$lib/components/ui/Button.svelte";
   import { paginated_limit } from "$lib/constants";
   import type { Collection } from "$lib/schemas/collection";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
-  import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
+  import { createInfiniteQuery } from "@tanstack/svelte-query";
+  import { resource } from "runed";
   import { useSearchParams } from "runed/kit";
   import * as v from "valibot";
 
-  const userQuery = createQuery(() => ({
-    queryKey: ["user", page.params.user],
-    queryFn: () => resolveUser(page.params.user!),
-    enabled: !!page.params.user,
-  }));
+  const userResource = resource(
+    () => page.params.user,
+    () => resolveUser(page.params.user!),
+  );
 
   const params = useSearchParams(
     v.object({
@@ -31,10 +31,10 @@
   );
 
   const userDetailsQuery = createInfiniteQuery(() => ({
-    queryKey: ["user", userQuery.data?.id, params.kind],
+    queryKey: ["user", userResource.current?.id, params.kind],
     queryFn: async ({ pageParam = 0 }) => {
       const data = {
-        id: userQuery.data!.id,
+        id: userResource.current!.id,
         offset: pageParam * paginated_limit,
         limit: paginated_limit,
       };
@@ -56,15 +56,15 @@
 </script>
 
 <svelte:head>
-  <title>{userQuery.data?.username}</title>
-  <meta name="description" content={userQuery.data?.description} />
-  <link rel="icon" href={userQuery.data?.avatar_url} />
-  <meta name="og:image" content={userQuery.data?.avatar_url} />
+  <title>{userResource.current?.username}</title>
+  <meta name="description" content={userResource.current?.description} />
+  <link rel="icon" href={userResource.current?.avatar_url} />
+  <meta name="og:image" content={userResource.current?.avatar_url} />
 </svelte:head>
 
 <Main>
   {#snippet left()}
-    <QueryView query={userQuery}>
+    <AsyncView resource={userResource}>
       {#snippet content(user)}
         <HeroSection
           pictureSrc={user.avatar_url}
@@ -74,7 +74,7 @@
           roundedPicture
         />
       {/snippet}
-    </QueryView>
+    </AsyncView>
   {/snippet}
 
   {#snippet right()}
