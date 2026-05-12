@@ -25,7 +25,7 @@ export async function getUserTracks({
   id: number;
 } & Paginated) {
   return await $api(`/users/${id}/tracks`, {
-    params: { limit, offset },
+    searchParams: { limit, offset },
     schema: Collection(Track),
   });
 }
@@ -38,7 +38,7 @@ export async function getUserPlaylists({
   id: number;
 } & Paginated) {
   return await $api(`/users/${id}/playlists`, {
-    params: { limit, offset },
+    searchParams: { limit, offset },
     schema: Collection(Playlist),
   });
 }

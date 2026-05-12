@@ -27,7 +27,7 @@ export async function getTracksByIds(ids: number[]) {
   }
 
   return await $api("/tracks", {
-    params: {
+    searchParams: {
       ids: ids.join(","),
       limit: paginated_limit,
     },

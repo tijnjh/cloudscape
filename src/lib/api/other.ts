@@ -1,5 +1,5 @@
 import { PUBLIC_SOUNDCLOAK_INSTANCES_URL } from "$env/static/public";
-import { upfetch } from "./utils";
+import ky from "ky";
 
 export interface Instance {
   URL: string;
@@ -32,5 +32,5 @@ export interface Instance {
 }
 
 export async function getSoundcloakInstances() {
-  return await upfetch<Instance[]>(PUBLIC_SOUNDCLOAK_INSTANCES_URL);
+  return await ky.get<Instance[]>(PUBLIC_SOUNDCLOAK_INSTANCES_URL).json();
 }

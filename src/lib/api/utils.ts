@@ -2,36 +2,27 @@ import { dev } from "$app/environment";
 import { goto } from "$app/navigation";
 import { resolve } from "$app/paths";
 import { selectedInstance } from "$lib/global.svelte";
-import { up } from "up-fetch";
+import ky, { type Input, type Options } from "ky";
 import * as v from "valibot";
 
-export const upfetch = up(fetch);
-
 export async function $api<T = unknown>(
-  path: string,
-  {
-    schema,
-    params,
-    headers,
-  }: {
-    schema?: v.GenericSchema<T>;
-    params?: Record<string, unknown>;
-    headers?: Record<string, string>;
-  } = {},
+  input: Input,
+  options?: Omit<Options, "baseUrl"> & { schema: v.GenericSchema<T> },
 ) {
   if (!selectedInstance.current) {
     throw goto(resolve("/select-instance"));
   }
 
-  const response = await upfetch(path, {
-    baseUrl: `${selectedInstance.current}/_/api/v2`,
-    params,
-    headers,
-  });
+  const response = await ky
+    .get(input, {
+      baseUrl: `${selectedInstance.current}/_/api/v2`,
+      ...options,
+    })
+    .json();
 
-  if (schema) {
+  if (options?.schema) {
     if (dev) {
-      const { success, output, issues } = v.safeParse(schema, response);
+      const { success, output, issues } = v.safeParse(options.schema, response);
 
       if (!success) {
         console.error(issues);
@@ -41,7 +32,7 @@ export async function $api<T = unknown>(
       return output;
     }
 
-    return response as v.InferOutput<typeof schema>;
+    return response as v.InferOutput<typeof options.schema>;
   }
 
   return response as T;

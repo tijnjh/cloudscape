@@ -20,7 +20,7 @@ export async function getRelatedTracks(id: number) {
 
 export async function getSearchSuggestions(query: string) {
   return await $api("/search/queries", {
-    params: { q: query },
+    searchParams: { q: query },
     schema: Collection(
       v.object({
         output: v.string(),
