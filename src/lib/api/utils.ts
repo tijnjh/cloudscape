@@ -7,7 +7,7 @@ import * as v from "valibot";
 
 export async function $api<T = unknown>(
   input: Input,
-  options?: Omit<Options, "baseUrl"> & { schema: v.GenericSchema<T> },
+  options?: Options & { schema: v.GenericSchema<T> },
 ) {
   if (!selectedInstance.current) {
     throw goto(resolve("/select-instance"));
@@ -15,7 +15,8 @@ export async function $api<T = unknown>(
 
   const response = await ky
     .get(input, {
-      baseUrl: `${selectedInstance.current}/_/api/v2`,
+      baseUrl: selectedInstance.current,
+      prefix: "/_/api/v2",
       ...options,
     })
     .json();

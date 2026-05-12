@@ -1,8 +1,8 @@
 <script lang="ts">
   import { getSelections } from "$lib/api/discovery";
   import { getTracksByIds } from "$lib/api/track";
+  import AsyncView from "$lib/components/AsyncView.svelte";
   import Main from "$lib/components/Main.svelte";
-  import QueryView from "$lib/components/QueryView.svelte";
   import SearchBar from "$lib/components/SearchBar.svelte";
   import PlaylistListing from "$lib/components/listings/PlaylistListing.svelte";
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
@@ -10,17 +10,16 @@
   import Button from "$lib/components/ui/Button.svelte";
   import { favoriteTrackIds } from "$lib/global.svelte";
   import { Settings2Icon } from "@lucide/svelte";
-  import { createQuery } from "@tanstack/svelte-query";
+  import { resource } from "runed";
 
-  const selectionsQuery = createQuery(() => ({
-    queryKey: ["selections"],
-    queryFn: () => getSelections(),
-  }));
-
-  const favoritesQuery = createQuery(() => ({
-    queryKey: ["favorites", favoriteTrackIds],
-    queryFn: () => getTracksByIds(favoriteTrackIds.current),
-  }));
+  const selectionsResource = resource(
+    () => "selections",
+    () => getSelections(),
+  );
+  const favoritesResource = resource(
+    () => favoriteTrackIds.current,
+    () => getTracksByIds(favoriteTrackIds.current),
+  );
 </script>
 
 <svelte:head>
@@ -51,17 +50,17 @@
         Your Favorites
       </h2>
 
-      <QueryView query={favoritesQuery}>
+      <AsyncView resource={favoritesResource}>
         {#snippet content(favorites)}
           {#each favorites as favorite (favorite.id)}
             <TrackListing track={favorite} />
           {/each}
         {/snippet}
-      </QueryView>
+      </AsyncView>
     {/if}
   {/snippet}
   {#snippet right()}
-    <QueryView query={selectionsQuery}>
+    <AsyncView resource={selectionsResource}>
       {#snippet content(data)}
         {#each data.collection as selection (selection.items)}
           <h3 class="text-2xl font-medium">
@@ -79,6 +78,6 @@
           <span class="mt-4 text-lg text-base-900-100/25">Nothing here...</span>
         {/each}
       {/snippet}
-    </QueryView>
+    </AsyncView>
   {/snippet}
 </Main>
