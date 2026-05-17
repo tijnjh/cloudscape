@@ -8,8 +8,13 @@ export function whenInView(fn: VoidFunction): Attachment<HTMLElement> {
   };
 }
 
-export const dateFormatter = new Intl.DateTimeFormat("en-US", {
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "short",
   day: "numeric",
 });
+
+export function formatDate(date: Date | string) {
+  const normalizedDate = typeof date === "string" ? new Date(date) : date;
+  return dateFormatter.format(normalizedDate);
+}
