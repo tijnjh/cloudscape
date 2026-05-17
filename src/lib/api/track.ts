@@ -10,15 +10,11 @@ export async function resolveTrack({
   user: string;
   track: string;
 }) {
-  return await $api(getPermalinkPath(user, track), {
-    schema: Track,
-  });
+  return await $api.get(getPermalinkPath(user, track)).json(Track);
 }
 
 export async function getTrackById(id: number) {
-  return await $api(`/tracks/${id}`, {
-    schema: Track,
-  });
+  return await $api.get(`/tracks/${id}`).json(Track);
 }
 
 export async function getTracksByIds(ids: number[]) {
@@ -26,11 +22,12 @@ export async function getTracksByIds(ids: number[]) {
     return [];
   }
 
-  return await $api("/tracks", {
-    params: {
-      ids: ids.join(","),
-      limit: paginated_limit,
-    },
-    schema: v.array(Track),
-  });
+  return await $api
+    .get("/tracks", {
+      searchParams: {
+        ids: ids.join(","),
+        limit: paginated_limit,
+      },
+    })
+    .json(v.array(Track));
 }

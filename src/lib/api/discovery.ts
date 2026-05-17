@@ -7,25 +7,26 @@ import { $api } from "./utils";
 import * as v from "valibot";
 
 export async function getSelections() {
-  return await $api("/mixed-selections", {
-    schema: Collection(Selection(v.union([Playlist, User]))),
-  });
+  return await $api
+    .get("/mixed-selections")
+    .json(Collection(Selection(v.union([Playlist, User]))));
 }
 
 export async function getRelatedTracks(id: number) {
-  return await $api(`/tracks/${id}/related`, {
-    schema: Collection(Track),
-  });
+  return await $api.get(`/tracks/${id}/related`).json(Collection(Track));
 }
 
 export async function getSearchSuggestions(query: string) {
-  return await $api("/search/queries", {
-    params: { q: query },
-    schema: Collection(
-      v.object({
-        output: v.string(),
-        query: v.string(),
-      }),
-    ),
-  });
+  return await $api
+    .get("/search/queries", {
+      searchParams: { q: query },
+    })
+    .json(
+      Collection(
+        v.object({
+          output: v.string(),
+          query: v.string(),
+        }),
+      ),
+    );
 }
