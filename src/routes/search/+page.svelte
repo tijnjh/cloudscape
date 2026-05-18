@@ -19,7 +19,7 @@
   import { match } from "ts-pattern";
   import * as v from "valibot";
 
-  const params = useSearchParams(
+  const searchParams = useSearchParams(
     v.object({
       q: v.optional(v.string(), ""),
       kind: v.optional(
@@ -33,16 +33,16 @@
     },
   );
 
-  const debouncedQ = new Debounced(() => params.q);
+  const debouncedQ = new Debounced(() => searchParams.q);
 
   type Listing = Track | Playlist | User;
 
   const searchQuery = createInfiniteQuery(() => ({
-    queryKey: ["search", debouncedQ.current, params.kind],
+    queryKey: ["search", debouncedQ.current, searchParams.kind],
     queryFn: async ({ pageParam }) => {
       if (!debouncedQ.current) return [] as Listing[];
 
-      const searchFn = match(params.kind)
+      const searchFn = match(searchParams.kind)
         .with("tracks", () => searchTracks)
         .with("playlists", () => searchPlaylists)
         .with("users", () => searchUsers)
@@ -67,13 +67,13 @@
 
 <Main>
   {#snippet left()}
-    <SearchBar value={params.q} />
+    <SearchBar value={searchParams.q} />
   {/snippet}
 
   {#snippet right()}
     <SegmentedPicker
       options={["all", "tracks", "playlists", "users"]}
-      bind:current={params.kind}
+      bind:current={searchParams.kind}
     />
     <InfiniteQueryView query={searchQuery} />
   {/snippet}

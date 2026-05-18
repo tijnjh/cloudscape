@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from "$app/state";
   import { resolvePlaylist } from "$lib/api/playlist";
   import { getTracksByIds } from "$lib/api/track";
   import HeroSection from "$lib/components/HeroSection.svelte";
@@ -11,13 +10,11 @@
   import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
 
+  const { params } = $props();
+
   const playlistQuery = createQuery(() => ({
-    queryKey: ["playlist", page.params.user, page.params.playlist],
-    queryFn: () =>
-      resolvePlaylist({
-        user: page.params.user!,
-        playlist: page.params.playlist!,
-      }),
+    queryKey: ["playlist", params.user, params.playlist],
+    queryFn: () => resolvePlaylist(params),
   }));
 
   const playlistTracksQuery = createInfiniteQuery(() => ({

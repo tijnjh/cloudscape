@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from "$app/state";
   import { resolveTrack } from "$lib/api/track";
   import HeroSection from "$lib/components/HeroSection.svelte";
   import Main from "$lib/components/Main.svelte";
@@ -9,13 +8,11 @@
   import { createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
 
+  const { params } = $props();
+
   const trackQuery = createQuery(() => ({
-    queryKey: ["track", page.params.track],
-    queryFn: () =>
-      resolveTrack({
-        track: page.params.track!,
-        user: page.params.user!,
-      }),
+    queryKey: ["track", params.user, params.track],
+    queryFn: () => resolveTrack(params),
   }));
 </script>
 

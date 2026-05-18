@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from "$app/state";
   import { getUserPlaylists, getUserTracks, resolveUser } from "$lib/api/user";
   import HeroSection from "$lib/components/HeroSection.svelte";
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
@@ -14,13 +13,15 @@
   import { useSearchParams } from "runed/kit";
   import * as v from "valibot";
 
+  const { params } = $props();
+
   const userQuery = createQuery(() => ({
-    queryKey: ["user", page.params.user],
-    queryFn: () => resolveUser(page.params.user!),
-    enabled: !!page.params.user,
+    queryKey: ["user", params.user],
+    queryFn: () => resolveUser(params.user),
+    enabled: !!params.user,
   }));
 
-  const params = useSearchParams(
+  const searchParams = useSearchParams(
     v.object({
       kind: v.optional(v.picklist(["tracks", "playlists"]), "tracks"),
     }),
@@ -31,7 +32,7 @@
   );
 
   const userDetailsQuery = createInfiniteQuery(() => ({
-    queryKey: ["user", userQuery.data?.id, params.kind],
+    queryKey: ["user", userQuery.data?.id, searchParams.kind],
     queryFn: async ({ pageParam = 0 }) => {
       const data = {
         id: userQuery.data!.id,
@@ -39,7 +40,7 @@
         limit: paginated_limit,
       };
       let results: Collection<Track | Playlist>;
-      switch (params.kind) {
+      switch (searchParams.kind) {
         case "playlists":
           results = await getUserPlaylists(data);
           break;
@@ -78,7 +79,7 @@
   {#snippet right()}
     <SegmentedPicker
       options={["tracks", "playlists"]}
-      bind:current={params.kind}
+      bind:current={searchParams.kind}
     />
 
     <InfiniteQueryView query={userDetailsQuery} />
