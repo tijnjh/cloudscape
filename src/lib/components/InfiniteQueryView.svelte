@@ -52,11 +52,11 @@
     {#each sortedPages as page (page)}
       {#each page as result (result.id)}
         {#if result.kind === "track"}
-          <TrackListing track={result as Track} />
+          <TrackListing track={result} />
         {:else if result.kind === "playlist"}
-          <PlaylistListing playlist={result as Playlist} />
+          <PlaylistListing playlist={result} />
         {:else if result.kind === "user"}
-          <UserListing user={result as User} />
+          <UserListing user={result} />
         {/if}
       {/each}
     {:else}
