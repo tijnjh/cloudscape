@@ -12,7 +12,7 @@
   import dedent from "dedent";
   import { resource } from "runed";
 
-  const playlistQuery = resource(
+  const playlistResource = resource(
     [() => page.params.user, () => page.params.playlist],
     () =>
       resolvePlaylist({
@@ -21,11 +21,11 @@
       }),
   );
 
-  const playlistTracksQuery = createInfiniteQuery(() => ({
-    queryKey: ["playlist-tracks", playlistQuery.current?.id],
+  const playlistTracks = createInfiniteQuery(() => ({
+    queryKey: ["playlist-tracks", playlistResource.current?.id],
     queryFn: ({ pageParam = 0 }) => {
       const allIds =
-        playlistQuery.current?.tracks?.map((track) => track.id) ?? [];
+        playlistResource.current?.tracks?.map((track) => track.id) ?? [];
 
       const startIdx = pageParam * paginated_limit;
       const endIdx = startIdx + paginated_limit;
@@ -36,7 +36,7 @@
     initialPageParam: 0,
     getNextPageParam: (_, allPages) => {
       const allIds =
-        playlistQuery.current?.tracks?.map((track) => track.id) ?? [];
+        playlistResource.current?.tracks?.map((track) => track.id) ?? [];
       const totalChunks = Math.ceil(allIds.length / paginated_limit);
 
       return allPages.length < totalChunks ? allPages.length : undefined;
@@ -45,22 +45,22 @@
 </script>
 
 <svelte:head>
-  <title>{playlistQuery.current?.title}</title>
+  <title>{playlistResource.current?.title}</title>
   <meta
     name="description"
-    content={dedent`${playlistQuery.current?.user?.username}
-               ${playlistQuery.current?.track_count} tracks
-               ${playlistQuery.current?.created_at}
+    content={dedent`${playlistResource.current?.user?.username}
+               ${playlistResource.current?.track_count} tracks
+               ${playlistResource.current?.created_at}
            `}
   />
 
-  <link rel="icon" href={playlistQuery.current?.artwork_url} />
-  <meta name="og:image" content={playlistQuery.current?.artwork_url} />
+  <link rel="icon" href={playlistResource.current?.artwork_url} />
+  <meta name="og:image" content={playlistResource.current?.artwork_url} />
 </svelte:head>
 
 <Main>
   {#snippet left()}
-    <AsyncView resource={playlistQuery}>
+    <AsyncView resource={playlistResource}>
       {#snippet content(playlist)}
         {@const releaseDate = playlist.release_date
           ? formatDate(playlist.release_date)
@@ -80,8 +80,8 @@
 
   {#snippet right()}
     <InfiniteQueryView
-      query={playlistTracksQuery}
-      orderedIds={playlistQuery.current?.tracks?.map((track) => track.id)}
+      query={playlistTracks}
+      orderedIds={playlistResource.current?.tracks?.map((track) => track.id)}
     />
   {/snippet}
 </Main>
