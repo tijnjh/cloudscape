@@ -5,7 +5,7 @@
   import HeroSection from "$lib/components/HeroSection.svelte";
   import Main from "$lib/components/Main.svelte";
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
-  import { dateFormatter } from "$lib/utils";
+  import { formatDate } from "$lib/utils";
   import dedent from "dedent";
   import { resource } from "runed";
 
@@ -38,7 +38,7 @@
     <AsyncView resource={trackResource}>
       {#snippet content(track)}
         {@const releaseDate = track.release_date
-          ? dateFormatter.format(new Date(track.release_date))
+          ? formatDate(track.release_date)
           : undefined}
 
         <HeroSection
