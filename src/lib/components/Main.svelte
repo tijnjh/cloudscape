@@ -18,7 +18,7 @@
 
   const [leftSplit, rightSplit] = $derived(split);
 
-  const gridTemplateColumns = $derived(`${leftSplit}fr ${rightSplit}fr`);
+  const gridTemplateColumns = $derived(`${leftSplit}% ${rightSplit}%`);
 </script>
 
 <main
