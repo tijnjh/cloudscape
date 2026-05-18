@@ -10,14 +10,16 @@
     query,
     content,
     class: className,
+    isLoading = (q) => q.isLoading,
   }: {
     query: CreateQueryResult<T>;
     content: Snippet<[data: T]>;
     class?: ClassValue;
+    isLoading?: (query: CreateQueryResult<T>) => boolean;
   } = $props();
 </script>
 
-{#if query.isLoading}
+{#if isLoading(query)}
   <Spinner />
 {:else if query.isError}
   <ErrorDisplay error={query.error} />
