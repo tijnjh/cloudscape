@@ -34,8 +34,10 @@
   const userDetailsQuery = createInfiniteQuery(() => ({
     queryKey: ["user", userQuery.data?.id, searchParams.kind],
     queryFn: async ({ pageParam = 0 }) => {
+      if (!userQuery.data) return [];
+
       const data = {
-        id: userQuery.data!.id,
+        id: userQuery.data.id,
         offset: pageParam * paginated_limit,
         limit: paginated_limit,
       };
