@@ -8,7 +8,7 @@
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
   import SearchBar from "$lib/components/SearchBar.svelte";
-  import Button from "$lib/components/ui/Button.svelte";
+  import SegmentedPicker from "$lib/components/ui/SegmentedPicker.svelte";
   import { paginated_limit } from "$lib/constants";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
@@ -68,26 +68,13 @@
 <Main>
   {#snippet left()}
     <SearchBar value={params.q} />
-
-    <div class="mx-auto flex w-full max-w-xl gap-2">
-      {#each ["all", "tracks", "playlists", "users"] as const as kind (kind)}
-        {#key params.kind}
-          <Button
-            variant={params.kind === kind ? "primary" : "secondary"}
-            class="capitalize"
-            onclick={() => {
-              params.kind = kind;
-              searchQuery.refetch();
-            }}
-          >
-            {kind}
-          </Button>
-        {/key}
-      {/each}
-    </div>
   {/snippet}
 
   {#snippet right()}
+    <SegmentedPicker
+      options={["all", "tracks", "playlists", "users"]}
+      bind:current={params.kind}
+    />
     <InfiniteQueryView query={searchQuery} />
   {/snippet}
 </Main>

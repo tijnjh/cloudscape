@@ -5,7 +5,7 @@
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
   import QueryView from "$lib/components/QueryView.svelte";
-  import Button from "$lib/components/ui/Button.svelte";
+  import SegmentedPicker from "$lib/components/ui/SegmentedPicker.svelte";
   import { paginated_limit } from "$lib/constants";
   import type { Collection } from "$lib/schemas/collection";
   import type { Playlist } from "$lib/schemas/playlist";
@@ -76,17 +76,10 @@
   {/snippet}
 
   {#snippet right()}
-    <div class="flex gap-2">
-      {#each ["tracks", "playlists"] as const as kind (kind)}
-        <Button
-          variant={params.kind === kind ? "primary" : "secondary"}
-          class="capitalize"
-          onclick={() => (params.kind = kind)}
-        >
-          {kind}
-        </Button>
-      {/each}
-    </div>
+    <SegmentedPicker
+      options={["tracks", "playlists"]}
+      bind:current={params.kind}
+    />
 
     <InfiniteQueryView query={userDetailsQuery} />
   {/snippet}
