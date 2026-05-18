@@ -6,11 +6,12 @@ import ky from "ky";
 export const $api = ky.create({
   baseUrl: selectedInstance.current,
   prefix: "/_/api/v2",
+
   hooks: {
     beforeRequest: [
       ({ request }) => {
         if (!selectedInstance.current) {
-          throw goto(resolve("/select-instance"));
+          throw goto(resolve("/_/preferences/instance"));
         }
 
         return request;
