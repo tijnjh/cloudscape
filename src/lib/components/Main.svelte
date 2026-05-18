@@ -18,7 +18,13 @@
 
   const [leftSplit, rightSplit] = $derived(split);
 
-  const gridTemplateColumns = $derived(`${leftSplit}% ${rightSplit}%`);
+  function accountForGap(percent: number) {
+    return `calc(${percent}% - .5rem)`;
+  }
+
+  const gridTemplateColumns = $derived.by(
+    () => `${accountForGap(leftSplit)} ${accountForGap(rightSplit)}`,
+  );
 </script>
 
 <main
