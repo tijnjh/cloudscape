@@ -17,7 +17,7 @@
   // }));
 </script>
 
-<form action="search" class="w-full">
+<form action="/search" class="w-full">
   <Input
     type="text"
     name="q"
