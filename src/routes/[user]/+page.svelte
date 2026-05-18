@@ -57,9 +57,7 @@
 
 <svelte:head>
   <title>{userQuery.data?.username}</title>
-  <meta name="description" content={userQuery.data?.description} />
   <link rel="icon" href={userQuery.data?.avatar_url} />
-  <meta name="og:image" content={userQuery.data?.avatar_url} />
 </svelte:head>
 
 <Main>

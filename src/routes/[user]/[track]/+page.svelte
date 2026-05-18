@@ -21,16 +21,7 @@
 
 <svelte:head>
   <title>{trackQuery.data?.title}</title>
-  <meta
-    name="description"
-    content={dedent`${trackQuery.data?.user.username}
-            ${trackQuery.data?.label_name}
-            ${trackQuery.data?.genre} - ${trackQuery.data?.release_date}
-        `}
-  />
-
   <link rel="icon" href={trackQuery.data?.artwork_url} />
-  <meta name="og:image" content={trackQuery.data?.artwork_url} />
 </svelte:head>
 
 <Main>
