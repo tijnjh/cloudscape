@@ -114,7 +114,7 @@ export const Track = v.strictObject({
           urn: v.string(),
           entry_time: v.number(),
           visual_url: v.pipe(v.string(), v.url()),
-          link: v.optional(v.pipe(v.string(), v.url())),
+          link: v.optional(v.string()),
         }),
       ),
       tracking: v.null(),
