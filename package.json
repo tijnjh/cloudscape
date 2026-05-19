@@ -58,5 +58,8 @@
   },
   "patchedDependencies": {
     "eslint-plugin-tailwindcss+4.0.0-beta.0": "patches/eslint-plugin-tailwindcss+4.0.0-beta.0.patch"
+  },
+  "engines": {
+    "node": ">=22.13.0"
   }
 }
