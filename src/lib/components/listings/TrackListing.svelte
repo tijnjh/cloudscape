@@ -1,7 +1,7 @@
 <script module lang="ts">
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
-  import { favoriteTrackIds } from "$lib/global.svelte";
+  import { currentTime, favoriteTrackIds } from "$lib/global.svelte";
   import {
     ClipboardIcon,
     DiscIcon,
@@ -97,6 +97,7 @@
   }}
   onclick={() => {
     nowPlaying.current = track;
+    currentTime.current = 0;
 
     setTimeout(() => {
       isPaused.current = false;

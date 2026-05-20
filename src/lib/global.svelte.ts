@@ -5,6 +5,8 @@ import type { AccentColor, BaseColor } from "./theme";
 import { PersistedState } from "runed";
 
 export const nowPlaying = new PersistedState<Track | null>("now-playing", null);
+export const currentTime = new ReactiveValue(0);
+
 export const favoriteTrackIds = new PersistedState<number[]>("favorites", []);
 export const showNowPlayingView = new ReactiveValue(false);
 export const isPaused = new ReactiveValue(true);

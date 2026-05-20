@@ -2,6 +2,7 @@
   import { onNavigate } from "$app/navigation";
   import { getRelatedTracks } from "$lib/api/discovery";
   import {
+    currentTime,
     isPaused,
     nowPlaying,
     selectedInstance,
@@ -116,6 +117,7 @@
       <audio
         class="h-10"
         bind:paused={isPaused.current}
+        bind:currentTime={currentTime.current}
         controls
         {@attach nowPlaying.current && applySource(nowPlaying.current)}
       >
