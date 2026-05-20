@@ -49,6 +49,7 @@
 </script>
 
 <svelte:head>
+  <title>Cloudscape</title>
   <link rel="icon" href={favicon} />
 </svelte:head>
 

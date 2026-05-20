@@ -23,10 +23,6 @@
   }));
 </script>
 
-<svelte:head>
-  <title>Cloudscape</title>
-</svelte:head>
-
 <Main class="mt-16">
   {#snippet left()}
     <div class="flex w-full flex-col items-start gap-4">

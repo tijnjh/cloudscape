@@ -19,6 +19,7 @@
   import { XIcon } from "@lucide/svelte";
   import { createQuery } from "@tanstack/svelte-query";
   import { cn } from "cnfn";
+  import { IsDocumentVisible } from "runed";
 
   $effect(() => {
     if (nowPlaying.current) {
@@ -68,7 +69,18 @@
       return relatedTracks.collection;
     },
   }));
+
+  const isDocumentVisible = new IsDocumentVisible();
 </script>
+
+<svelte:head>
+  {#if !isDocumentVisible.current}
+    <title>
+      {nowPlaying.current?.title} &bull; {nowPlaying.current?.user.username}
+    </title>
+    <link rel="icon" href={nowPlaying.current?.artwork_url} />
+  {/if}
+</svelte:head>
 
 <svelte:window
   onkeydown={(e) => {
