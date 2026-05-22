@@ -53,8 +53,7 @@
       return results.collection;
     },
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length === 0 ? undefined : allPages.length,
+    getNextPageParam: (lastPage, allPages) => lastPage.length === 0 ? undefined : allPages.length,
   }));
 </script>
 

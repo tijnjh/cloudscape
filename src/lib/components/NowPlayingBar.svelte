@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { showNowPlayingView, isPaused, nowPlaying } from "$lib/global.svelte";
+  import { isPaused, nowPlaying, showNowPlayingView } from "$lib/global.svelte";
   import ListingThumbnail from "./ListingThumbnail.svelte";
   import Button from "./ui/Button.svelte";
   import { PauseIcon, PlayIcon } from "@lucide/svelte";

@@ -47,9 +47,7 @@
   {#snippet left()}
     <QueryView query={playlistQuery}>
       {#snippet content(playlist)}
-        {@const releaseDate = playlist.release_date
-          ? formatDate(playlist.release_date)
-          : undefined}
+        {@const releaseDate = playlist.release_date ? formatDate(playlist.release_date) : undefined}
 
         <HeroSection
           pictureSrc={playlist.artwork_url}

@@ -1,0 +1,93 @@
+{
+  "tasks": {
+    "dev": "deno run -A npm:vite@^8.0.12 dev",
+    "build": "deno task prepare && deno run -A npm:vite@^8.0.12 build",
+    "preview": "deno run -A npm:vite@^8.0.12 preview",
+    "prepare": "deno run -A npm:@sveltejs/kit@2.59.1/svelte-kit sync",
+    "check": "deno task prepare && deno run -A npm:svelte-check@^4.4.8 --tsconfig ./tsconfig.json",
+    "check:watch": "deno task prepare && deno run -A npm:svelte-check@^4.4.8 --tsconfig ./tsconfig.json --watch",
+    "lint": "deno lint",
+    "lint:fix": "deno lint --fix",
+    "format": "deno fmt",
+    "format:check": "deno fmt --check"
+  },
+  "imports": {
+    "$lib": "./src/lib",
+    "$lib/": "./src/lib/",
+    "@fontsource/atkinson-hyperlegible": "npm:@fontsource/atkinson-hyperlegible@^5.2.8",
+    "@lucide/svelte": "npm:@lucide/svelte@^1.14.0",
+    "@sveltejs/adapter-static": "npm:@sveltejs/adapter-static@^3.0.10",
+    "@sveltejs/kit": "npm:@sveltejs/kit@2.59.1",
+    "@sveltejs/kit/internal/server": "npm:@sveltejs/kit@2.59.1/internal/server",
+    "@sveltejs/kit/vite": "npm:@sveltejs/kit@2.59.1/vite",
+    "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.3.0",
+    "@tanstack/svelte-query": "npm:@tanstack/svelte-query@^6.1.28",
+    "bits-ui": "npm:bits-ui@^2.18.1",
+    "cnfn": "npm:cnfn@^5.5.1",
+    "dedent": "npm:dedent@^1.7.2",
+    "hls.js": "npm:hls.js@^1.6.16",
+    "hls.js/": "npm:hls.js@^1.6.16/",
+    "ky": "npm:ky@^2.0.2",
+    "mode-watcher": "npm:mode-watcher@^1.1.0",
+    "runed": "npm:runed@~0.37.1",
+    "runed/": "npm:runed@~0.37.1/",
+    "serialize-error": "npm:serialize-error@^13.0.1",
+    "svelte": "npm:svelte@^5.55.5",
+    "svelte/": "npm:svelte@^5.55.5/",
+    "tailwind-color-pairings": "npm:tailwind-color-pairings@~0.1.2",
+    "tailwind-variants": "npm:tailwind-variants@^3.2.2",
+    "tailwindcss": "npm:tailwindcss@^4.3.0",
+    "ts-pattern": "npm:ts-pattern@^5.9.0",
+    "tw-animate-css": "npm:tw-animate-css@^1.4.0",
+    "type-fest": "npm:type-fest@^5.6.0",
+    "valibot": "npm:valibot@^1.4.0",
+    "vite": "npm:vite@^8.0.12"
+  },
+  "fmt": {
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "proseWrap": "preserve",
+    "semiColons": true,
+    "singleQuote": false,
+    "include": [
+      ".vscode/extensions.json",
+      ".vscode/settings.json",
+      "deno.json",
+      "README.md",
+      "src",
+      "svelte.config.js",
+      "tsconfig.json",
+      "vite.config.ts"
+    ],
+    "exclude": [
+      ".svelte-kit",
+      "build",
+      "node_modules"
+    ]
+  },
+  "lint": {
+    "include": [
+      "src",
+      "svelte.config.js",
+      "vite.config.ts"
+    ],
+    "exclude": [
+      ".svelte-kit",
+      "build",
+      "node_modules"
+    ],
+    "rules": {
+      "tags": [
+        "recommended"
+      ],
+      "exclude": [
+        "no-sloppy-imports"
+      ]
+    }
+  },
+  "unstable": [
+    "fmt-component"
+  ],
+  "nodeModulesDir": "auto",
+  "lock": "deno.lock"
+}

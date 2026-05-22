@@ -5,11 +5,7 @@
   import NowPlayingBar from "$lib/components/NowPlayingBar.svelte";
   import NowPlayingView from "$lib/components/NowPlayingView.svelte";
   import Button from "$lib/components/ui/Button.svelte";
-  import {
-    isBlackAccent,
-    selectedAccentColor,
-    selectedBaseColor,
-  } from "$lib/global.svelte";
+  import { isBlackAccent, selectedAccentColor, selectedBaseColor } from "$lib/global.svelte";
   import { shades } from "$lib/theme";
   import "./layout.css";
   import { ChevronLeft } from "@lucide/svelte";
@@ -62,8 +58,8 @@
       <Button
         variant="secondary"
         icon={ChevronLeft}
-        onclick={() => history.back()}>Back</Button
-      >
+        onclick={() => history.back()}
+      >Back</Button>
 
       <Button variant="secondary" href="/">Home</Button>
     </div>

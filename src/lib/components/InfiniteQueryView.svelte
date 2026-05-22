@@ -9,10 +9,7 @@
   import TrackListing from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
   import Button from "./ui/Button.svelte";
-  import type {
-    CreateInfiniteQueryResult,
-    InfiniteData,
-  } from "@tanstack/svelte-query";
+  import type { CreateInfiniteQueryResult, InfiniteData } from "@tanstack/svelte-query";
   import { fly } from "svelte/transition";
 
   const {

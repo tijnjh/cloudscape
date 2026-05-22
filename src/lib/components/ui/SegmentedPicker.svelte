@@ -1,6 +1,6 @@
 <script lang="ts" generics="T extends string[]">
   import Button from "./Button.svelte";
-  import { cn, type ClassValue } from "cnfn";
+  import { type ClassValue, cn } from "cnfn";
 
   let {
     options,

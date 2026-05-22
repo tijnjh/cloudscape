@@ -4,4 +4,13 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [tailwindcss(), sveltekit()],
+  resolve: {
+    conditions: ["svelte"],
+  },
+  ssr: {
+    resolve: {
+      conditions: ["svelte"],
+      externalConditions: ["svelte", "node"],
+    },
+  },
 });

@@ -1,15 +1,10 @@
 <script lang="ts">
-  import {
-    searchTracks,
-    searchPlaylists,
-    searchUsers,
-    searchAnything,
-  } from "$lib/api/search";
+  import { searchAnything, searchPlaylists, searchTracks, searchUsers } from "$lib/api/search";
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
-  import SearchBar from "$lib/components/SearchBar.svelte";
   import SegmentedPicker from "$lib/components/ui/SegmentedPicker.svelte";
   import { paginated_limit } from "$lib/constants";
+  import SearchBar from "$lib/components/SearchBar.svelte";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
   import type { User } from "$lib/schemas/user";

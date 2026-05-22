@@ -1,19 +1,12 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
   import { getRelatedTracks } from "$lib/api/discovery";
-  import {
-    isPaused,
-    nowPlaying,
-    selectedInstance,
-    showNowPlayingView,
-  } from "$lib/global.svelte";
+  import { isPaused, nowPlaying, selectedInstance, showNowPlayingView } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
   import Menu from "./Menu.svelte";
   import QueryView from "./QueryView.svelte";
-  import TrackListing, {
-    getTrackListingMenuActions,
-  } from "./listings/TrackListing.svelte";
+  import TrackListing, { getTrackListingMenuActions } from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
   import Button from "./ui/Button.svelte";
   import { XIcon } from "@lucide/svelte";
@@ -31,8 +24,7 @@
           album: "Cloudscape",
           artwork: [
             {
-              src:
-                nowPlaying.current.artwork_url?.replace("large", "t500x500") ??
+              src: nowPlaying.current.artwork_url?.replace("large", "t500x500") ??
                 "",
               sizes: "500x500",
               type: "image/jpeg",
@@ -95,7 +87,8 @@
     {:else}
       <div
         class="mt-12 aspect-square w-full rounded-xl bg-base-300-700 md:max-w-md"
-      ></div>
+      >
+      </div>
     {/if}
 
     {#if nowPlaying.current}
