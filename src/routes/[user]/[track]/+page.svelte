@@ -25,9 +25,7 @@
   {#snippet left()}
     <QueryView query={trackQuery}>
       {#snippet content(track)}
-        {@const releaseDate = track.release_date
-          ? formatDate(track.release_date)
-          : undefined}
+        {@const releaseDate = formatDate(track.release_date)}
 
         <HeroSection
           pictureSrc={track.artwork_url}

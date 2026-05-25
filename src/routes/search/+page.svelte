@@ -1,9 +1,9 @@
 <script lang="ts">
   import {
-    searchTracks,
-    searchPlaylists,
-    searchUsers,
     searchAnything,
+    searchPlaylists,
+    searchTracks,
+    searchUsers,
   } from "$lib/api/search";
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";

@@ -62,8 +62,10 @@
       <Button
         variant="secondary"
         icon={ChevronLeft}
-        onclick={() => history.back()}>Back</Button
+        onclick={() => history.back()}
       >
+        Back
+      </Button>
 
       <Button variant="secondary" href="/">Home</Button>
     </div>

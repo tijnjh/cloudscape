@@ -1,7 +1,6 @@
 import svelteConfig from "./svelte.config.js";
 import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
-import prettier from "eslint-config-prettier";
 import svelte from "eslint-plugin-svelte";
 import tailwindcss from "eslint-plugin-tailwindcss";
 import { defineConfig } from "eslint/config";
@@ -17,8 +16,6 @@ export default defineConfig(
   js.configs.recommended,
   ts.configs.recommended,
   svelte.configs.recommended,
-  prettier,
-  svelte.configs.prettier,
   {
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },

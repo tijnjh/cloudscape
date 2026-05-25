@@ -14,7 +14,8 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
-export function formatDate(date: Date | string) {
+export function formatDate(date?: Date | string | null | undefined) {
+  if (!date) return;
   const normalizedDate = typeof date === "string" ? new Date(date) : date;
   return dateFormatter.format(normalizedDate);
 }

@@ -11,8 +11,7 @@
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --check . && eslint .",
-    "format": "prettier --write ."
+    "lint": "eslint ."
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "^5.2.8",
@@ -39,15 +38,11 @@
     "@sveltejs/kit": "2.59.1",
     "@sveltejs/vite-plugin-svelte": "7.1.2",
     "@tailwindcss/vite": "^4.3.0",
-    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^25.6.2",
     "eslint": "^10.3.0",
-    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-svelte": "^3.17.1",
     "eslint-plugin-tailwindcss": "^4.0.0-beta.0",
     "globals": "^17.6.0",
-    "prettier": "^3.8.3",
-    "prettier-plugin-svelte": "^3.5.1",
     "svelte": "^5.55.5",
     "svelte-check": "^4.4.8",
     "tailwindcss": "^4.3.0",

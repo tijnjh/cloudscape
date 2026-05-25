@@ -1,4 +1,11 @@
 {
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
   "files.associations": {
     "*.css": "tailwindcss"
   }

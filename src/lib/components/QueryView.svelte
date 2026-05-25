@@ -2,7 +2,7 @@
   import Spinner from "$lib/components/Spinner.svelte";
   import ErrorDisplay from "./ErrorDisplay.svelte";
   import type { CreateQueryResult } from "@tanstack/svelte-query";
-  import { cn, type ClassValue } from "cnfn";
+  import { type ClassValue, cn } from "cnfn";
   import type { Snippet } from "svelte";
   import { fly } from "svelte/transition";
 

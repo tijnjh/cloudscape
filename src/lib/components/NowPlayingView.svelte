@@ -33,7 +33,7 @@
             {
               src:
                 nowPlaying.current.artwork_url?.replace("large", "t500x500") ??
-                "",
+                  "",
               sizes: "500x500",
               type: "image/jpeg",
             },
@@ -44,7 +44,8 @@
   });
 
   const applySource = (track: Track) => (element: HTMLAudioElement) => {
-    const url = `${selectedInstance.current}/_/api/hls/${track.user.permalink}/${track.permalink}`;
+    const url =
+      `${selectedInstance.current}/_/api/hls/${track.user.permalink}/${track.permalink}`;
 
     if (!Hls.isSupported()) {
       throw new Error("hls is not supported");
@@ -95,7 +96,8 @@
     {:else}
       <div
         class="mt-12 aspect-square w-full rounded-xl bg-base-300-700 md:max-w-md"
-      ></div>
+      >
+      </div>
     {/if}
 
     {#if nowPlaying.current}
