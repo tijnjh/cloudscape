@@ -16,7 +16,14 @@
     return urlObj.host;
   }
 
-  const dn = new Intl.DisplayNames("en", { type: "region" });
+  function getCountryName(countryCode: string) {
+    try {
+      const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+      return regionNames.of(countryCode);
+    } catch {
+      return countryCode;
+    }
+  }
 
   function reload() {
     if (!browser) return;
@@ -41,7 +48,7 @@
           variant={isSelected ? "primary" : "secondary"}
         >
           {cleanUrl(instance.URL)}
-          ({dn.of(instance.Host.Country)})
+          ({getCountryName(instance.Host.Country)})
         </Button>
       {/if}
     {/each}
