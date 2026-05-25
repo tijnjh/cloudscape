@@ -18,7 +18,13 @@
 
   const { children } = $props();
 
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
 
   const doc = browser ? document.documentElement : undefined;
 
