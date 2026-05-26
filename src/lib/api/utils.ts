@@ -24,7 +24,7 @@ function formatSearchParams(o: SearchParams) {
 
 export async function $api<TSchema extends v.GenericSchema>(
   input: string,
-  { schema, searchParams, ...primitiveInit }: Init<TSchema> = {},
+  { schema, searchParams, ...baseInit }: Init<TSchema> = {},
 ) {
   const searchParamsString = searchParams
     ? formatSearchParams(searchParams)
@@ -34,9 +34,9 @@ export async function $api<TSchema extends v.GenericSchema>(
     .filter(Boolean)
     .join("");
 
-  const res = await fetch(url, primitiveInit).then((r) => r.json());
+  const res = (await (await fetch(url, baseInit)).json()) as unknown;
 
-  if (import.meta.env.DEV && schema) {
+  if (schema && import.meta.env.dev) {
     return v.parse(schema, res);
   }
 
