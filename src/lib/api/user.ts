@@ -1,8 +1,8 @@
 import { Collection } from "$lib/schemas/collection";
-import { Paginated } from "$lib/schemas/paginated";
 import { Playlist } from "$lib/schemas/playlist";
 import { Track } from "$lib/schemas/track";
 import { User } from "$lib/schemas/user";
+import type { WithPagination } from "$lib/types";
 import { $api, getPermalinkPath } from "./utils";
 
 export async function resolveUser(user: string) {
@@ -17,9 +17,7 @@ export async function getUserTracks({
   id,
   offset,
   limit,
-}: {
-  id: number;
-} & Paginated) {
+}: WithPagination<{ id: number }>) {
   return await $api
     .get(`/users/${id}/tracks`, {
       searchParams: { limit, offset },
@@ -31,9 +29,7 @@ export async function getUserPlaylists({
   id,
   offset,
   limit,
-}: {
-  id: number;
-} & Paginated) {
+}: WithPagination<{ id: number }>) {
   return await $api
     .get(`/users/${id}/playlists`, {
       searchParams: { limit, offset },
