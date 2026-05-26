@@ -6,9 +6,9 @@
   import QueryView from "$lib/components/QueryView.svelte";
   import SegmentedPicker from "$lib/components/ui/SegmentedPicker.svelte";
   import { max_items_per_page } from "$lib/constants";
-  import type { Collection } from "$lib/schemas/collection";
-  import type { Playlist } from "$lib/schemas/playlist";
-  import type { Track } from "$lib/schemas/track";
+  import type { Playlist } from "$lib/schemas/playlist.js";
+  import type { Track } from "$lib/schemas/track.js";
+  import { match } from "$lib/utils.js";
   import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
   import { useSearchParams } from "runed/kit";
   import * as v from "valibot";
@@ -36,21 +36,14 @@
     queryFn: async ({ pageParam = 0 }) => {
       if (!userQuery.data) return [];
 
-      const data = {
+      return await match(searchParams.kind, {
+        tracks: () => getUserTracks,
+        playlists: () => getUserPlaylists,
+      })({
         id: userQuery.data.id,
         offset: pageParam * max_items_per_page,
         limit: max_items_per_page,
-      };
-      let results: Collection<Track | Playlist>;
-      switch (searchParams.kind) {
-        case "playlists":
-          results = await getUserPlaylists(data);
-          break;
-        default:
-          results = await getUserTracks(data);
-          break;
-      }
-      return results.collection;
+      }).then((res) => res.collection as (Track | Playlist)[]);
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>

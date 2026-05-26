@@ -19,3 +19,19 @@ export function formatDate(date?: Date | string | null | undefined) {
   const normalizedDate = typeof date === "string" ? new Date(date) : date;
   return dateFormatter.format(normalizedDate);
 }
+
+export function match<
+  TValue extends PropertyKey,
+  TCases extends Record<TValue, () => unknown>,
+>(value: TValue, cases: TCases): ReturnType<TCases[TValue]>;
+export function match<
+  TValue extends PropertyKey,
+  TCases extends Partial<Record<TValue, () => unknown>>,
+>(
+  value: TValue,
+  cases: TCases & { _: () => unknown },
+): ReturnType<NonNullable<TCases[keyof TCases]>>;
+// @ts-expect-error - implicit any to allow for overloads
+export function match(value, cases) {
+  return (cases[value] ?? cases._)();
+}

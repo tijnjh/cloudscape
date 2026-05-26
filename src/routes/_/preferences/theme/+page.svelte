@@ -6,8 +6,8 @@
     selectedBaseColor,
   } from "$lib/global.svelte";
   import { accentColors, baseColors, type ValidColor } from "$lib/theme";
+  import { match } from "$lib/utils";
   import { setMode, userPrefersMode } from "mode-watcher";
-  import { match } from "ts-pattern";
 
   const themeModes = ["light", "dark", "system"] as const;
 </script>
@@ -22,17 +22,13 @@
     onclick: VoidFunction;
   },
 )}
-  {@const style = match(color)
-    .with(
-      "black",
-      () => "--swatch-color-light: #000; --swatch-color-dark: #fff;",
-    )
-    .otherwise(
-      () => `
-          --swatch-color-light: var(--color-${color}-500, var(--color-${color}));
-          --swatch-color-dark: var(--color-${color}-400, var(--color-${color}));
-        `,
-    )}
+  {@const style = match(color, {
+    black: () => "--swatch-color-light: #000; --swatch-color-dark: #fff;",
+    _: () => `
+      --swatch-color-light: var(--color-${color}-500, var(--color-${color}));
+      --swatch-color-dark: var(--color-${color}-400, var(--color-${color}));
+    `,
+  })}
   <Button {style} {onclick} variant={isSelected ? "primary" : "secondary"}>
     <div
       class="size-3 rounded-full bg-(--swatch-color-light) outline-2 outline-base-300-700 dark:bg-(--swatch-color-dark)"
