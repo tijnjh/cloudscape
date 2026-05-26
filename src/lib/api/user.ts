@@ -6,11 +6,11 @@ import type { WithPagination } from "$lib/types";
 import { $api, getPermalinkPath } from "./utils";
 
 export async function resolveUser(user: string) {
-  return await $api.get(getPermalinkPath(user)).json(User);
+  return await $api(getPermalinkPath(user), { schema: User });
 }
 
 export async function getUserById(id: number) {
-  return await $api.get(`/users/${id}`).json(User);
+  return await $api(`/users/${id}`, { schema: User });
 }
 
 export async function getUserTracks({
@@ -18,11 +18,10 @@ export async function getUserTracks({
   offset,
   limit,
 }: WithPagination<{ id: number }>) {
-  return await $api
-    .get(`/users/${id}/tracks`, {
-      searchParams: { limit, offset },
-    })
-    .json(Collection(Track));
+  return await $api(`/users/${id}/tracks`, {
+    searchParams: { limit, offset },
+    schema: Collection(Track),
+  });
 }
 
 export async function getUserPlaylists({
@@ -30,9 +29,8 @@ export async function getUserPlaylists({
   offset,
   limit,
 }: WithPagination<{ id: number }>) {
-  return await $api
-    .get(`/users/${id}/playlists`, {
-      searchParams: { limit, offset },
-    })
-    .json(Collection(Playlist));
+  return await $api(`/users/${id}/playlists`, {
+    searchParams: { limit, offset },
+    schema: Collection(Playlist),
+  });
 }

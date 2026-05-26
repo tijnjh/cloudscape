@@ -8,11 +8,11 @@ export function resolvePlaylist({
   user: string;
   playlist: string;
 }) {
-  return $api.get(getPermalinkPath(user, "sets", playlist)).json<Playlist>();
+  return $api(getPermalinkPath(user, "sets", playlist), { schema: Playlist });
   // we don't enforce the schema here because it can also return a system playlist which differs slightly from the regular playlist schema
   // will implement a more robust solution for this in the future
 }
 
 export function getPlaylistById(id: number) {
-  return $api.get(`/playlists/${id}`).json(Playlist);
+  return $api(`/playlists/${id}`, { schema: Playlist });
 }

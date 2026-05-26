@@ -11,11 +11,10 @@ export async function searchAnything({
   offset,
   limit,
 }: WithPagination<{ query: string }>) {
-  return await $api
-    .get("/search", {
-      searchParams: { q: query, limit, offset },
-    })
-    .json(Collection(v.union([Track, Playlist, User])));
+  return await $api("/search", {
+    searchParams: { q: query, limit, offset },
+    schema: Collection(v.union([Track, Playlist, User])),
+  });
 }
 
 export async function searchTracks({
@@ -23,11 +22,10 @@ export async function searchTracks({
   offset,
   limit,
 }: WithPagination<{ query: string }>) {
-  return await $api
-    .get("/search/tracks", {
-      searchParams: { q: query, limit, offset },
-    })
-    .json(Collection(Track));
+  return await $api("/search/tracks", {
+    searchParams: { q: query, limit, offset },
+    schema: Collection(Track),
+  });
 }
 
 export async function searchPlaylists({
@@ -35,11 +33,10 @@ export async function searchPlaylists({
   offset,
   limit,
 }: WithPagination<{ query: string }>) {
-  return await $api
-    .get("/search/playlists", {
-      searchParams: { q: query, limit, offset },
-    })
-    .json(Collection(Playlist));
+  return await $api("/search/playlists", {
+    searchParams: { q: query, limit, offset },
+    schema: Collection(Playlist),
+  });
 }
 
 export async function searchUsers({
@@ -47,9 +44,8 @@ export async function searchUsers({
   offset,
   limit,
 }: WithPagination<{ query: string }>) {
-  return await $api
-    .get("/search/users", {
-      searchParams: { q: query, limit, offset },
-    })
-    .json(Collection(User));
+  return await $api("/search/users", {
+    searchParams: { q: query, limit, offset },
+    schema: Collection(User),
+  });
 }

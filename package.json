@@ -20,7 +20,6 @@
     "cnfn": "^5.5.1",
     "dedent": "^1.7.2",
     "hls.js": "^1.6.16",
-    "ky": "^2.0.2",
     "mode-watcher": "^1.1.0",
     "runed": "^0.37.1",
     "serialize-error": "^13.0.1",
