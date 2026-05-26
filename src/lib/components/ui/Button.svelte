@@ -28,10 +28,8 @@
     },
   });
 
-  export type ButtonProps =
-    & ButtonRootProps
-    & VariantProps<typeof buttonVariants>
-    & {
+  export type ButtonProps = ButtonRootProps &
+    VariantProps<typeof buttonVariants> & {
       icon?: Component<IconProps>;
       iconPosition?: "leading" | "trailing";
     };
