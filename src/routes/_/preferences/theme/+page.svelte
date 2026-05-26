@@ -23,21 +23,20 @@
   },
 )}
   {@const style = match(color)
-  .with(
-    "black",
-    () => "--swatch-color-light: #000; --swatch-color-dark: #fff;",
-  )
-  .otherwise(
-    () => `
+    .with(
+      "black",
+      () => "--swatch-color-light: #000; --swatch-color-dark: #fff;",
+    )
+    .otherwise(
+      () => `
           --swatch-color-light: var(--color-${color}-500, var(--color-${color}));
           --swatch-color-dark: var(--color-${color}-400, var(--color-${color}));
         `,
-  )}
+    )}
   <Button {style} {onclick} variant={isSelected ? "primary" : "secondary"}>
     <div
       class="size-3 rounded-full bg-(--swatch-color-light) outline-2 outline-base-300-700 dark:bg-(--swatch-color-dark)"
-    >
-    </div>
+    ></div>
     {color}
   </Button>
 {/snippet}
@@ -71,8 +70,8 @@
 
   {#each accentColors as accentColor (accentColor)}
     {@render swatch(accentColor, {
-      isSelected: selectedAccentColor.current === accentColor &&
-        !isBlackAccent.current,
+      isSelected:
+        selectedAccentColor.current === accentColor && !isBlackAccent.current,
       onclick: () => {
         isBlackAccent.current = false;
         selectedAccentColor.current = accentColor;

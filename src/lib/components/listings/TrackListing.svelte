@@ -32,48 +32,47 @@
 
       ...(page.route.id !== "/[user]/[track]"
         ? [
-          {
-            label: "Go to track",
-            icon: DiscIcon,
-            href: resolve("/[user]/[track]", {
-              user: track.user.permalink,
-              track: track.permalink,
-            }),
-          },
-        ]
+            {
+              label: "Go to track",
+              icon: DiscIcon,
+              href: resolve("/[user]/[track]", {
+                user: track.user.permalink,
+                track: track.permalink,
+              }),
+            },
+          ]
         : []),
 
       ...(page.route.id !== "/[user]"
         ? [
-          {
-            label: "Go to artist",
-            icon: UserIcon,
-            href: resolve("/[user]", {
-              user: track.user.permalink,
-            }),
-          },
-        ]
+            {
+              label: "Go to artist",
+              icon: UserIcon,
+              href: resolve("/[user]", {
+                user: track.user.permalink,
+              }),
+            },
+          ]
         : []),
 
       ...(!page.url.pathname.includes(`track-stations:${track.id}`)
         ? [
-          {
-            label: `Go to track station`,
-            href: resolve("/[user]/sets/[playlist]", {
-              user: "discover",
-              playlist: `track-stations:${track.id}`,
-            }),
-            icon: SpeakerIcon,
-          },
-        ]
+            {
+              label: `Go to track station`,
+              href: resolve("/[user]/sets/[playlist]", {
+                user: "discover",
+                playlist: `track-stations:${track.id}`,
+              }),
+              icon: SpeakerIcon,
+            },
+          ]
         : []),
 
       {
         label: "Copy track URL",
         icon: ClipboardIcon,
         onclick: () => {
-          const url =
-            `${page.url.protocol}//${page.url.host}/${track.user.permalink}/${track.permalink}`;
+          const url = `${page.url.protocol}//${page.url.host}/${track.user.permalink}/${track.permalink}`;
           navigator.clipboard?.writeText(url);
         },
       },
