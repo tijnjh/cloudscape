@@ -1,3 +1,5 @@
+import { goto } from "$app/navigation";
+import { resolve } from "$app/paths";
 import { selectedInstance } from "$lib/global.svelte";
 import * as v from "valibot";
 
@@ -26,6 +28,10 @@ export async function $api<TSchema extends v.GenericSchema>(
   input: string,
   { schema, searchParams, ...baseInit }: Init<TSchema> = {},
 ) {
+  if (!selectedInstance.current) {
+    throw goto(resolve("/_/preferences/instance"));
+  }
+
   const url = [
     selectedInstance.current,
     "/_/api/v2",
