@@ -5,7 +5,7 @@
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
   import QueryView from "$lib/components/QueryView.svelte";
-  import { paginated_limit } from "$lib/constants";
+  import { max_items_per_page } from "$lib/constants";
   import { formatDate } from "$lib/utils";
   import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
   import dedent from "dedent";
@@ -22,8 +22,8 @@
     queryFn: ({ pageParam = 0 }) => {
       const allIds = playlistQuery.data?.tracks?.map((track) => track.id) ?? [];
 
-      const startIdx = pageParam * paginated_limit;
-      const endIdx = startIdx + paginated_limit;
+      const startIdx = pageParam * max_items_per_page;
+      const endIdx = startIdx + max_items_per_page;
       const idsChunk = allIds.slice(startIdx, endIdx);
 
       return getTracksByIds(idsChunk);
@@ -31,7 +31,7 @@
     initialPageParam: 0,
     getNextPageParam: (_, allPages) => {
       const allIds = playlistQuery.data?.tracks?.map((track) => track.id) ?? [];
-      const totalChunks = Math.ceil(allIds.length / paginated_limit);
+      const totalChunks = Math.ceil(allIds.length / max_items_per_page);
 
       return allPages.length < totalChunks ? allPages.length : undefined;
     },

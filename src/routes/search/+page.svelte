@@ -9,7 +9,7 @@
   import Main from "$lib/components/Main.svelte";
   import SearchBar from "$lib/components/SearchBar.svelte";
   import SegmentedPicker from "$lib/components/ui/SegmentedPicker.svelte";
-  import { paginated_limit } from "$lib/constants";
+  import { max_items_per_page } from "$lib/constants";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
   import type { User } from "$lib/schemas/user";
@@ -51,13 +51,13 @@
 
       return searchFn({
         query: debouncedQ.current,
-        offset: pageParam * paginated_limit,
-        limit: paginated_limit,
+        offset: pageParam * max_items_per_page,
+        limit: max_items_per_page,
       }).then((r) => r.collection);
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>
-      lastPage.length < paginated_limit ? allPages.length : undefined,
+      lastPage.length < max_items_per_page ? allPages.length : undefined,
   }));
 </script>
 

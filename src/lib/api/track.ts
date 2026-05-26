@@ -1,4 +1,4 @@
-import { paginated_limit } from "$lib/constants";
+import { max_items_per_page } from "$lib/constants";
 import { Track } from "$lib/schemas/track";
 import { $api, getPermalinkPath } from "./utils";
 import * as v from "valibot";
@@ -25,7 +25,7 @@ export async function getTracksByIds(ids: number[]) {
   return await $api("/tracks", {
     searchParams: {
       ids: ids.join(","),
-      limit: paginated_limit,
+      limit: max_items_per_page,
     },
     schema: v.array(Track),
   });

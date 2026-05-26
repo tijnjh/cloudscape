@@ -5,7 +5,7 @@
   import Main from "$lib/components/Main.svelte";
   import QueryView from "$lib/components/QueryView.svelte";
   import SegmentedPicker from "$lib/components/ui/SegmentedPicker.svelte";
-  import { paginated_limit } from "$lib/constants";
+  import { max_items_per_page } from "$lib/constants";
   import type { Collection } from "$lib/schemas/collection";
   import type { Playlist } from "$lib/schemas/playlist";
   import type { Track } from "$lib/schemas/track";
@@ -38,8 +38,8 @@
 
       const data = {
         id: userQuery.data.id,
-        offset: pageParam * paginated_limit,
-        limit: paginated_limit,
+        offset: pageParam * max_items_per_page,
+        limit: max_items_per_page,
       };
       let results: Collection<Track | Playlist>;
       switch (searchParams.kind) {
