@@ -6,8 +6,8 @@
   "license": "AGPL-3.0",
   "scripts": {
     "patch": "patch-files",
-    "dev": "deno run patch && vite dev",
-    "build": "deno run patch && vite build",
+    "dev": "npm run  patch && vite dev",
+    "build": "npm run patch && vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
