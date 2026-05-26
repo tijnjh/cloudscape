@@ -26,15 +26,16 @@ export async function $api<TSchema extends v.GenericSchema>(
   input: string,
   { schema, searchParams, ...baseInit }: Init<TSchema> = {},
 ) {
-  const searchParamsString = searchParams
-    ? formatSearchParams(searchParams)
-    : undefined;
-
-  const url = [selectedInstance.current, "/_/api/v2", input, searchParamsString]
+  const url = [
+    selectedInstance.current,
+    "/_/api/v2",
+    input,
+    searchParams && formatSearchParams(searchParams),
+  ]
     .filter(Boolean)
     .join("");
 
-  const res = (await (await fetch(url, baseInit)).json()) as unknown;
+  const res = await (await fetch(url, baseInit)).json();
 
   if (schema && import.meta.env.dev) {
     return v.parse(schema, res);

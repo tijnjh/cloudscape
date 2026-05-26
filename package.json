@@ -33,7 +33,6 @@
     "@eslint/compat": "^2.1.0",
     "@eslint/js": "^10.0.1",
     "@lucide/svelte": "^1.14.0",
-    "@standard-schema/spec": "^1.1.0",
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/kit": "2.59.1",
     "@sveltejs/vite-plugin-svelte": "7.1.2",
