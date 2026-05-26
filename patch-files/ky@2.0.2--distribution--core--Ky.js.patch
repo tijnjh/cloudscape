@@ -1,0 +1,19 @@
+Index: node_modules/ky/distribution/core/Ky.js
+===================================================================
+--- node_modules/ky/distribution/core/Ky.js
++++ node_modules/ky/distribution/core/Ky.js
+@@ -79,9 +79,13 @@
+         throw new TypeError(invalidSchemaMessage);
+     }
+     const validationResult = await standardSchema.validate(jsonValue);
+     if (validationResult.issues) {
+-        throw new SchemaValidationError(validationResult.issues);
++        if (import.meta.env.DEV) {
++            throw new SchemaValidationError(validationResult.issues);
++        } else {
++            return jsonValue;
++        }
+     }
+     return validationResult.value;
+ };
+ export class Ky {

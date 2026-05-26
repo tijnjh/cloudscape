@@ -5,8 +5,9 @@
   "type": "module",
   "license": "AGPL-3.0",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
+    "patch": "patch-files",
+    "dev": "deno run patch && vite dev",
+    "build": "deno run patch && vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -22,6 +23,7 @@
     "hls.js": "^1.6.16",
     "ky": "^2.0.2",
     "mode-watcher": "^1.1.0",
+    "patch-files": "^6.0.5",
     "runed": "^0.37.1",
     "serialize-error": "^13.0.1",
     "tailwind-color-pairings": "^0.1.2",
@@ -50,9 +52,6 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"
-  },
-  "patchedDependencies": {
-    "eslint-plugin-tailwindcss+4.0.0-beta.0": "patches/eslint-plugin-tailwindcss+4.0.0-beta.0.patch"
   },
   "engines": {
     "node": ">=22.13.0"

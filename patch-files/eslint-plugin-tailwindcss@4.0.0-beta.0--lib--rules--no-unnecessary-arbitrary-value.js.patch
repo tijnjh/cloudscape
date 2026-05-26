@@ -1,0 +1,25 @@
+Index: node_modules/eslint-plugin-tailwindcss/lib/rules/no-unnecessary-arbitrary-value.js
+===================================================================
+--- node_modules/eslint-plugin-tailwindcss/lib/rules/no-unnecessary-arbitrary-value.js
++++ node_modules/eslint-plugin-tailwindcss/lib/rules/no-unnecessary-arbitrary-value.js
+@@ -93,9 +93,9 @@
+       let originalClassNamesValue = null;
+       if (arg === null) {
+         originalClassNamesValue = astUtil.extractValueFromNode(node);
+         const range = astUtil.extractRangeFromNode(node);
+-        if (node.type === 'TextAttribute') {
++        if (node.type === 'TextAttribute' || node.type === 'SvelteAttribute') {
+           start = range[0];
+           end = range[1];
+         } else {
+           start = range[0] + 1;
+@@ -320,8 +320,9 @@
+ 
+     const scriptVisitor = {
+       JSXAttribute: attributeVisitor,
+       TextAttribute: attributeVisitor,
++      SvelteAttribute: attributeVisitor,
+       CallExpression: callExpressionVisitor,
+       TaggedTemplateExpression: function (node) {
+         if (!tags.includes(node.tag.name)) {
+           return;

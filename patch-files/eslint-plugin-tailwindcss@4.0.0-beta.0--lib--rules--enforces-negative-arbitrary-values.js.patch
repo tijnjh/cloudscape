@@ -1,0 +1,14 @@
+Index: node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-negative-arbitrary-values.js
+===================================================================
+--- node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-negative-arbitrary-values.js
++++ node_modules/eslint-plugin-tailwindcss/lib/rules/enforces-negative-arbitrary-values.js
+@@ -176,8 +176,9 @@
+ 
+     const scriptVisitor = {
+       JSXAttribute: attributeVisitor,
+       TextAttribute: attributeVisitor,
++      SvelteAttribute: attributeVisitor,
+       CallExpression: callExpressionVisitor,
+       TaggedTemplateExpression: function (node) {
+         if (!tags.includes(node.tag.name ?? node.tag.object?.name ?? node.tag.callee?.name)) {
+           return;
