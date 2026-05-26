@@ -11,33 +11,28 @@ interface SearchParams {
 }
 
 function formatSearchParams(o: SearchParams) {
-  return "?" +
+  return (
+    "?" +
     Object.entries(o)
       .filter(([, v]) => v != null)
-      .map(([k, v]) =>
-        `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`
+      .map(
+        ([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`,
       )
-      .join("&");
+      .join("&")
+  );
 }
 
 export async function $api<TSchema extends v.GenericSchema>(
   input: string,
-  {
-    schema,
-    searchParams,
-    ...primitiveInit
-  }: Init<TSchema> = {},
+  { schema, searchParams, ...primitiveInit }: Init<TSchema> = {},
 ) {
   const searchParamsString = searchParams
     ? formatSearchParams(searchParams)
     : undefined;
 
-  const url = [
-    selectedInstance.current,
-    "/_/api/v2",
-    input,
-    searchParamsString,
-  ].filter(Boolean).join("");
+  const url = [selectedInstance.current, "/_/api/v2", input, searchParamsString]
+    .filter(Boolean)
+    .join("");
 
   const res = await fetch(url, primitiveInit).then((r) => r.json());
 
