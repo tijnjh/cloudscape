@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onNavigate } from "$app/navigation";
   import { getRelatedTracks } from "$lib/api/discovery";
+  import { Button } from "$lib/components/ui/button";
   import {
     isPaused,
     nowPlaying,
@@ -9,16 +10,15 @@
   } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
   import type { Track } from "$lib/schemas/track";
+  import { cn } from "$lib/utils";
   import Menu from "./Menu.svelte";
   import QueryView from "./QueryView.svelte";
   import TrackListing, {
     getTrackListingMenuActions,
   } from "./listings/TrackListing.svelte";
   import UserListing from "./listings/UserListing.svelte";
-  import Button from "./ui/Button.svelte";
   import { XIcon } from "@lucide/svelte";
   import { createQuery } from "@tanstack/svelte-query";
-  import { cn } from "cnfn";
 
   $effect(() => {
     if (nowPlaying.current) {
@@ -145,6 +145,7 @@
     size="icon"
     onclick={() => (showNowPlayingView.current = false)}
     class="sticky bottom-4 max-md:mt-16 md:absolute md:top-4 md:right-4"
-    icon={XIcon}
-  />
+  >
+    <XIcon />
+  </Button>
 </div>

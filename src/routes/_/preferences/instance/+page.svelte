@@ -2,7 +2,7 @@
   import { browser } from "$app/environment";
   import { getSoundcloakInstances } from "$lib/api/other";
   import QueryView from "$lib/components/QueryView.svelte";
-  import Button from "$lib/components/ui/Button.svelte";
+  import { Button } from "$lib/components/ui/button";
   import { selectedInstance } from "$lib/global.svelte";
   import { createQuery } from "@tanstack/svelte-query";
 
@@ -45,7 +45,7 @@
             selectedInstance.current = instance.URL;
             reload();
           }}
-          variant={isSelected ? "primary" : "secondary"}
+          disabled={isSelected}
         >
           {cleanUrl(instance.URL)}
           ({getCountryName(instance.Host.Country)})

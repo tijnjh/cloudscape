@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/state";
   import Main from "$lib/components/Main.svelte";
-  import Button from "$lib/components/ui/Button.svelte";
+  import { Button } from "$lib/components/ui/button";
   import { ServerCogIcon, SwatchBookIcon } from "@lucide/svelte";
   import type { Snippet } from "svelte";
 
@@ -21,10 +21,10 @@
         {@const isSelected = page.route.id === href}
         <Button
           {href}
-          icon={tab.icon}
           class="w-fit justify-start capitalize md:w-full"
-          variant={isSelected ? "primary" : "secondary"}
+          disabled={isSelected}
         >
+          <tab.icon />
           {tab.name}
         </Button>
       {/each}

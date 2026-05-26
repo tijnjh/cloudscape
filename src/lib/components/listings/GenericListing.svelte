@@ -1,37 +1,27 @@
 <script module lang="ts">
   import type { ListingThumbnailProps } from "../ListingThumbnail.svelte";
-  import type { LucideProps } from "@lucide/svelte";
-  import type { ButtonRootProps } from "bits-ui";
+  import { EllipsisIcon, type LucideProps } from "@lucide/svelte";
   import type { Component } from "svelte";
-  import type { MergeExclusive } from "type-fest";
 
-  export type Action = MergeExclusive<
-    {
-      label: string;
-      icon: Component<LucideProps>;
-      onclick: VoidFunction;
-    },
-    {
-      label: string;
-      icon: Component<LucideProps>;
-      href: string;
-    }
-  >;
-
-  export type GenericListingProps = ButtonRootProps & {
+  export type GenericListingProps = ButtonProps & {
     title: string;
     badges?: (string | false)[];
     subtitle: string;
     thumbnail: ListingThumbnailProps;
-    actions?: Action[];
+    actions?: Array<{
+      label: string;
+      icon: Component<LucideProps>;
+      onSelect: VoidFunction;
+    }>;
   };
 </script>
 
 <script lang="ts">
+  import { Button, type ButtonProps } from "$lib/components/ui/button";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import ListingThumbnail from "../ListingThumbnail.svelte";
-  import Menu from "../Menu.svelte";
-  import Badge from "../ui/Badge.svelte";
-  import { Button as BitsUiButton } from "bits-ui";
+  import { Badge } from "../ui/badge";
+  import * as Item from "../ui/item";
 
   const {
     title,
@@ -43,7 +33,54 @@
   }: GenericListingProps = $props();
 </script>
 
-<div class="flex items-center gap-4 text-left">
+<Item.Root variant="outline">
+  {#snippet child({ props })}
+    <a {...props}>
+      <Item.Media variant="icon">
+        <ListingThumbnail {...thumbnail} />
+      </Item.Media>
+
+      <Item.Content>
+        <Item.Title>
+          {title}
+          {#each badges?.filter(Boolean) as badge (badge)}
+            <Badge>{badge}</Badge>
+          {/each}
+        </Item.Title>
+
+        <Item.Description>
+          {subtitle}
+        </Item.Description>
+      </Item.Content>
+
+      {#if actions}
+        <Item.Actions>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              {#snippet child({ props })}
+                <Button {...props}>
+                  <EllipsisIcon />
+                </Button>
+              {/snippet}
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+              {#each actions as { icon: Icon, onSelect, label } (label)}
+                <DropdownMenu.Item {onSelect}>
+                  {#if Icon}
+                    <Icon />
+                  {/if}
+                  {label}
+                </DropdownMenu.Item>
+              {/each}
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+        </Item.Actions>
+      {/if}
+    </a>
+  {/snippet}
+</Item.Root>
+
+<!-- <div class="flex items-center gap-4 text-left">
   <BitsUiButton.Root
     {...props}
     class={[
@@ -60,7 +97,9 @@
 
         {#each badges as badge (badge)}
           {#if badge}
-            <Badge label={badge} />
+            <Badge>
+              {badge}
+            </Badge>
           {/if}
         {/each}
       </div>
@@ -73,4 +112,4 @@
   {#if actions}
     <Menu {actions} {title} {subtitle} />
   {/if}
-</div>
+</div> -->

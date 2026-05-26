@@ -12,6 +12,6 @@
     src: playlist.artwork_url,
     alt: `Playlist picture of ${playlist.title}`,
   }}
-  href={`/${playlist.user.permalink}/sets/${playlist.permalink}`}
+  onSelect={`/${playlist.user.permalink}/sets/${playlist.permalink}`}
   badges={playlist.is_album ? ["Album"] : []}
 />

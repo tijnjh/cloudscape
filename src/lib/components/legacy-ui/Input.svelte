@@ -1,7 +1,7 @@
-<script module lang="ts">
-  import Button from "./Button.svelte";
+<script lang="ts">
+  import { Button } from "$lib/components/ui/button";
+  import { cn } from "$lib/utils";
   import { type IconProps, XIcon } from "@lucide/svelte";
-  import { cn } from "cnfn";
   import type { Component } from "svelte";
   import type { HTMLInputAttributes } from "svelte/elements";
   import { scale } from "svelte/transition";
@@ -9,9 +9,7 @@
   export interface InputProps extends HTMLInputAttributes {
     icon?: Component<IconProps>;
   }
-</script>
 
-<script lang="ts">
   let {
     value = $bindable(),
     class: className,

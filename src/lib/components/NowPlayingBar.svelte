@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { Button } from "$lib/components/ui/button";
   import { isPaused, nowPlaying, showNowPlayingView } from "$lib/global.svelte";
   import ListingThumbnail from "./ListingThumbnail.svelte";
-  import Button from "./ui/Button.svelte";
   import { PauseIcon, PlayIcon } from "@lucide/svelte";
   import { fly } from "svelte/transition";
 

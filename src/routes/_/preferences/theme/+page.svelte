@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from "$lib/components/ui/Button.svelte";
+  import { Button } from "$lib/components/ui/button";
   import {
     isBlackAccent,
     selectedAccentColor,
@@ -29,7 +29,7 @@
       --swatch-color-dark: var(--color-${color}-400, var(--color-${color}));
     `,
   })}
-  <Button {style} {onclick} variant={isSelected ? "primary" : "secondary"}>
+  <Button {style} {onclick} variant={isSelected ? "default" : "secondary"}>
     <div
       class="size-3 rounded-full bg-(--swatch-color-light) outline-2 outline-base-300-700 dark:bg-(--swatch-color-dark)"
     ></div>
@@ -45,7 +45,7 @@
   {#each themeModes as themeMode (themeMode)}
     {@const isSelected = userPrefersMode.current === themeMode}
     <Button
-      variant={isSelected ? "primary" : "secondary"}
+      variant={isSelected ? "default" : "secondary"}
       onclick={() => setMode(themeMode)}
       class="capitalize"
     >

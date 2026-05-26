@@ -4,7 +4,7 @@
   import favicon from "$lib/assets/favicon.svg";
   import NowPlayingBar from "$lib/components/NowPlayingBar.svelte";
   import NowPlayingView from "$lib/components/NowPlayingView.svelte";
-  import Button from "$lib/components/ui/Button.svelte";
+  import { Button } from "$lib/components/ui/button";
   import {
     isBlackAccent,
     selectedAccentColor,
@@ -12,7 +12,7 @@
   } from "$lib/global.svelte";
   import { shades } from "$lib/theme";
   import "./layout.css";
-  import { ChevronLeft } from "@lucide/svelte";
+  import { ChevronLeftIcon } from "@lucide/svelte";
   import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
   import { ModeWatcher } from "mode-watcher";
 
@@ -65,11 +65,8 @@
     <div
       class="fixed inset-x-0 top-0 z-20 mx-auto flex max-w-5xl justify-between bg-linear-to-b from-base-200-800 to-base-300-700/0 p-4"
     >
-      <Button
-        variant="secondary"
-        icon={ChevronLeft}
-        onclick={() => history.back()}
-      >
+      <Button variant="secondary" onclick={() => history.back()}>
+        <ChevronLeftIcon />
         Back
       </Button>
 

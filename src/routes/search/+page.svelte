@@ -8,7 +8,7 @@
   import InfiniteQueryView from "$lib/components/InfiniteQueryView.svelte";
   import Main from "$lib/components/Main.svelte";
   import SearchBar from "$lib/components/SearchBar.svelte";
-  import SegmentedPicker from "$lib/components/ui/SegmentedPicker.svelte";
+  import SegmentedPicker from "$lib/components/SegmentedPicker.svelte";
   import { max_items_per_page } from "$lib/constants";
   import { match } from "$lib/utils";
   import { createInfiniteQuery } from "@tanstack/svelte-query";

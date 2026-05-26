@@ -7,7 +7,7 @@
   import PlaylistListing from "$lib/components/listings/PlaylistListing.svelte";
   import TrackListing from "$lib/components/listings/TrackListing.svelte";
   import UserListing from "$lib/components/listings/UserListing.svelte";
-  import Button from "$lib/components/ui/Button.svelte";
+  import { Button } from "$lib/components/ui/button";
   import { favoriteTrackIds } from "$lib/global.svelte";
   import { Settings2Icon } from "@lucide/svelte";
   import { createQuery } from "@tanstack/svelte-query";
@@ -36,7 +36,9 @@
           <Button variant="secondary" href="https://tijn.dev/cloudscape">
             Source
           </Button>
-          <Button size="icon" icon={Settings2Icon} href="/_/preferences" />
+          <Button size="icon" href="/_/preferences">
+            <Settings2Icon />
+          </Button>
         </div>
       </div>
 

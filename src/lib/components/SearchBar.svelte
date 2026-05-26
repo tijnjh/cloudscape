@@ -1,6 +1,6 @@
 <script lang="ts">
   // import { getSearchSuggestions } from "$lib/api/discovery";
-  import Input from "./ui/Input.svelte";
+  import Input from "./legacy-ui/Input.svelte";
   import { SearchIcon } from "@lucide/svelte";
 
   // import { createQuery } from "@tanstack/svelte-query";

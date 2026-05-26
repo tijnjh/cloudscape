@@ -36,9 +36,9 @@
 </script>
 
 <script lang="ts">
+  import { cn } from "$lib/utils";
   import type { IconProps } from "@lucide/svelte";
   import { Button } from "bits-ui";
-  import { cn } from "cnfn";
   import type { Component } from "svelte";
 
   const {

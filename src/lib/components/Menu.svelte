@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Button from "./ui/Button.svelte";
+  import { Button } from "$lib/components/ui/button";
+  import { cn } from "$lib/utils";
   import { EllipsisIcon, type LucideProps } from "@lucide/svelte";
   import { Dialog, DropdownMenu } from "bits-ui";
-  import { cn } from "cnfn";
   import type { Component } from "svelte";
   import { MediaQuery } from "svelte/reactivity";
   import { scale } from "svelte/transition";
@@ -40,7 +40,7 @@
     aria-label="More options"
     {...props}
   >
-    <EllipsisIcon size={16} />
+    <EllipsisIcon />
   </Button>
 {/snippet}
 
@@ -65,9 +65,9 @@
                   <Button
                     href={action.href}
                     onclick={action.onclick}
-                    icon={action.icon}
                     class="w-full justify-start"
                   >
+                    <action.icon />
                     {action.label}
                   </Button>
                 {/each}
@@ -117,12 +117,12 @@
           {#each actions as action (action?.label)}
             {#if action}
               <Button
-                icon={action.icon}
                 onclick={action.onclick}
                 variant="secondary"
                 href={action.href}
                 class="w-full justify-start"
               >
+                <action.icon />
                 {action.label}
               </Button>
             {/if}

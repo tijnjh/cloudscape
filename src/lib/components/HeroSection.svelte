@@ -1,5 +1,9 @@
-<script module lang="ts">
+<script lang="ts">
   import type { User } from "$lib/schemas/user";
+  import { cn } from "$lib/utils";
+  import Collapsible from "./legacy-ui/Collapsible.svelte";
+  import UserListing from "./listings/UserListing.svelte";
+  import Badge from "./ui/badge/badge.svelte";
 
   export interface HeroSectionProps {
     pictureSrc?: string | null;
@@ -9,13 +13,6 @@
     user?: User;
     roundedPicture?: boolean;
   }
-</script>
-
-<script lang="ts">
-  import UserListing from "./listings/UserListing.svelte";
-  import Badge from "./ui/Badge.svelte";
-  import Collapsible from "./ui/Collapsible.svelte";
-  import { cn } from "cnfn";
 
   const {
     pictureSrc,
@@ -49,7 +46,9 @@
     <div class="flex gap-2">
       {#each badges as badge (badge)}
         {#if badge}
-          <Badge label={badge} />
+          <Badge>
+            {badge}
+          </Badge>
         {/if}
       {/each}
     </div>

@@ -1,8 +1,9 @@
 <script lang="ts" generics="T">
   import Spinner from "$lib/components/Spinner.svelte";
+  import { cn } from "$lib/utils";
   import ErrorDisplay from "./ErrorDisplay.svelte";
   import type { CreateQueryResult } from "@tanstack/svelte-query";
-  import { type ClassValue, cn } from "cnfn";
+  import type { ClassValue } from "clsx";
   import type { Snippet } from "svelte";
   import { fly } from "svelte/transition";
 
