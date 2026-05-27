@@ -36,14 +36,18 @@
     queryFn: async ({ pageParam = 0 }) => {
       if (!userQuery.data) return [];
 
-      return await match(searchParams.kind, {
+      const fn = match(searchParams.kind, {
         tracks: () => getUserTracks,
         playlists: () => getUserPlaylists,
-      })({
+      });
+
+      const result = await fn({
         id: userQuery.data.id,
         offset: pageParam * max_items_per_page,
         limit: max_items_per_page,
-      }).then((res) => res.collection as (Track | Playlist)[]);
+      })
+
+      return result.collection as (Track | Playlist)[]; // need to cast for some reason :P
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>

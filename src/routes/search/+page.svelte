@@ -37,16 +37,20 @@
     queryFn: async ({ pageParam }) => {
       if (!debouncedQ.current) return [];
 
-      return await match(searchParams.kind, {
+      const fn = match(searchParams.kind, {
         tracks: () => searchTracks,
         playlists: () => searchPlaylists,
         users: () => searchUsers,
         all: () => searchAnything,
-      })({
+      });
+
+      const result = await fn({
         query: debouncedQ.current,
         offset: pageParam * max_items_per_page,
         limit: max_items_per_page,
-      }).then((res) => res.collection);
+      });
+
+      return result.collection
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>
