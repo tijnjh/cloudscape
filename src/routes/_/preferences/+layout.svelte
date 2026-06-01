@@ -17,8 +17,9 @@
   {#snippet left()}
     <div class="flex gap-2 lg:contents">
       {#each tabs as tab (tab.name)}
-        {@const href = `/_/preferences/${tab.name}`}
-        {@const isSelected = page.route.id === href}
+        {const href = `/_/preferences/${tab.name}`}
+        {const isSelected = page.route.id === href}
+        
         <Button
           {href}
           icon={tab.icon}

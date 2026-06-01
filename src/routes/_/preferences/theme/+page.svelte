@@ -22,7 +22,7 @@
     onclick: VoidFunction;
   },
 )}
-  {@const style = match(color, {
+  {const style = match(color, {
     black: () => "--swatch-color-light: #000; --swatch-color-dark: #fff;",
     _: () => `
       --swatch-color-light: var(--color-${color}-500, var(--color-${color}));
@@ -43,7 +43,8 @@
 
 <div class="flex flex-wrap gap-2">
   {#each themeModes as themeMode (themeMode)}
-    {@const isSelected = userPrefersMode.current === themeMode}
+    {const isSelected = userPrefersMode.current === themeMode}
+    
     <Button
       variant={isSelected ? "primary" : "secondary"}
       onclick={() => setMode(themeMode)}

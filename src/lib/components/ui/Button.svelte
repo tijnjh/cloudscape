@@ -45,7 +45,7 @@
     children,
     variant,
     size,
-    icon,
+    icon: Icon,
     iconPosition = "leading",
     class: className,
     ...props
@@ -57,7 +57,6 @@
 </script>
 
 {#snippet iconSnippet()}
-  {@const Icon = icon}
   <Icon
     size={16}
     strokeWidth={3}

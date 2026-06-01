@@ -37,7 +37,7 @@
 <QueryView query={instancesQuery}>
   {#snippet content(instances)}
     {#each instances as instance (instance.URL)}
-      {@const isSelected = instance.URL === selectedInstance.current}
+      {const isSelected = instance.URL === selectedInstance.current}
 
       {#if instance.Settings.EnableAPI}
         <Button
