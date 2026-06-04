@@ -1,7 +1,7 @@
-import { PUBLIC_SOUNDCLOAK_INSTANCES_URL } from "$env/static/public";
+import { SOUNDCLOAK_INSTANCES_URL } from "$app/env/public";
 import { SoundcloakInstance } from "$lib/schemas/soundcloak";
 
 export async function getSoundcloakInstances() {
-  return await (await fetch(PUBLIC_SOUNDCLOAK_INSTANCES_URL))
-    .json() as SoundcloakInstance[];
+  const res = await fetch(SOUNDCLOAK_INSTANCES_URL);
+  return (await res.json()) as SoundcloakInstance[];
 }

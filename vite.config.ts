@@ -10,6 +10,9 @@ export default defineConfig({
       adapter: adapter({
         fallback: "index.html",
       }),
+      experimental: {
+        explicitEnvironmentVariables: true,
+      },
     }),
   ],
 });

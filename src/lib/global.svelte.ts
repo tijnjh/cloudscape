@@ -1,4 +1,4 @@
-import { PUBLIC_DEFAULT_INSTANCE } from "$env/static/public";
+import { DEFAULT_INSTANCE } from "$app/env/public";
 import { ReactiveValue } from "./reactive-value.svelte";
 import type { Track } from "./schemas/track";
 import type { AccentColor, BaseColor } from "./theme";
@@ -11,7 +11,7 @@ export const isPaused = new ReactiveValue(true);
 
 export const selectedInstance = new PersistedState<string | undefined>(
   "selected-instance",
-  PUBLIC_DEFAULT_INSTANCE,
+  DEFAULT_INSTANCE,
 );
 
 export const selectedBaseColor = new PersistedState<BaseColor>(
