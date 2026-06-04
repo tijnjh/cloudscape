@@ -1,4 +1,5 @@
 <script module lang="ts">
+  import type { LucideIcon } from "@lucide/svelte";
   import type { ButtonRootProps } from "bits-ui";
   import { tv, type VariantProps } from "tailwind-variants";
 
@@ -30,16 +31,14 @@
 
   export type ButtonProps = ButtonRootProps &
     VariantProps<typeof buttonVariants> & {
-      icon?: Component<IconProps>;
+      icon?: LucideIcon;
       iconPosition?: "leading" | "trailing";
     };
 </script>
 
 <script lang="ts">
-  import type { IconProps } from "@lucide/svelte";
   import { Button } from "bits-ui";
   import { cn } from "cnfn";
-  import type { Component } from "svelte";
 
   const {
     children,
