@@ -1,13 +1,13 @@
 <script module lang="ts">
   import Button from "./Button.svelte";
-  import { type IconProps, XIcon } from "@lucide/svelte";
+  import { type LucideIcon, XIcon } from "@lucide/svelte";
   import { cn } from "cnfn";
   import type { Component } from "svelte";
   import type { HTMLInputAttributes } from "svelte/elements";
   import { scale } from "svelte/transition";
 
   export interface InputProps extends HTMLInputAttributes {
-    icon?: Component<IconProps>;
+    icon?: LucideIcon;
   }
 </script>
 

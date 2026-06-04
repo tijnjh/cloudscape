@@ -1,9 +1,8 @@
 <script lang="ts">
   import Button from "./ui/Button.svelte";
-  import { EllipsisIcon, type LucideProps } from "@lucide/svelte";
+  import { EllipsisIcon, type LucideIcon } from "@lucide/svelte";
   import { Dialog, DropdownMenu } from "bits-ui";
   import { cn } from "cnfn";
-  import type { Component } from "svelte";
   import { MediaQuery } from "svelte/reactivity";
   import { scale } from "svelte/transition";
   import type { MergeExclusive } from "type-fest";
@@ -18,12 +17,12 @@
     actions?: MergeExclusive<
       {
         label: string;
-        icon: Component<LucideProps>;
+        icon: LucideIcon;
         onclick: VoidFunction;
       },
       {
         label: string;
-        icon: Component<LucideProps>;
+        icon: LucideIcon;
         href: string;
       }
     >[];

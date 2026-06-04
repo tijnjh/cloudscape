@@ -1,19 +1,18 @@
 <script module lang="ts">
   import type { ListingThumbnailProps } from "../ListingThumbnail.svelte";
-  import type { LucideProps } from "@lucide/svelte";
+  import type { LucideIcon } from "@lucide/svelte";
   import type { ButtonRootProps } from "bits-ui";
-  import type { Component } from "svelte";
   import type { MergeExclusive } from "type-fest";
 
   export type Action = MergeExclusive<
     {
       label: string;
-      icon: Component<LucideProps>;
+      icon: LucideIcon;
       onclick: VoidFunction;
     },
     {
       label: string;
-      icon: Component<LucideProps>;
+      icon: LucideIcon;
       href: string;
     }
   >;
