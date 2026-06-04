@@ -1,15 +1,11 @@
-<script module lang="ts">
-  import type { ClassValue } from "cnfn";
+<script lang="ts">
+  import { cn, type ClassValue } from "cnfn";
 
   export interface ListingThumbnailProps {
     src?: string | null;
     alt: string;
     class?: ClassValue;
   }
-</script>
-
-<script lang="ts">
-  import { cn } from "cnfn";
 
   const { src, alt, ...props }: ListingThumbnailProps = $props();
 

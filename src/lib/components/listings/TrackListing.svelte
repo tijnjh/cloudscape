@@ -11,7 +11,7 @@
     UserIcon,
   } from "@lucide/svelte";
 
-  export function getTrackListingMenuActions(track: Track) {
+  export function getTrackListingMenuActions(track: SC.Track) {
     const isFavorited = favoriteTrackIds.current.includes(track.id);
 
     return [
@@ -82,10 +82,9 @@
 
 <script lang="ts">
   import { isPaused, nowPlaying } from "$lib/global.svelte";
-  import type { Track } from "$lib/schemas/track";
   import GenericListing from "./GenericListing.svelte";
 
-  const { track }: { track: Track } = $props();
+  const { track }: { track: SC.Track } = $props();
 </script>
 
 <GenericListing

@@ -1,7 +1,4 @@
-<script lang="ts" generics="T extends Track | Playlist | User">
-  import type { Playlist } from "$lib/schemas/playlist";
-  import type { Track } from "$lib/schemas/track";
-  import type { User } from "$lib/schemas/user";
+<script lang="ts" generics="T extends SC.Track | SC.Playlist | SC.User">
   import { whenInView } from "$lib/utils";
   import ErrorDisplay from "./ErrorDisplay.svelte";
   import Spinner from "./Spinner.svelte";

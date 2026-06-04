@@ -1,8 +1,7 @@
 <script lang="ts">
-  import type { Playlist } from "$lib/schemas/playlist";
   import GenericListing from "./GenericListing.svelte";
 
-  const { playlist }: { playlist: Playlist } = $props();
+  const { playlist }: { playlist: SC.Playlist } = $props();
 </script>
 
 <GenericListing

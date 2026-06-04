@@ -1,10 +1,12 @@
 import { PUBLIC_DEFAULT_INSTANCE } from "$env/static/public";
 import { ReactiveValue } from "./reactive-value.svelte";
-import type { Track } from "./schemas/track";
 import type { AccentColor, BaseColor } from "./theme";
 import { PersistedState } from "runed";
 
-export const nowPlaying = new PersistedState<Track | null>("now-playing", null);
+export const nowPlaying = new PersistedState<SC.Track | null>(
+  "now-playing",
+  null,
+);
 export const favoriteTrackIds = new PersistedState<number[]>("favorites", []);
 export const showNowPlayingView = new ReactiveValue(false);
 export const isPaused = new ReactiveValue(true);

@@ -8,7 +8,6 @@
     showNowPlayingView,
   } from "$lib/global.svelte";
   import { Hls } from "$lib/hls";
-  import type { Track } from "$lib/schemas/track";
   import Menu from "./Menu.svelte";
   import QueryView from "./QueryView.svelte";
   import TrackListing, {
@@ -43,7 +42,7 @@
     }
   });
 
-  const applySource = (track: Track) => (element: HTMLAudioElement) => {
+  const applySource = (track: SC.Track) => (element: HTMLAudioElement) => {
     const url = `${selectedInstance.current}/_/api/hls/${track.user.permalink}/${track.permalink}`;
 
     if (!Hls.isSupported()) {

@@ -1,16 +1,3 @@
-<script module lang="ts">
-  import type { User } from "$lib/schemas/user";
-
-  export interface HeroSectionProps {
-    pictureSrc?: string | null;
-    title: string;
-    badges?: (string | false)[];
-    description?: string | null;
-    user?: User;
-    roundedPicture?: boolean;
-  }
-</script>
-
 <script lang="ts">
   import UserListing from "./listings/UserListing.svelte";
   import Badge from "./ui/Badge.svelte";
@@ -24,7 +11,14 @@
     badges,
     user,
     roundedPicture = false,
-  }: HeroSectionProps = $props();
+  }: {
+    pictureSrc?: string | null;
+    title: string;
+    badges?: (string | false)[];
+    description?: string | null;
+    user?: SC.User;
+    roundedPicture?: boolean;
+  } = $props();
 </script>
 
 {#if pictureSrc}

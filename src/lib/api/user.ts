@@ -1,16 +1,12 @@
-import { Collection } from "$lib/schemas/collection";
-import { Playlist } from "$lib/schemas/playlist";
-import { Track } from "$lib/schemas/track";
-import { User } from "$lib/schemas/user";
 import type { WithPagination } from "$lib/types";
 import { $api, getPermalinkPath } from "./utils";
 
 export async function resolveUser(user: string) {
-  return await $api(getPermalinkPath(user), { schema: User });
+  return await $api<SC.User>(getPermalinkPath(user));
 }
 
 export async function getUserById(id: number) {
-  return await $api(`/users/${id}`, { schema: User });
+  return await $api<SC.User>(`/users/${id}`);
 }
 
 export async function getUserTracks({
@@ -18,9 +14,8 @@ export async function getUserTracks({
   offset,
   limit,
 }: WithPagination<{ id: number }>) {
-  return await $api(`/users/${id}/tracks`, {
+  return await $api<SC.Collection<SC.Track>>(`/users/${id}/tracks`, {
     searchParams: { limit, offset },
-    schema: Collection(Track),
   });
 }
 
@@ -29,8 +24,7 @@ export async function getUserPlaylists({
   offset,
   limit,
 }: WithPagination<{ id: number }>) {
-  return await $api(`/users/${id}/playlists`, {
+  return await $api<SC.Collection<SC.Playlist>>(`/users/${id}/playlists`, {
     searchParams: { limit, offset },
-    schema: Collection(Playlist),
   });
 }

@@ -6,8 +6,6 @@
   import QueryView from "$lib/components/QueryView.svelte";
   import SegmentedPicker from "$lib/components/ui/SegmentedPicker.svelte";
   import { max_items_per_page } from "$lib/constants";
-  import type { Playlist } from "$lib/schemas/playlist.js";
-  import type { Track } from "$lib/schemas/track.js";
   import { match } from "$lib/utils.js";
   import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
   import { useSearchParams } from "runed/kit";
@@ -45,9 +43,9 @@
         id: userQuery.data.id,
         offset: pageParam * max_items_per_page,
         limit: max_items_per_page,
-      })
+      });
 
-      return result.collection as (Track | Playlist)[]; // need to cast for some reason :P
+      return result.collection as (SC.Track | SC.Playlist)[]; // need to cast for some reason :P
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>

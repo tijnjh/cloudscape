@@ -1,8 +1,7 @@
 <script lang="ts">
-  import type { User } from "$lib/schemas/user";
   import GenericListing from "./GenericListing.svelte";
 
-  const { user }: { user: User } = $props();
+  const { user }: { user: SC.User } = $props();
 </script>
 
 <GenericListing

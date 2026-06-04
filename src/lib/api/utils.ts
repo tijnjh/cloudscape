@@ -1,10 +1,8 @@
 import { goto } from "$app/navigation";
 import { resolve } from "$app/paths";
 import { selectedInstance } from "$lib/global.svelte";
-import * as v from "valibot";
 
-interface Init<TSchema extends v.GenericSchema> extends RequestInit {
-  schema?: TSchema;
+interface Init extends RequestInit {
   searchParams?: SearchParams;
 }
 
@@ -24,9 +22,9 @@ function formatSearchParams(o: SearchParams) {
   );
 }
 
-export async function $api<TSchema extends v.GenericSchema>(
+export async function $api<T>(
   input: string,
-  { schema, searchParams, ...baseInit }: Init<TSchema> = {},
+  { searchParams, ...baseInit }: Init = {},
 ) {
   if (!selectedInstance.current) {
     throw goto(resolve("/_/preferences/instance"));
@@ -43,11 +41,7 @@ export async function $api<TSchema extends v.GenericSchema>(
 
   const res = await (await fetch(url, baseInit)).json();
 
-  if (schema && import.meta.env.dev) {
-    return v.parse(schema, res);
-  }
-
-  return res as v.InferOutput<TSchema>;
+  return res as T;
 }
 
 export function getPermalinkPath(...permalinks: string[]) {
