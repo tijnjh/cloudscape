@@ -19,7 +19,7 @@
       {#each tabs as tab (tab.name)}
         {const href = `/_/preferences/${tab.name}`}
         {const isSelected = page.route.id === href}
-        
+
         <Button
           {href}
           icon={tab.icon}
