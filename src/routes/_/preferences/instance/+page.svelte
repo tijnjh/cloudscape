@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
+  import { browser } from "$app/env";
   import { getSoundcloakInstances } from "$lib/api/other";
   import QueryView from "$lib/components/QueryView.svelte";
   import Button from "$lib/components/ui/Button.svelte";
