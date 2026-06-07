@@ -1,4 +1,4 @@
-<script lang="ts" generics="T extends string[]">
+<script lang="ts" generics="const T extends string[]">
   import Button from "./Button.svelte";
   import { type ClassValue, cn } from "cnfn";
 
