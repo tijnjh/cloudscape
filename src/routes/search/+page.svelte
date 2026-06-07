@@ -50,7 +50,7 @@
         limit: max_items_per_page,
       });
 
-      return result.collection
+      return result.collection;
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>

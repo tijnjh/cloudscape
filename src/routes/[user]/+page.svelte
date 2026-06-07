@@ -45,7 +45,7 @@
         id: userQuery.data.id,
         offset: pageParam * max_items_per_page,
         limit: max_items_per_page,
-      })
+      });
 
       return result.collection as (Track | Playlist)[]; // need to cast for some reason :P
     },

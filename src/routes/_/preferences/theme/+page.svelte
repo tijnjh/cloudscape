@@ -43,8 +43,8 @@
 
 <div class="flex flex-wrap gap-2">
   {#each themeModes as themeMode (themeMode)}
-    {const isSelected = userPrefersMode.current === themeMode}
-    
+    {const isSelected = $derived(userPrefersMode.current === themeMode)}
+
     <Button
       variant={isSelected ? "primary" : "secondary"}
       onclick={() => setMode(themeMode)}
