@@ -23,7 +23,7 @@
         <AnimatePresence>
           {#key nowPlaying.current?.artwork_url}
             <motion.div
-              key={nowPlaying.current!.artwork_url!}
+              key={nowPlaying.current?.artwork_url!}
               transition={{ ease: "easeInOut" }}
               class="aspect-square size-12 rounded"
               initial={{
