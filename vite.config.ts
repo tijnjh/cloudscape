@@ -7,9 +7,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     sveltekit({
-      adapter: adapter({
-        fallback: "index.html",
-      }),
+      adapter: adapter(),
       experimental: {
         explicitEnvironmentVariables: true,
       },
