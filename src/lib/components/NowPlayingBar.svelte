@@ -20,47 +20,52 @@
         onclick={() => (showNowPlayingView.current = true)}
         class="flex gap-4 truncate text-left"
       >
-        <AnimatePresence>
-          {#key nowPlaying.current?.artwork_url}
-            <motion.div
-              key={nowPlaying.current?.artwork_url!}
-              transition={{ ease: "easeInOut" }}
-              class="aspect-square size-12 rounded"
-              initial={{
-                scale: 0.5,
-                filter: "blur(4px)",
-                rotate: 15,
-                opacity: 0,
-              }}
-              animate={{
-                scale: 1,
-                filter: "blur(0px)",
-                rotate: 0,
-                opacity: 1,
-              }}
-              exit={{
-                scale: 0.5,
-                filter: "blur(10px)",
-                rotate: -15,
-                opacity: 0,
-              }}
-            >
-              <ListingThumbnail src={nowPlaying.current?.artwork_url} alt="" />
-            </motion.div>
-          {/key}
-        </AnimatePresence>
+        {#if nowPlaying.current}
+          <AnimatePresence>
+            {#key nowPlaying.current.id}
+              <motion.div
+                key={nowPlaying.current.id.toString()}
+                transition={{ ease: "easeInOut" }}
+                class="aspect-square size-12 rounded"
+                initial={{
+                  scale: 0.5,
+                  filter: "blur(4px)",
+                  rotate: 15,
+                  opacity: 0,
+                }}
+                animate={{
+                  scale: 1,
+                  filter: "blur(0px)",
+                  rotate: 0,
+                  opacity: 1,
+                }}
+                exit={{
+                  scale: 0.5,
+                  filter: "blur(10px)",
+                  rotate: -15,
+                  opacity: 0,
+                }}
+              >
+                <ListingThumbnail
+                  src={nowPlaying.current?.artwork_url}
+                  alt=""
+                />
+              </motion.div>
+            {/key}
+          </AnimatePresence>
+        {/if}
 
         <div class="flex w-full min-w-0 flex-col">
           <h3 class="truncate m-0 p-0">
             <NumericText
               class="inline-block"
-              value={nowPlaying.current!.title}
+              value={nowPlaying.current?.title ?? ""}
             />
           </h3>
           <p class="truncate opacity-50">
             <NumericText
               class="inline-block"
-              value={nowPlaying.current!.user.username}
+              value={nowPlaying.current?.user.username ?? ""}
             />
           </p>
         </div>
