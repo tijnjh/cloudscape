@@ -2,7 +2,7 @@
   import { isPaused, nowPlaying, showNowPlayingView } from "$lib/global.svelte";
   import ListingThumbnail from "./ListingThumbnail.svelte";
   import Button from "./ui/Button.svelte";
-  import { motion } from "@humanspeak/svelte-motion";
+  import { AnimatePresence, motion } from "@humanspeak/svelte-motion";
   import { PauseIcon, PlayIcon } from "@lucide/svelte";
   import NumericText from "@numeric-text/svelte";
   import { fly } from "svelte/transition";
@@ -20,7 +20,35 @@
         onclick={() => (showNowPlayingView.current = true)}
         class="flex gap-4 truncate text-left"
       >
-        <ListingThumbnail src={nowPlaying.current?.artwork_url} alt="" />
+        <AnimatePresence>
+          {#key nowPlaying.current?.artwork_url}
+            <motion.div
+              key={nowPlaying.current!.artwork_url!}
+              transition={{ ease: "easeInOut" }}
+              class="aspect-square size-12 rounded"
+              initial={{
+                scale: 0.5,
+                filter: "blur(4px)",
+                rotate: 15,
+                opacity: 0,
+              }}
+              animate={{
+                scale: 1,
+                filter: "blur(0px)",
+                rotate: 0,
+                opacity: 1,
+              }}
+              exit={{
+                scale: 0.5,
+                filter: "blur(10px)",
+                rotate: -15,
+                opacity: 0,
+              }}
+            >
+              <ListingThumbnail src={nowPlaying.current?.artwork_url} alt="" />
+            </motion.div>
+          {/key}
+        </AnimatePresence>
 
         <div class="flex w-full min-w-0 flex-col">
           <h3 class="truncate m-0 p-0">
@@ -45,7 +73,11 @@
         }}
       >
         <motion.div
-          initial={{ rotate: 180, scale: 0, filter: "blur(10px)" }}
+          initial={{
+            rotate: 180,
+            scale: 0,
+            filter: "blur(10px)",
+          }}
           animate={isPaused.current
             ? { rotate: 360, scale: 1, filter: "blur(0px)" }
             : { rotate: 180, scale: 1, filter: "blur(0px)" }}
