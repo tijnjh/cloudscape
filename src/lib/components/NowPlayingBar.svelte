@@ -2,7 +2,9 @@
   import { isPaused, nowPlaying, showNowPlayingView } from "$lib/global.svelte";
   import ListingThumbnail from "./ListingThumbnail.svelte";
   import Button from "./ui/Button.svelte";
+  import { motion } from "@humanspeak/svelte-motion";
   import { PauseIcon, PlayIcon } from "@lucide/svelte";
+  import NumericText from "@numeric-text/svelte";
   import { fly } from "svelte/transition";
 
   const StatusIcon = $derived(isPaused.current ? PlayIcon : PauseIcon);
@@ -21,8 +23,18 @@
         <ListingThumbnail src={nowPlaying.current?.artwork_url} alt="" />
 
         <div class="flex w-full min-w-0 flex-col">
-          <h3 class="truncate">{nowPlaying.current?.title}</h3>
-          <p class="truncate opacity-50">{nowPlaying.current?.user.username}</p>
+          <h3 class="truncate m-0 p-0">
+            <NumericText
+              class="inline-block"
+              value={nowPlaying.current!.title}
+            />
+          </h3>
+          <p class="truncate opacity-50">
+            <NumericText
+              class="inline-block"
+              value={nowPlaying.current!.user.username}
+            />
+          </p>
         </div>
       </button>
 
@@ -32,7 +44,14 @@
           isPaused.current = !isPaused.current;
         }}
       >
-        <StatusIcon fill="currentColor" size={16} />
+        <motion.div
+          initial={{ rotate: 180, scale: 0, filter: "blur(10px)" }}
+          animate={isPaused.current
+            ? { rotate: 360, scale: 1, filter: "blur(0px)" }
+            : { rotate: 180, scale: 1, filter: "blur(0px)" }}
+        >
+          <StatusIcon fill="currentColor" size={16} />
+        </motion.div>
       </Button>
     </div>
   </div>

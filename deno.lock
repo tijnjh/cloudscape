@@ -4,7 +4,9 @@
     "npm:@eslint/compat@^2.1.0": "2.1.0_eslint@10.4.1",
     "npm:@eslint/js@^10.0.1": "10.0.1_eslint@10.4.1",
     "npm:@fontsource/atkinson-hyperlegible@^5.2.8": "5.2.8",
+    "npm:@humanspeak/svelte-motion@~0.6.5": "0.6.5_svelte@5.56.2",
     "npm:@lucide/svelte@^1.17.0": "1.17.0_svelte@5.56.2",
+    "npm:@numeric-text/svelte@~0.1.4": "0.1.4_svelte@5.56.2",
     "npm:@sveltejs/adapter-static@^3.0.10": "3.0.10_@sveltejs+kit@2.63.0__@sveltejs+vite-plugin-svelte@7.1.2___svelte@5.56.2___vite@8.0.16____@types+node@25.9.2___@types+node@25.9.2__svelte@5.56.2__typescript@6.0.3__vite@8.0.16___@types+node@25.9.2__@types+node@25.9.2_@sveltejs+vite-plugin-svelte@7.1.2__svelte@5.56.2__vite@8.0.16___@types+node@25.9.2__@types+node@25.9.2_@types+node@25.9.2_svelte@5.56.2_typescript@6.0.3_vite@8.0.16__@types+node@25.9.2",
     "npm:@sveltejs/kit@^2.63.0": "2.63.0_@sveltejs+vite-plugin-svelte@7.1.2__svelte@5.56.2__vite@8.0.16___@types+node@25.9.2__@types+node@25.9.2_svelte@5.56.2_typescript@6.0.3_vite@8.0.16__@types+node@25.9.2_@types+node@25.9.2",
     "npm:@sveltejs/vite-plugin-svelte@7.1.2": "7.1.2_svelte@5.56.2_vite@8.0.16__@types+node@25.9.2_@types+node@25.9.2",
@@ -212,6 +214,15 @@
     "@humanfs/types@0.15.0": {
       "integrity": "sha512-ZZ1w0aoQkwuUuC7Yf+7sdeaNfqQiiLcSRbfI08oAxqLtpXQr9AIVX7Ay7HLDuiLYAaFPu8oBYNq/QIi9URHJ3Q=="
     },
+    "@humanspeak/svelte-motion@0.6.5_svelte@5.56.2": {
+      "integrity": "sha512-HKYYlxsJMlT7/GycREa+yVUyAhFTdS/q47lZiZ3ZPtOzzAGBXSxFhp4uERqzyUQZJ35XXYw/GGyWhrpt4+KSMA==",
+      "dependencies": [
+        "acorn",
+        "motion",
+        "motion-dom",
+        "svelte"
+      ]
+    },
     "@humanwhocodes/module-importer@1.0.1": {
       "integrity": "sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA=="
     },
@@ -280,6 +291,16 @@
       "dependencies": [
         "@nodelib/fs.scandir",
         "fastq"
+      ]
+    },
+    "@numeric-text/core@0.1.4": {
+      "integrity": "sha512-tMaH5u/kdpw3AP+XJMnDWyq39zVHoP80NCLTFwzVept64dIAMKBNLlYtUK0+EULiyFg6IiSwswmc9tMukV1tLw=="
+    },
+    "@numeric-text/svelte@0.1.4_svelte@5.56.2": {
+      "integrity": "sha512-dtVrYcadp5NBOeoF8NXHKXKid+vCrpx3s36MBfqAoDLBiLsqgAY+1kDwAOH75gAFGsviAE14JR4ygVVefDNn3w==",
+      "dependencies": [
+        "@numeric-text/core",
+        "svelte"
       ]
     },
     "@oxc-project/types@0.133.0": {
@@ -1018,6 +1039,14 @@
     "flatted@3.4.2": {
       "integrity": "sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA=="
     },
+    "framer-motion@12.40.0": {
+      "integrity": "sha512-uaBd3qC1v3KQqBEjwTUd183K6PbS+j0yR9w9VmEOLWA/tnUcSn8Xa3uck7t4dgpDoUss8xQTcj8W2L07lrnLFg==",
+      "dependencies": [
+        "motion-dom",
+        "motion-utils",
+        "tslib"
+      ]
+    },
     "fsevents@2.3.3": {
       "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
       "os": ["darwin"],
@@ -1266,6 +1295,22 @@
         "runed@0.25.0_svelte@5.56.2",
         "svelte",
         "svelte-toolbelt@0.7.1_svelte@5.56.2"
+      ]
+    },
+    "motion-dom@12.40.0": {
+      "integrity": "sha512-HxU3ZaBwNPVQUBQf1xxgq+7JrPNZvjLVxgbpEZL7RrWJnsxOf0/OM+yrHG9ogLQ31Do/r57Oz2gQWPK+6q62mg==",
+      "dependencies": [
+        "motion-utils"
+      ]
+    },
+    "motion-utils@12.39.0": {
+      "integrity": "sha512-8nadJAJjTtqRkmRF36FoJTrywK9nnFmnPwnSMyxaOCU7GDjN9RTMJIxx9De8ErM+vpPhMccr/6fo5WciyQLnMQ=="
+    },
+    "motion@12.40.0": {
+      "integrity": "sha512-yjrHUrBFW6kQvjJwRsoiPSAhC5tRwRqNGJWmiJ4CrGnbKp0V88AdzkhBmDoqIsIPfarOe0Uddd37Xq43/gIocA==",
+      "dependencies": [
+        "framer-motion",
+        "tslib"
       ]
     },
     "mri@1.2.0": {
@@ -1783,7 +1828,9 @@
         "npm:@eslint/compat@^2.1.0",
         "npm:@eslint/js@^10.0.1",
         "npm:@fontsource/atkinson-hyperlegible@^5.2.8",
+        "npm:@humanspeak/svelte-motion@~0.6.5",
         "npm:@lucide/svelte@^1.17.0",
+        "npm:@numeric-text/svelte@~0.1.4",
         "npm:@sveltejs/adapter-static@^3.0.10",
         "npm:@sveltejs/kit@^2.63.0",
         "npm:@sveltejs/vite-plugin-svelte@7.1.2",
