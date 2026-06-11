@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { page } from "$app/state";
   import favicon from "$lib/assets/favicon.svg";
   import NowPlayingBar from "$lib/components/NowPlayingBar.svelte";
