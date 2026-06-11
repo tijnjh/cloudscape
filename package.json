@@ -17,7 +17,7 @@
     "@fontsource/atkinson-hyperlegible": "^5.2.8",
     "@humanspeak/svelte-motion": "^0.6.5",
     "@numeric-text/svelte": "^0.1.4",
-    "@sveltejs/kit": "^3.0.0-next.2",
+    "@sveltejs/kit": "^2.65.0",
     "@tanstack/svelte-query": "^6.1.34",
     "bits-ui": "^2.18.1",
     "cnfn": "^5.5.1",
@@ -35,7 +35,7 @@
     "@eslint/compat": "^2.1.0",
     "@eslint/js": "^10.0.1",
     "@lucide/svelte": "^1.17.0",
-    "@sveltejs/adapter-node": "^6.0.0-next.0",
+    "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/vite-plugin-svelte": "7.1.2",
     "@tailwindcss/vite": "^4.3.0",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
@@ -55,9 +55,6 @@
   },
   "patchedDependencies": {
     "eslint-plugin-tailwindcss+4.0.0-beta.0": "patches/eslint-plugin-tailwindcss+4.0.0-beta.0.patch"
-  },
-  "engines": {
-    "node": ">=22.13.0"
   },
   "prettier": {
     "plugins": [

@@ -1,0 +1,3 @@
+minimumReleaseAgeExclude:
+  - '@sveltejs/kit@2.65.0'
+  - '@types/node@25.9.3'
