@@ -1,5 +1,8 @@
 import { max_items_per_page } from "$lib/constants";
+import { Collection } from "$lib/schemas/collection";
+import { Comment } from "$lib/schemas/comment";
 import { Track } from "$lib/schemas/track";
+import type { WithPagination } from "$lib/types";
 import { $api, getPermalinkPath } from "./utils";
 import * as v from "valibot";
 
@@ -15,6 +18,17 @@ export async function resolveTrack({
 
 export async function getTrackById(id: number) {
   return await $api(`/tracks/${id}`, { schema: Track });
+}
+
+export async function getTrackComments({
+  id,
+  offset,
+  limit,
+}: WithPagination<{ id: number }>) {
+  return await $api(`/tracks/${id}/comments`, {
+    searchParams: { limit, offset, sort: "newest", threaded: 0 },
+    schema: Collection(Comment),
+  });
 }
 
 export async function getTracksByIds(ids: number[]) {

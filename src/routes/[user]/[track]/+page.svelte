@@ -1,5 +1,6 @@
 <script lang="ts">
   import { resolveTrack } from "$lib/api/track";
+  import CommentsView from "$lib/components/CommentsView.svelte";
   import HeroSection from "$lib/components/HeroSection.svelte";
   import Main from "$lib/components/Main.svelte";
   import QueryView from "$lib/components/QueryView.svelte";
@@ -43,6 +44,15 @@
     <QueryView query={trackQuery}>
       {#snippet content(track)}
         <TrackListing {track} />
+
+        {#if track.commentable}
+          <h2 class="mt-4 text-lg font-medium">
+            Comments{track.comment_count != null
+              ? ` (${track.comment_count})`
+              : ""}
+          </h2>
+          <CommentsView trackId={track.id} />
+        {/if}
       {/snippet}
     </QueryView>
   {/snippet}
