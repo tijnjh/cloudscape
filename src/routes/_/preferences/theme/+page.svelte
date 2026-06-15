@@ -6,7 +6,7 @@
     selectedBaseColor,
   } from "$lib/global.svelte";
   import { accentColors, baseColors, type ValidColor } from "$lib/theme";
-  import { match } from "$lib/utils";
+  import { match } from "$lib/utils/match";
   import { setMode, userPrefersMode } from "mode-watcher";
 
   const themeModes = ["light", "dark", "system"] as const;
@@ -24,7 +24,7 @@
 )}
   {const style = match(color, {
     black: () => "--swatch-color-light: #000; --swatch-color-dark: #fff;",
-    _: () => `
+    _: (): string => `
       --swatch-color-light: var(--color-${color}-500, var(--color-${color}));
       --swatch-color-dark: var(--color-${color}-400, var(--color-${color}));
     `,

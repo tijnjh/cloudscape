@@ -8,7 +8,7 @@
   import { max_items_per_page } from "$lib/constants";
   import type { Playlist } from "$lib/schemas/playlist.js";
   import type { Track } from "$lib/schemas/track.js";
-  import { match } from "$lib/utils.js";
+  import { match } from "$lib/utils/match";
   import { createInfiniteQuery, createQuery } from "@tanstack/svelte-query";
   import { useSearchParams } from "runed/kit";
   import * as v from "valibot";

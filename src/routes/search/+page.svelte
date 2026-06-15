@@ -10,7 +10,7 @@
   import SearchBar from "$lib/components/SearchBar.svelte";
   import SegmentedPicker from "$lib/components/ui/SegmentedPicker.svelte";
   import { max_items_per_page } from "$lib/constants";
-  import { match } from "$lib/utils";
+  import { match } from "$lib/utils/match";
   import { createInfiniteQuery } from "@tanstack/svelte-query";
   import { Debounced } from "runed";
   import { useSearchParams } from "runed/kit";
