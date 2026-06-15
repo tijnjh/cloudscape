@@ -1,29 +1,7 @@
 /**
- * pattern-matching helper for typescript
+ * type-safe pattern matching for typescript
  * source: https://gist.github.com/tijnjh/e8b3c575f9813988577c3382d21558f7
  */
-
-// -- helpers --
-
-type Narrowable
-  = | string
-    | number
-    | bigint
-    | boolean
-    | symbol
-    | object
-    | null
-    | undefined
-type Cases<TValue extends PropertyKey, TReturn> = {
-  [K in TValue]: () => TReturn;
-}
-type DefaultCases<T extends PropertyKey, R> = Partial<Cases<T, R>> & {
-  _: () => R
-}
-type NoExtraKeys<TKeys, TAllowed extends PropertyKey> = Record<
-  Exclude<keyof TKeys, TAllowed>,
-  never
->
 
 // -- implementation --
 
@@ -57,29 +35,26 @@ type NoExtraKeys<TKeys, TAllowed extends PropertyKey> = Record<
  * })
  * ```
  */
-function match<const TValue extends PropertyKey, TReturn extends Narrowable>(
-  value: TValue,
-  cases: Cases<TValue, TReturn>,
-): TReturn
+
+function match<
+  const TValue extends PropertyKey,
+  TReturn extends Narrowable,
+>(value: TValue, cases: Cases<TValue, TReturn>): TReturn
 
 function match<
   const TValue extends PropertyKey,
   TCases extends Cases<TValue, unknown> & NoExtraKeys<TCases, TValue>,
 >(value: TValue, cases: TCases): ReturnType<TCases[TValue]>
 
-function match<const TValue extends PropertyKey, TReturn extends Narrowable>(
-  value: TValue,
-  cases: DefaultCases<TValue, TReturn>,
-): TReturn
+function match<
+  const TValue extends PropertyKey,
+  TReturn extends Narrowable,
+>(value: TValue, cases: DefaultCases<TValue, TReturn>): TReturn
 
 function match<
   const TValue extends PropertyKey,
-  TCases extends DefaultCases<TValue, unknown>
-  & NoExtraKeys<TCases, TValue | '_'>,
->(
-  value: TValue,
-  cases: TCases,
-): ReturnType<Extract<TCases[keyof TCases], () => unknown>>
+  TCases extends DefaultCases<TValue, unknown> & NoExtraKeys<TCases, TValue | '_'>,
+>(value: TValue, cases: TCases): ReturnType<Extract<TCases[keyof TCases], () => unknown>>
 
 // @ts-expect-error - implicit any to allow overload implementation
 function match(value, cases) {
@@ -87,3 +62,10 @@ function match(value, cases) {
 }
 
 export { match }
+
+// -- helpers --
+
+type Narrowable = string | number | bigint | boolean | symbol | object | null | undefined
+type Cases<TValue extends PropertyKey, TReturn> = { [K in TValue]: () => TReturn }
+type DefaultCases<TValue extends PropertyKey, TReturn> = Partial<Cases<TValue, TReturn>> & { _: () => TReturn }
+type NoExtraKeys<TCases, TAllowed extends PropertyKey> = Record<Exclude<keyof TCases, TAllowed>, never>
