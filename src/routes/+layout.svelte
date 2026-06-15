@@ -1,6 +1,6 @@
 <script lang="ts">
   import { browser } from "$app/environment";
-  import { page } from "$app/state";
+  import { navigating, page } from "$app/state";
   import favicon from "$lib/assets/favicon.svg";
   import NowPlayingBar from "$lib/components/NowPlayingBar.svelte";
   import NowPlayingView from "$lib/components/NowPlayingView.svelte";
@@ -12,7 +12,7 @@
   } from "$lib/global.svelte";
   import { shades } from "$lib/theme";
   import "./layout.css";
-  import { ChevronLeft } from "@lucide/svelte";
+  import { ChevronLeft, LoaderCircleIcon } from "@lucide/svelte";
   import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
   import { ModeWatcher } from "mode-watcher";
 
@@ -52,6 +52,25 @@
       doc?.classList.remove("black-accent");
     }
   });
+
+  let showNavigationSpinner = $state(false);
+
+  $effect(() => {
+    if (!navigating.type) {
+      showNavigationSpinner = false;
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      showNavigationSpinner = true;
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  });
+
+  navigating.type;
 </script>
 
 <svelte:head>
@@ -61,6 +80,36 @@
 <ModeWatcher defaultMode="system" />
 
 <QueryClientProvider client={queryClient}>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none fixed top-0 left-0 z-99999999 h-80 w-full select-none"
+  >
+    <div
+      class={[
+        "absolute top-0 w-full h-80 rounded-[100%] bg-amber-500/30 blur-3xl transition-all duration-500  dark:bg-sky-400/25",
+        showNavigationSpinner
+          ? "-translate-y-1/2 opacity-100"
+          : "-translate-y-full opacity-0",
+      ]}
+    ></div>
+    <div
+      class={[
+        "absolute top-6 left-1/2 -translate-x-1/2 rounded-full bg-white/75 p-2 shadow-lg backdrop-blur-lg transition-all duration-300 dark:bg-slate-900/40",
+        showNavigationSpinner
+          ? "translate-y-0 opacity-100"
+          : "-translate-y-6 opacity-0",
+      ]}
+    >
+      <LoaderCircleIcon
+        class={[
+          "animate-spin text-gray-900 dark:text-white text-2xl",
+          "text-4xl",
+        ]}
+        aria-label="Loading"
+      />
+    </div>
+  </div>
+
   {#if page.route.id !== "/"}
     <div
       class="fixed inset-x-0 top-0 z-20 mx-auto flex max-w-5xl justify-between bg-linear-to-b from-base-200-800 to-base-300-700/0 p-4"
