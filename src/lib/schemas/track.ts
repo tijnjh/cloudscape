@@ -1,5 +1,5 @@
-import { User } from "./user";
-import * as v from "valibot";
+import * as v from 'valibot'
+import { User } from './user'
 
 export const Track = v.strictObject({
   artwork_url: v.nullable(v.pipe(v.string(), v.url())),
@@ -12,12 +12,12 @@ export const Track = v.strictObject({
   download_count: v.nullable(v.number()),
   downloadable: v.boolean(),
   duration: v.number(),
-  embeddable_by: v.picklist(["all", "none", "me"]),
+  embeddable_by: v.picklist(['all', 'none', 'me']),
   full_duration: v.number(),
   genre: v.nullable(v.string()),
   has_downloads_left: v.boolean(),
   id: v.number(),
-  kind: v.literal("track"),
+  kind: v.literal('track'),
   label_name: v.nullable(v.string()),
   last_modified: v.pipe(v.string(), v.isoTimestamp()),
   license: v.string(),
@@ -27,46 +27,46 @@ export const Track = v.strictObject({
       v.strictObject({
         url: v.pipe(v.string(), v.url()),
         preset: v.picklist([
-          "opus_0_0",
-          "aac_96k",
-          "aac_160k",
-          "mp3_0_0",
-          "abr_sq",
-          "mp3_1_0",
-          "mp3_0_1",
-          "mp3_standard",
+          'opus_0_0',
+          'aac_96k',
+          'aac_160k',
+          'mp3_0_0',
+          'abr_sq',
+          'mp3_1_0',
+          'mp3_0_1',
+          'mp3_standard',
         ]),
         duration: v.number(),
         snipped: v.boolean(),
         format: v.strictObject({
           protocol: v.picklist([
-            "hls",
-            "progressive",
-            "ctr-encrypted-hls",
-            "cbc-encrypted-hls",
+            'hls',
+            'progressive',
+            'ctr-encrypted-hls',
+            'cbc-encrypted-hls',
           ]),
           mime_type: v.picklist([
             'audio/mp4; codecs="mp4a.40.2"',
-            "audio/mpegurl",
-            "audio/mpeg",
+            'audio/mpegurl',
+            'audio/mpeg',
             'audio/ogg; codecs="opus"',
           ]),
         }),
-        quality: v.picklist(["sq", "lq"]),
+        quality: v.picklist(['sq', 'lq']),
         is_legacy_transcoding: v.boolean(),
       }),
     ),
   }),
   monetization_model: v.picklist([
-    "AD_SUPPORTED",
-    "BLACKBOX",
-    "NOT_APPLICABLE",
-    "SUB_HIGH_TIER",
+    'AD_SUPPORTED',
+    'BLACKBOX',
+    'NOT_APPLICABLE',
+    'SUB_HIGH_TIER',
   ]),
   permalink: v.string(),
   permalink_url: v.pipe(v.string(), v.url()),
   playback_count: v.nullable(v.number()),
-  policy: v.picklist(["MONETIZE", "BLOCK", "SNIP", "ALLOW"]),
+  policy: v.picklist(['MONETIZE', 'BLOCK', 'SNIP', 'ALLOW']),
   public: v.boolean(),
   publisher_metadata: v.nullable(
     v.strictObject({
@@ -93,8 +93,8 @@ export const Track = v.strictObject({
   release_date: v.nullable(v.string()),
   reposts_count: v.number(),
   secret_token: v.nullable(v.string()),
-  sharing: v.picklist(["public", "private"]),
-  state: v.picklist(["finished", "processing"]),
+  sharing: v.picklist(['public', 'private']),
+  state: v.picklist(['finished', 'processing']),
   station_permalink: v.string(),
   station_urn: v.string(),
   streamable: v.boolean(),
@@ -121,6 +121,6 @@ export const Track = v.strictObject({
     }),
   ),
   waveform_url: v.pipe(v.string(), v.url()),
-});
+})
 
-export type Track = v.InferOutput<typeof Track>;
+export type Track = v.InferOutput<typeof Track>

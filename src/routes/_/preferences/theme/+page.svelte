@@ -1,15 +1,12 @@
-<script lang="ts">
-  import Button from "$lib/components/ui/Button.svelte";
-  import {
-    isBlackAccent,
-    selectedAccentColor,
-    selectedBaseColor,
-  } from "$lib/global.svelte";
-  import { accentColors, baseColors, type ValidColor } from "$lib/theme";
-  import { match } from "$lib/utils/match";
-  import { setMode, userPrefersMode } from "mode-watcher";
+<script lang='ts'>
+  import type { ValidColor } from '$lib/theme'
+  import Button from '$lib/components/ui/Button.svelte'
+  import { isBlackAccent, selectedAccentColor, selectedBaseColor } from '$lib/global.svelte'
+  import { accentColors, baseColors } from '$lib/theme'
+  import { match } from '$lib/utils/match'
+  import { setMode, userPrefersMode } from 'mode-watcher'
 
-  const themeModes = ["light", "dark", "system"] as const;
+  const themeModes = ['light', 'dark', 'system'] as const
 </script>
 
 {#snippet swatch(
@@ -18,37 +15,37 @@
     isSelected,
     onclick,
   }: {
-    isSelected: boolean;
-    onclick: VoidFunction;
+    isSelected: boolean
+    onclick: VoidFunction
   },
 )}
   {const style = match(color, {
-    black: () => "--swatch-color-light: #000; --swatch-color-dark: #fff;",
+    black: () => '--swatch-color-light: #000; --swatch-color-dark: #fff;',
     _: (): string => `
       --swatch-color-light: var(--color-${color}-500, var(--color-${color}));
       --swatch-color-dark: var(--color-${color}-400, var(--color-${color}));
     `,
   })}
-  <Button {style} {onclick} variant={isSelected ? "primary" : "secondary"}>
+  <Button {style} {onclick} variant={isSelected ? 'primary' : 'secondary'}>
     <div
-      class="size-3 rounded-full bg-(--swatch-color-light) outline-2 outline-base-300-700 dark:bg-(--swatch-color-dark)"
+      class='size-3 rounded-full bg-(--swatch-color-light) outline-2 outline-base-300-700 dark:bg-(--swatch-color-dark)'
     ></div>
     {color}
   </Button>
 {/snippet}
 
-<h3 class="text-xl font-medium">Theme</h3>
+<h3 class='text-xl font-medium'>Theme</h3>
 
 <span>Mode</span>
 
-<div class="flex flex-wrap gap-2">
+<div class='flex flex-wrap gap-2'>
   {#each themeModes as themeMode (themeMode)}
     {const isSelected = $derived(userPrefersMode.current === themeMode)}
 
     <Button
-      variant={isSelected ? "primary" : "secondary"}
+      variant={isSelected ? 'primary' : 'secondary'}
       onclick={() => setMode(themeMode)}
-      class="capitalize"
+      class='capitalize'
     >
       {themeMode}
     </Button>
@@ -57,11 +54,11 @@
 
 <span>Accent Colors</span>
 
-<div class="flex flex-wrap gap-2">
-  {@render swatch("black", {
+<div class='flex flex-wrap gap-2'>
+  {@render swatch('black', {
     isSelected: isBlackAccent.current === true,
     onclick: () => {
-      isBlackAccent.current = !isBlackAccent.current;
+      isBlackAccent.current = !isBlackAccent.current
     },
   })}
 
@@ -70,8 +67,8 @@
       isSelected:
         selectedAccentColor.current === accentColor && !isBlackAccent.current,
       onclick: () => {
-        isBlackAccent.current = false;
-        selectedAccentColor.current = accentColor;
+        isBlackAccent.current = false
+        selectedAccentColor.current = accentColor
       },
     })}
   {/each}
@@ -79,12 +76,12 @@
 
 <span>Base Colors</span>
 
-<div class="flex flex-wrap gap-2">
+<div class='flex flex-wrap gap-2'>
   {#each baseColors as baseColor (baseColor)}
     {@render swatch(baseColor, {
       isSelected: selectedBaseColor.current === baseColor,
       onclick: () => {
-        selectedBaseColor.current = baseColor;
+        selectedBaseColor.current = baseColor
       },
     })}
   {/each}

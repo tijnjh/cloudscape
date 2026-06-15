@@ -1,24 +1,24 @@
 <!-- TODO: use https://bits-ui.com/docs/components/collapsible -->
 
-<script lang="ts">
-  import type { Snippet } from "svelte";
+<script lang='ts'>
+  import type { Snippet } from 'svelte'
 
-  let {
+  const {
     children,
     summary,
   }: {
-    children: Snippet;
-    summary: string;
-  } = $props();
+    children: Snippet
+    summary: string
+  } = $props()
 </script>
 
-<details class="relative overflow-hidden">
+<details class='relative overflow-hidden'>
   <summary
-    class="mb-2 w-fit cursor-pointer rounded-md bg-base-300-700 px-4 py-1"
+    class='mb-2 w-fit cursor-pointer rounded-md bg-base-300-700 px-4 py-1'
   >
     {summary}
   </summary>
-  <div class="mb-32 pt-2">
+  <div class='mb-32 pt-2'>
     {@render children()}
   </div>
 </details>

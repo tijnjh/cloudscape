@@ -1,33 +1,35 @@
-<script lang="ts">
-  import { browser } from "$app/environment";
-  import { getSoundcloakInstances } from "$lib/api/other";
-  import QueryView from "$lib/components/QueryView.svelte";
-  import Button from "$lib/components/ui/Button.svelte";
-  import { selectedInstance } from "$lib/global.svelte";
-  import { createQuery } from "@tanstack/svelte-query";
+<script lang='ts'>
+  import { browser } from '$app/environment'
+  import { getSoundcloakInstances } from '$lib/api/other'
+  import QueryView from '$lib/components/QueryView.svelte'
+  import Button from '$lib/components/ui/Button.svelte'
+  import { selectedInstance } from '$lib/global.svelte'
+  import { createQuery } from '@tanstack/svelte-query'
 
   const instancesQuery = createQuery(() => ({
-    queryKey: ["soundcloak-instances"],
+    queryKey: ['soundcloak-instances'],
     queryFn: async () => getSoundcloakInstances(),
-  }));
+  }))
 
   function cleanUrl(url: string) {
-    const urlObj = new URL(url);
-    return urlObj.host;
+    const urlObj = new URL(url)
+    return urlObj.host
   }
 
   function getCountryName(countryCode: string) {
     try {
-      const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
-      return regionNames.of(countryCode);
-    } catch {
-      return countryCode;
+      const regionNames = new Intl.DisplayNames(['en'], { type: 'region' })
+      return regionNames.of(countryCode)
+    }
+    catch {
+      return countryCode
     }
   }
 
   function reload() {
-    if (!browser) return;
-    location.reload();
+    if (!browser)
+      return
+    location.reload()
   }
 </script>
 
@@ -42,10 +44,10 @@
       {#if instance.Settings.EnableAPI}
         <Button
           onclick={() => {
-            selectedInstance.current = instance.URL;
-            reload();
+            selectedInstance.current = instance.URL
+            reload()
           }}
-          variant={isSelected ? "primary" : "secondary"}
+          variant={isSelected ? 'primary' : 'secondary'}
         >
           {cleanUrl(instance.URL)}
           ({getCountryName(instance.Host.Country)})

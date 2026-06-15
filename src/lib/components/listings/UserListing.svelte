@@ -1,8 +1,8 @@
-<script lang="ts">
-  import type { User } from "$lib/schemas/user";
-  import GenericListing from "./GenericListing.svelte";
+<script lang='ts'>
+  import type { User } from '$lib/schemas/user'
+  import GenericListing from './GenericListing.svelte'
 
-  const { user }: { user: User } = $props();
+  const { user }: { user: User } = $props()
 </script>
 
 <GenericListing
@@ -11,8 +11,8 @@
   thumbnail={{
     src: user.avatar_url,
     alt: `Profile picture of ${user.permalink}`,
-    class: "rounded-full",
+    class: 'rounded-full',
   }}
   href={`/${user.permalink}`}
-  badges={[user.verified && "Verified"]}
+  badges={[user.verified && 'Verified']}
 />

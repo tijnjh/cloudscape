@@ -1,1 +1,1 @@
-export const max_items_per_page = 25;
+export const max_items_per_page = 25

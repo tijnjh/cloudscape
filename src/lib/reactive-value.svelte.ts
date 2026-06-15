@@ -1,15 +1,15 @@
 export class ReactiveValue<T> {
-  #state: T;
+  #state: T
 
   constructor(value: T) {
-    this.#state = $state(value);
+    this.#state = $state(value)
   }
 
   get current() {
-    return this.#state;
+    return this.#state
   }
 
   set current(value: T) {
-    this.#state = value;
+    this.#state = value
   }
 }

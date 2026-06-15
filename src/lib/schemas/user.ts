@@ -1,4 +1,4 @@
-import * as v from "valibot";
+import * as v from 'valibot'
 
 export const User = v.strictObject({
   avatar_url: v.pipe(v.string(), v.url()),
@@ -36,7 +36,7 @@ export const User = v.strictObject({
   full_name: v.string(),
   groups_count: v.optional(v.number()),
   id: v.number(),
-  kind: v.literal("user"),
+  kind: v.literal('user'),
   last_modified: v.pipe(v.string(), v.isoTimestamp()),
   last_name: v.string(),
   likes_count: v.optional(v.number()),
@@ -67,6 +67,6 @@ export const User = v.strictObject({
       tracking: v.null(),
     }),
   ),
-});
+})
 
-export type User = v.InferOutput<typeof User>;
+export type User = v.InferOutput<typeof User>

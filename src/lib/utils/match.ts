@@ -5,25 +5,25 @@
 
 // -- helpers --
 
-type Narrowable =
-  | string
-  | number
-  | bigint
-  | boolean
-  | symbol
-  | object
-  | null
-  | undefined;
+type Narrowable
+  = | string
+    | number
+    | bigint
+    | boolean
+    | symbol
+    | object
+    | null
+    | undefined
 type Cases<TValue extends PropertyKey, TReturn> = {
   [K in TValue]: () => TReturn;
-};
+}
 type DefaultCases<T extends PropertyKey, R> = Partial<Cases<T, R>> & {
-  _: () => R;
-};
+  _: () => R
+}
 type NoExtraKeys<TKeys, TAllowed extends PropertyKey> = Record<
   Exclude<keyof TKeys, TAllowed>,
   never
->;
+>
 
 // -- implementation --
 
@@ -60,30 +60,30 @@ type NoExtraKeys<TKeys, TAllowed extends PropertyKey> = Record<
 function match<const TValue extends PropertyKey, TReturn extends Narrowable>(
   value: TValue,
   cases: Cases<TValue, TReturn>,
-): TReturn;
+): TReturn
 
 function match<
   const TValue extends PropertyKey,
   TCases extends Cases<TValue, unknown> & NoExtraKeys<TCases, TValue>,
->(value: TValue, cases: TCases): ReturnType<TCases[TValue]>;
+>(value: TValue, cases: TCases): ReturnType<TCases[TValue]>
 
 function match<const TValue extends PropertyKey, TReturn extends Narrowable>(
   value: TValue,
   cases: DefaultCases<TValue, TReturn>,
-): TReturn;
+): TReturn
 
 function match<
   const TValue extends PropertyKey,
-  TCases extends DefaultCases<TValue, unknown> &
-    NoExtraKeys<TCases, TValue | "_">,
+  TCases extends DefaultCases<TValue, unknown>
+  & NoExtraKeys<TCases, TValue | '_'>,
 >(
   value: TValue,
   cases: TCases,
-): ReturnType<Extract<TCases[keyof TCases], () => unknown>>;
+): ReturnType<Extract<TCases[keyof TCases], () => unknown>>
 
 // @ts-expect-error - implicit any to allow overload implementation
 function match(value, cases) {
-  return (cases[value] ?? cases._)();
+  return (cases[value] ?? cases._)()
 }
 
-export { match };
+export { match }

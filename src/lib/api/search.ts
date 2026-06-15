@@ -1,20 +1,20 @@
-import { Collection } from "$lib/schemas/collection";
-import { Playlist } from "$lib/schemas/playlist";
-import { Track } from "$lib/schemas/track";
-import { User } from "$lib/schemas/user";
-import type { WithPagination } from "$lib/types";
-import { $api } from "./utils";
-import * as v from "valibot";
+import type { WithPagination } from '$lib/types'
+import { Collection } from '$lib/schemas/collection'
+import { Playlist } from '$lib/schemas/playlist'
+import { Track } from '$lib/schemas/track'
+import { User } from '$lib/schemas/user'
+import * as v from 'valibot'
+import { $api } from './utils'
 
 export async function searchAnything({
   query,
   offset,
   limit,
 }: WithPagination<{ query: string }>) {
-  return await $api("/search", {
+  return await $api('/search', {
     searchParams: { q: query, limit, offset },
     schema: Collection(v.union([Track, Playlist, User])),
-  });
+  })
 }
 
 export async function searchTracks({
@@ -22,10 +22,10 @@ export async function searchTracks({
   offset,
   limit,
 }: WithPagination<{ query: string }>) {
-  return await $api("/search/tracks", {
+  return await $api('/search/tracks', {
     searchParams: { q: query, limit, offset },
     schema: Collection(Track),
-  });
+  })
 }
 
 export async function searchPlaylists({
@@ -33,10 +33,10 @@ export async function searchPlaylists({
   offset,
   limit,
 }: WithPagination<{ query: string }>) {
-  return await $api("/search/playlists", {
+  return await $api('/search/playlists', {
     searchParams: { q: query, limit, offset },
     schema: Collection(Playlist),
-  });
+  })
 }
 
 export async function searchUsers({
@@ -44,8 +44,8 @@ export async function searchUsers({
   offset,
   limit,
 }: WithPagination<{ query: string }>) {
-  return await $api("/search/users", {
+  return await $api('/search/users', {
     searchParams: { q: query, limit, offset },
     schema: Collection(User),
-  });
+  })
 }

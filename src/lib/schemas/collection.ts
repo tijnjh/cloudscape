@@ -1,4 +1,4 @@
-import * as v from "valibot";
+import * as v from 'valibot'
 
 export function Collection<T extends v.GenericSchema>(T: T) {
   return v.strictObject({
@@ -7,8 +7,8 @@ export function Collection<T extends v.GenericSchema>(T: T) {
     query_urn: v.nullish(v.string()),
     total_results: v.optional(v.number()),
     variant: v.optional(v.string()),
-  });
+  })
 }
 export type Collection<T> = v.InferOutput<
   ReturnType<typeof Collection<v.GenericSchema<T>>>
->;
+>

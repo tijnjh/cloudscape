@@ -1,4 +1,4 @@
-import * as v from "valibot";
+import * as v from 'valibot'
 
 export const SoundcloakInstance = v.strictObject({
   URL: v.string(),
@@ -28,6 +28,6 @@ export const SoundcloakInstance = v.strictObject({
     Country: v.string(),
     Anycast: v.boolean(),
   }),
-});
+})
 
-export type SoundcloakInstance = v.InferOutput<typeof SoundcloakInstance>;
+export type SoundcloakInstance = v.InferOutput<typeof SoundcloakInstance>
