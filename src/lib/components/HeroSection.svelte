@@ -1,21 +1,21 @@
-<script module lang="ts">
-  import type { User } from "$lib/schemas/user";
+<script module lang='ts'>
+  import type { User } from '$lib/schemas/user'
 
   export interface HeroSectionProps {
-    pictureSrc?: string | null;
-    title: string;
-    badges?: (string | false)[];
-    description?: string | null;
-    user?: User;
-    roundedPicture?: boolean;
+    pictureSrc?: string | null
+    title: string
+    badges?: (string | false)[]
+    description?: string | null
+    user?: User
+    roundedPicture?: boolean
   }
 </script>
 
-<script lang="ts">
-  import UserListing from "./listings/UserListing.svelte";
-  import Badge from "./ui/Badge.svelte";
-  import Collapsible from "./ui/Collapsible.svelte";
-  import { cn } from "cnfn";
+<script lang='ts'>
+  import { cn } from 'cnfn'
+  import UserListing from './listings/UserListing.svelte'
+  import Badge from './ui/Badge.svelte'
+  import Collapsible from './ui/Collapsible.svelte'
 
   const {
     pictureSrc,
@@ -24,29 +24,29 @@
     badges,
     user,
     roundedPicture = false,
-  }: HeroSectionProps = $props();
+  }: HeroSectionProps = $props()
 </script>
 
 {#if pictureSrc}
   <img
-    src={pictureSrc.replace("large", "t500x500")}
+    src={pictureSrc.replace('large', 't500x500')}
     {@attach (node) => {
       node.onerror = () => {
-        node.src = pictureSrc;
-      };
+        node.src = pictureSrc
+      }
     }}
     class={cn(
-      "mx-auto my-4 aspect-square w-full max-w-xs",
-      roundedPicture ? "rounded-full" : "rounded-xl",
+      'mx-auto my-4 aspect-square w-full max-w-xs',
+      roundedPicture ? 'rounded-full' : 'rounded-xl',
     )}
     alt={title}
   />
 {/if}
 
-<div class="flex items-center gap-2">
-  <h1 class="text-2xl font-medium">{title}</h1>
+<div class='flex items-center gap-2'>
+  <h1 class='text-2xl font-medium'>{title}</h1>
   {#if badges}
-    <div class="flex gap-2">
+    <div class='flex gap-2'>
       {#each badges as badge (badge)}
         {#if badge}
           <Badge label={badge} />
@@ -57,14 +57,14 @@
 </div>
 
 {#if user}
-  <div class="flex flex-col gap-4">
+  <div class='flex flex-col gap-4'>
     <UserListing {user} />
   </div>
 {/if}
 
 {#if description}
-  <Collapsible summary="Description">
-    <p class="whitespace-pre-wrap text-base-600-400">
+  <Collapsible summary='Description'>
+    <p class='whitespace-pre-wrap text-base-600-400'>
       {description}
     </p>
   </Collapsible>

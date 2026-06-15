@@ -6,7 +6,7 @@
 
     <script>
       // @ts-check
-      "use strict";
+      'use strict'
 
       if (document) {
         /**
@@ -16,38 +16,30 @@
          */
         function getStoredColor(key, fallback) {
           try {
-            return localStorage[key] || fallback;
+            return localStorage[key] || fallback
           } catch {
-            return fallback;
+            return fallback
           }
         }
 
         /** @type {string} */
-        const baseColor = getStoredColor("selected-base-color", "mist");
+        const baseColor = getStoredColor('selected-base-color', 'mist')
         /** @type {string} */
-        const accentColor = getStoredColor("selected-accent-color", "emerald");
+        const accentColor = getStoredColor('selected-accent-color', 'emerald')
 
-        const shades = /** @type {const} */ ([
-          50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
-        ]);
+        const shades = /** @type {const} */ ([50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950])
 
         /**
          * @param {string} name
          * @param {string} value
          */
         function setProperty(name, value) {
-          document.documentElement.style.setProperty(name, value);
+          document.documentElement.style.setProperty(name, value)
         }
 
         for (const shade of shades) {
-          setProperty(
-            `--t-base-${shade}`,
-            `var(--color-${baseColor}-${shade})`,
-          );
-          setProperty(
-            `--t-accent-${shade}`,
-            `var(--color-${accentColor}-${shade})`,
-          );
+          setProperty(`--t-base-${shade}`, `var(--color-${baseColor}-${shade})`)
+          setProperty(`--t-accent-${shade}`, `var(--color-${accentColor}-${shade})`)
         }
       }
     </script>

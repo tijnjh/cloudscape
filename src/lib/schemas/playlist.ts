@@ -1,6 +1,6 @@
-import { Track } from "./track";
-import { User } from "./user";
-import * as v from "valibot";
+import * as v from 'valibot'
+import { Track } from './track'
+import { User } from './user'
 
 export const Playlist = v.strictObject({
   artwork_url: v.nullable(v.string()),
@@ -8,11 +8,11 @@ export const Playlist = v.strictObject({
   description: v.optional(v.nullable(v.string())),
   display_date: v.pipe(v.string(), v.isoTimestamp()),
   duration: v.number(),
-  embeddable_by: v.optional(v.picklist(["all", "none", "me"])),
+  embeddable_by: v.optional(v.picklist(['all', 'none', 'me'])),
   genre: v.optional(v.nullable(v.string())),
   id: v.number(),
   is_album: v.boolean(),
-  kind: v.literal("playlist"),
+  kind: v.literal('playlist'),
   label_name: v.optional(v.nullable(v.string())),
   last_modified: v.pipe(v.string(), v.isoTimestamp()),
   license: v.optional(v.string()),
@@ -28,7 +28,7 @@ export const Playlist = v.strictObject({
   reposts_count: v.number(),
   secret_token: v.nullable(v.string()),
   set_type: v.string(),
-  sharing: v.picklist(["public", "private"]),
+  sharing: v.picklist(['public', 'private']),
   tag_list: v.optional(v.string()),
   title: v.string(),
   track_count: v.number(),
@@ -36,13 +36,13 @@ export const Playlist = v.strictObject({
     v.array(
       v.union([
         Track,
-        v.pick(Track, ["id", "kind", "monetization_model", "policy"]),
+        v.pick(Track, ['id', 'kind', 'monetization_model', 'policy']),
       ]),
     ),
   ),
   uri: v.pipe(v.string(), v.url()),
   user: User,
   user_id: v.number(),
-});
+})
 
-export type Playlist = v.InferOutput<typeof Playlist>;
+export type Playlist = v.InferOutput<typeof Playlist>

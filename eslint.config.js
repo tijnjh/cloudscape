@@ -1,46 +1,26 @@
-import svelteConfig from "./svelte.config.js";
-import { includeIgnoreFile } from "@eslint/compat";
-import js from "@eslint/js";
-import svelte from "eslint-plugin-svelte";
-import tailwindcss from "eslint-plugin-tailwindcss";
-import { defineConfig } from "eslint/config";
-import globals from "globals";
-import path from "node:path";
-import ts from "typescript-eslint";
+// @ts-check
 
-const gitignorePath = path.resolve(import.meta.dirname, ".gitignore");
+import antfu from '@antfu/eslint-config'
+import tailwindcss from 'eslint-plugin-better-tailwindcss'
 
-export default defineConfig(
-  includeIgnoreFile(gitignorePath),
-  tailwindcss.configs["flat/recommended"],
-  js.configs.recommended,
-  ts.configs.recommended,
-  svelte.configs.recommended,
+export default antfu(
   {
-    languageOptions: {
-      globals: { ...globals.browser, ...globals.node },
+    formatters: true,
+    svelte: true,
+    rules: {
+      'ts/no-redeclare': 'off',
+      'style/quote-props': 'off',
     },
+  },
+  tailwindcss.configs.recommended,
+  {
     settings: {
-      tailwindcss: {
-        config: `${import.meta.dirname}/src/routes/layout.css`,
-        functions: ["cn", "tv"],
+      'better-tailwindcss': {
+        entryPoint: './src/routes/layout.css',
       },
     },
     rules: {
-      // typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
-      // see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
-      "no-undef": "off",
+      'better-tailwindcss/enforce-consistent-line-wrapping': 'off',
     },
   },
-  {
-    files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        extraFileExtensions: [".svelte"],
-        parser: ts.parser,
-        svelteConfig,
-      },
-    },
-  },
-);
+)

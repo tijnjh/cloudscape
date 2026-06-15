@@ -1,14 +1,14 @@
-<script lang="ts">
+<script lang='ts'>
+  import { SearchIcon } from '@lucide/svelte'
   // import { getSearchSuggestions } from "$lib/api/discovery";
-  import Input from "./ui/Input.svelte";
-  import { SearchIcon } from "@lucide/svelte";
+  import Input from './ui/Input.svelte'
 
   // import { createQuery } from "@tanstack/svelte-query";
   // import { Debounced } from "runed";
 
-  let { value = $bindable() }: { value?: string } = $props();
+  let { value = $bindable() }: { value?: string } = $props()
 
-  // const debouncedValue = new Debounced(() => value);
+// const debouncedValue = new Debounced(() => value);
 
   // const searchSuggestionsQuery = createQuery(() => ({
   //   queryKey: ["search-suggestions", debouncedValue.current],
@@ -17,13 +17,13 @@
   // }));
 </script>
 
-<form action="/search" class="w-full">
+<form action='/search' class='w-full'>
   <Input
-    type="text"
-    name="q"
-    placeholder="Search for artists, tracks or playlists..."
-    class="w-full"
-    id="search-input"
+    type='text'
+    name='q'
+    placeholder='Search for artists, tracks or playlists...'
+    class='w-full'
+    id='search-input'
     // list="search-suggestions"
     icon={SearchIcon}
     bind:value
