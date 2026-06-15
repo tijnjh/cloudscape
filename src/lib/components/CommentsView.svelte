@@ -50,8 +50,9 @@
       commentsQuery.fetchNextPage()
     }}
     {@attach whenInView(() => {
-      if (commentsQuery.isFetching)
-return
+      if (commentsQuery.isFetching) {
+        return
+      }
       commentsQuery.fetchNextPage()
     })}
   >

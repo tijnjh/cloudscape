@@ -75,8 +75,10 @@
       query.fetchNextPage()
     }}
     {@attach whenInView(() => {
-      if (query.isFetching)
-return
+      if (!query.isFetching) {
+        return
+      }
+
       query.fetchNextPage()
     })}
   >
