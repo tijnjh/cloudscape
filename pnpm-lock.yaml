@@ -28,7 +28,7 @@ importers:
         version: 1.6.16
       jotai:
         specifier: ^2.20.1
-        version: 2.20.1(@babel/core@7.29.7)(@babel/template@7.29.7)(react@19.2.7)
+        version: 2.20.1(@babel/core@7.29.7)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7)
       lucide-react:
         specifier: ^1.18.0
         version: 1.18.0(react@19.2.7)
@@ -78,6 +78,12 @@ importers:
       '@types/node':
         specifier: ^25.9.2
         version: 25.9.2
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
       eslint:
         specifier: ^10.4.1
         version: 10.4.1(jiti@2.7.0)
@@ -886,6 +892,14 @@ packages:
   '@types/node@25.9.2':
     resolution: {integrity: sha512-G05zqtJhcDLb8uslf5EjCxXg9G1KQxiV8OS0R26IC//Eoyitzqe8z37I7cqvnZlrlSfgocQRfSn/AHBZJJFyGw==}
 
+  '@types/react-dom@19.2.3':
+    resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
+    peerDependencies:
+      '@types/react': ^19.2.0
+
+  '@types/react@19.2.17':
+    resolution: {integrity: sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==}
+
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
 
@@ -1146,6 +1160,9 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  csstype@3.2.3:
+    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -3274,6 +3291,14 @@ snapshots:
     dependencies:
       undici-types: 7.24.6
 
+  '@types/react-dom@19.2.3(@types/react@19.2.17)':
+    dependencies:
+      '@types/react': 19.2.17
+
+  '@types/react@19.2.17':
+    dependencies:
+      csstype: 3.2.3
+
   '@types/trusted-types@2.0.7':
     optional: true
 
@@ -3556,6 +3581,8 @@ snapshots:
       which: 2.0.2
 
   cssesc@3.0.0: {}
+
+  csstype@3.2.3: {}
 
   debug@4.4.3:
     dependencies:
@@ -4164,10 +4191,11 @@ snapshots:
 
   jiti@2.7.0: {}
 
-  jotai@2.20.1(@babel/core@7.29.7)(@babel/template@7.29.7)(react@19.2.7):
+  jotai@2.20.1(@babel/core@7.29.7)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7):
     optionalDependencies:
       '@babel/core': 7.29.7
       '@babel/template': 7.29.7
+      '@types/react': 19.2.17
       react: 19.2.7
 
   js-tokens@4.0.0: {}
