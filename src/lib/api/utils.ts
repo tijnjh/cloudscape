@@ -1,9 +1,9 @@
 import { goto } from '$app/navigation'
 import { resolve } from '$app/paths'
 import { selectedInstance } from '$lib/global.svelte'
-import * as v from 'valibot'
+import { Data, Effect, Schema } from 'effect'
 
-interface Init<TSchema extends v.GenericSchema> extends RequestInit {
+interface Init<TSchema extends Schema.Schema<unknown>> extends RequestInit {
   schema?: TSchema
   searchParams?: SearchParams
 }
@@ -24,7 +24,9 @@ function formatSearchParams(o: SearchParams) {
   )
 }
 
-export async function $api<TSchema extends v.GenericSchema>(
+export class FetchError extends Data.TaggedError('FetchError')<{ message: string }> {}
+
+export const $api = Effect.fn(function* <TSchema extends Schema.Schema<unknown>>(
   input: string,
   { schema, searchParams, ...baseInit }: Init<TSchema> = {},
 ) {
@@ -41,14 +43,19 @@ export async function $api<TSchema extends v.GenericSchema>(
     .filter(Boolean)
     .join('')
 
-  const res = await (await fetch(url, baseInit)).json()
+  const res = yield* Effect.tryPromise({
+    try: () => fetch(url, baseInit).then(r => r.json),
+    catch: () => new FetchError({ message: 'failed to fetch' }),
+  })
 
   if (schema && import.meta.env.dev) {
-    return v.parse(schema, res)
+    return yield* Schema.decodeUnknownEffect(schema)(res, {
+      onExcessProperty: 'error',
+    })
   }
 
-  return res as v.InferOutput<TSchema>
-}
+  return res as TSchema['Type']
+})
 
 export function getPermalinkPath(...permalinks: string[]) {
   const permalinkUrl = `https://soundcloud.com/${permalinks.join('/')}`

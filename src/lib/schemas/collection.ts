@@ -1,14 +1,13 @@
-import * as v from 'valibot'
+import { Schema } from 'effect'
 
-export function Collection<T extends v.GenericSchema>(T: T) {
-  return v.strictObject({
-    collection: v.array(T),
-    next_href: v.nullish(v.string()),
-    query_urn: v.nullish(v.string()),
-    total_results: v.optional(v.number()),
-    variant: v.optional(v.string()),
+export function Collection<T extends Schema.Schema<unknown>>(T: T) {
+  return Schema.Struct({
+    collection: Schema.Array(T),
+    next_href: Schema.NullishOr(Schema.String),
+    query_urn: Schema.NullishOr(Schema.String),
+    total_results: Schema.optional(Schema.Number),
+    variant: Schema.optional(Schema.String),
   })
 }
-export type Collection<T> = v.InferOutput<
-  ReturnType<typeof Collection<v.GenericSchema<T>>>
->
+
+export type Collection<T> = ReturnType<typeof Collection<Schema.Schema<T>>>['Type']

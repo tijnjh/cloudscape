@@ -21,6 +21,7 @@
     "bits-ui": "^2.18.1",
     "cnfn": "^5.5.1",
     "dedent": "^1.7.2",
+    "effect": "4.0.0-beta.85",
     "hls.js": "^1.6.16",
     "mode-watcher": "^1.1.0",
     "runed": "^0.37.1",

@@ -3,29 +3,29 @@ import { Playlist } from '$lib/schemas/playlist'
 import { Selection } from '$lib/schemas/selection'
 import { Track } from '$lib/schemas/track'
 import { User } from '$lib/schemas/user'
-import * as v from 'valibot'
+import { Effect, Schema } from 'effect'
 import { $api } from './utils'
 
-export async function getSelections() {
-  return await $api('/mixed-selections', {
-    schema: Collection(Selection(v.union([Playlist, User]))),
+export const getSelections = Effect.fn(function* () {
+  return yield* $api('/mixed-selections', {
+    schema: Collection(Selection(Schema.Union([Playlist, User]))),
   })
-}
+})
 
-export async function getRelatedTracks(id: number) {
-  return await $api(`/tracks/${id}/related`, {
+export const getRelatedTracks = Effect.fn(function* (id: number) {
+  return yield* $api(`/tracks/${id}/related`, {
     schema: Collection(Track),
   })
-}
+})
 
-export async function getSearchSuggestions(query: string) {
-  return await $api('/search/queries', {
+export const getSearchSuggestions = Effect.fn(function* (query: string) {
+  return yield* $api('/search/queries', {
     searchParams: { q: query },
     schema: Collection(
-      v.object({
-        output: v.string(),
-        query: v.string(),
+      Schema.Struct({
+        output: Schema.String,
+        query: Schema.String,
       }),
     ),
   })
-}
+})

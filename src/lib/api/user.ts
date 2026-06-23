@@ -3,11 +3,16 @@ import { Collection } from '$lib/schemas/collection'
 import { Playlist } from '$lib/schemas/playlist'
 import { Track } from '$lib/schemas/track'
 import { User } from '$lib/schemas/user'
+import { Effect } from 'effect'
 import { $api, getPermalinkPath } from './utils'
 
-export async function resolveUser(user: string) {
-  return await $api(getPermalinkPath(user), { schema: User })
-}
+// export async function resolveUser(user: string) {
+//   return await
+// }
+
+export const resolveUser = Effect.fn(function* (user: string) {
+  return yield* $api(getPermalinkPath(user), { schema: User })
+})
 
 export async function getUserById(id: number) {
   return await $api(`/users/${id}`, { schema: User })

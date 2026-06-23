@@ -1,21 +1,19 @@
-import * as v from 'valibot'
-import { User } from './user'
+import { Schema } from 'effect'
 
-export const Comment = v.strictObject({
-  body: v.string(),
-  created_at: v.pipe(v.string(), v.isoTimestamp()),
-  id: v.number(),
-  kind: v.literal('comment'),
-  self: v.optional(
-    v.strictObject({
-      urn: v.string(),
+export const Comment = Schema.Struct({
+  body: Schema.String,
+  created_at: Schema.String,
+  id: Schema.Number,
+  kind: Schema.Literal('comment'),
+  self: Schema.optional(
+    Schema.Struct({
+      urn: Schema.String,
     }),
   ),
-  timestamp: v.nullable(v.number()),
-  track_id: v.number(),
-  uri: v.pipe(v.string(), v.url()),
-  user: User,
-  user_id: v.number(),
+  timestamp: Schema.NullOr(Schema.Number),
+  track_id: Schema.Number,
+  uri: Schema.String,
+  user_id: Schema.Number,
 })
 
-export type Comment = v.InferOutput<typeof Comment>
+export type Comment = typeof Comment.Type

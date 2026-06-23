@@ -1,24 +1,22 @@
-import * as v from 'valibot'
+import { Schema } from 'effect'
 import { Collection } from './collection'
 
-export function Selection<T extends v.GenericSchema>(T: T) {
-  return v.strictObject({
-    description: v.nullable(v.string()),
-    id: v.string(),
+export function Selection<T extends Schema.Schema<unknown>>(T: T) {
+  return Schema.Struct({
+    description: Schema.NullOr(Schema.String),
+    id: Schema.String,
     items: Collection(T),
-    kind: v.literal('selection'),
-    last_updated: v.nullable(v.string()),
-    next_href: v.optional(v.string()),
-    query_urn: v.string(),
-    social_proof: v.nullable(v.string()),
-    social_proof_users: v.nullable(v.string()),
-    style: v.nullable(v.string()),
-    title: v.string(),
-    tracking_feature_name: v.string(),
-    urn: v.string(),
+    kind: Schema.Literal('selection'),
+    last_updated: Schema.NullOr(Schema.String),
+    next_href: Schema.optional(Schema.String),
+    query_urn: Schema.String,
+    social_proof: Schema.NullOr(Schema.String),
+    social_proof_users: Schema.NullOr(Schema.String),
+    style: Schema.NullOr(Schema.String),
+    title: Schema.String,
+    tracking_feature_name: Schema.String,
+    urn: Schema.String,
   })
 }
 
-export type Selection<T> = v.InferOutput<
-  ReturnType<typeof Selection<v.GenericSchema<T>>>
->
+export type Selection<T> = ReturnType<typeof Selection<Schema.Schema<T>>>['Type']

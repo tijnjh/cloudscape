@@ -1,33 +1,33 @@
-import * as v from 'valibot'
+import { Schema } from 'effect'
 
-export const SoundcloakInstance = v.strictObject({
-  URL: v.string(),
-  Onion: v.string(),
-  I2P: v.string(),
-  I2PA: v.string(),
-  I2PAH: v.string(),
-  Ygg: v.string(),
-  YggD: v.string(),
-  YggA: v.string(),
-  Settings: v.strictObject({
-    Commit: v.string(),
-    Repo: v.string(),
-    ProxyImages: v.boolean(),
-    ProxyStreams: v.boolean(),
-    Restream: v.boolean(),
-    EnableAPI: v.boolean(),
+export const SoundcloakInstance = Schema.Struct({
+  URL: Schema.String,
+  Onion: Schema.String,
+  I2P: Schema.String,
+  I2PA: Schema.String,
+  I2PAH: Schema.String,
+  Ygg: Schema.String,
+  YggD: Schema.String,
+  YggA: Schema.String,
+  Settings: Schema.Struct({
+    Commit: Schema.String,
+    Repo: Schema.String,
+    ProxyImages: Schema.Boolean,
+    ProxyStreams: Schema.Boolean,
+    Restream: Schema.Boolean,
+    EnableAPI: Schema.Boolean,
   }),
-  Status: v.strictObject({
-    Error: v.string(),
-    SkippedResolve: v.boolean(),
+  Status: Schema.Struct({
+    Error: Schema.String,
+    SkippedResolve: Schema.Boolean,
   }),
-  Host: v.strictObject({
-    IP: v.string(),
-    Organisation: v.string(),
-    ASN: v.string(),
-    Country: v.string(),
-    Anycast: v.boolean(),
+  Host: Schema.Struct({
+    IP: Schema.String,
+    Organisation: Schema.String,
+    ASN: Schema.String,
+    Country: Schema.String,
+    Anycast: Schema.Boolean,
   }),
 })
 
-export type SoundcloakInstance = v.InferOutput<typeof SoundcloakInstance>
+export type SoundcloakInstance = typeof SoundcloakInstance.Type

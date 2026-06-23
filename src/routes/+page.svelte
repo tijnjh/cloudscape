@@ -11,15 +11,16 @@
   import { favoriteTrackIds } from '$lib/global.svelte'
   import { Settings2Icon } from '@lucide/svelte'
   import { createQuery } from '@tanstack/svelte-query'
+  import { Effect } from 'effect'
 
   const selectionsQuery = createQuery(() => ({
     queryKey: ['selections'],
-    queryFn: () => getSelections(),
+    queryFn: () => Effect.runPromise(getSelections()),
   }))
 
   const favoritesQuery = createQuery(() => ({
     queryKey: ['favorites', favoriteTrackIds],
-    queryFn: () => getTracksByIds(favoriteTrackIds.current),
+    queryFn: () => Effect.runPromise(getTracksByIds(favoriteTrackIds.current)),
   }))
 </script>
 
