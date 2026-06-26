@@ -3,7 +3,7 @@
   import Button from '$lib/components/ui/Button.svelte'
   import { isBlackAccent, selectedAccentColor, selectedBaseColor } from '$lib/global.svelte'
   import { accentColors, baseColors } from '$lib/theme'
-  import { match } from '$lib/utils/match'
+  import { match } from '@tijnjh/match'
   import { setMode, userPrefersMode } from 'mode-watcher'
 
   const themeModes = ['light', 'dark', 'system'] as const

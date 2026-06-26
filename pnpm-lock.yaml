@@ -20,6 +20,9 @@ importers:
       '@tanstack/svelte-query':
         specifier: ^6.1.34
         version: 6.1.34(svelte@5.56.3(@typescript-eslint/types@8.61.0))
+      '@tijnjh/match':
+        specifier: ^0.0.3
+        version: 0.0.3
       bits-ui:
         specifier: ^2.18.1
         version: 2.18.1(@internationalized/date@3.12.2)(@sveltejs/kit@2.64.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.3(@typescript-eslint/types@8.61.0))(vite@8.0.16(@types/node@25.9.2)(jiti@2.7.0)(yaml@2.9.0)))(svelte@5.56.3(@typescript-eslint/types@8.61.0))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.2)(jiti@2.7.0)(yaml@2.9.0)))(svelte@5.56.3(@typescript-eslint/types@8.61.0))
@@ -782,6 +785,9 @@ packages:
     resolution: {integrity: sha512-b/j6OXHd285NLPTH31SqJ8+XfHKoDPV8+ZGxXjg4pSAWW2aVo/f5gbu5m32QjfdTSumib3+d1dJBv5Yupv7HKw==}
     peerDependencies:
       svelte: ^5.25.0
+
+  '@tijnjh/match@0.0.3':
+    resolution: {integrity: sha512-COyq3NcqdmPyyIp5yS3d3RJmDXgYPZP19LTWLR6gfuPgljgWs3RQf5gOAIcEj5m0veajZk0+roZaLw8+dHov2A==}
 
   '@tybys/wasm-util@0.10.2':
     resolution: {integrity: sha512-RoBvJ2X0wuKlWFIjrwffGw1IqZHKQqzIchKaadZZfnNpsAYp2mM0h36JtPCjNDAHGgYez/15uMBpfGwchhiMgg==}
@@ -2973,6 +2979,8 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 5.101.0
       svelte: 5.56.3(@typescript-eslint/types@8.61.0)
+
+  '@tijnjh/match@0.0.3': {}
 
   '@tybys/wasm-util@0.10.2':
     dependencies:

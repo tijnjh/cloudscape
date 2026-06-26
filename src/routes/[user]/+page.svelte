@@ -8,8 +8,8 @@
   import QueryView from '$lib/components/QueryView.svelte'
   import SegmentedPicker from '$lib/components/ui/SegmentedPicker.svelte'
   import { max_items_per_page } from '$lib/constants'
-  import { match } from '$lib/utils/match'
   import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query'
+  import { match } from '@tijnjh/match'
   import { useSearchParams } from 'runed/kit'
   import * as v from 'valibot'
 
