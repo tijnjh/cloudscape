@@ -3,6 +3,7 @@
   import { AnimatePresence, motion } from '@humanspeak/svelte-motion'
   import { PauseIcon, PlayIcon } from '@lucide/svelte'
   import NumericText from '@numeric-text/svelte'
+  import { hapticTrigger } from 'ios-haptics'
   import { fly } from 'svelte/transition'
   import ListingThumbnail from './ListingThumbnail.svelte'
   import Button from './ui/Button.svelte'
@@ -75,6 +76,7 @@
       <Button
         size='icon'
         disabled={isBlocked}
+        {@attach !isBlocked && hapticTrigger}
         onclick={() => {
           isPaused.current = !isPaused.current
         }}
