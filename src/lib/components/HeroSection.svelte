@@ -30,6 +30,8 @@
 {#if pictureSrc}
   <img
     src={pictureSrc.replace('large', 't500x500')}
+    width='500'
+    height='500'
     {@attach (node) => {
       node.onerror = () => {
         node.src = pictureSrc

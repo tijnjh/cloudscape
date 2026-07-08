@@ -20,6 +20,8 @@
   <img
     {src}
     {alt}
+    width='48'
+    height='48'
     class={cn('aspect-square size-12 rounded-sm', props.class)}
     onerror={() => (hasFailed = true)}
   />

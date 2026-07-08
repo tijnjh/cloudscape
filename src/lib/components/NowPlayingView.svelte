@@ -84,6 +84,8 @@
     {#if nowPlaying.current?.artwork_url}
       <img
         src={nowPlaying.current.artwork_url.replace('large', 't500x500')}
+        width='500'
+        height='500'
         class='mt-12 aspect-square w-full rounded-xl'
         alt=""
       />
