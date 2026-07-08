@@ -8,6 +8,7 @@
   import Button from './ui/Button.svelte'
 
   const StatusIcon = $derived(isPaused.current ? PlayIcon : PauseIcon)
+  const isBlocked = $derived(nowPlaying.current?.policy === 'BLOCK')
 </script>
 
 {#if !showNowPlayingView.current}
@@ -73,6 +74,7 @@
 
       <Button
         size='icon'
+        disabled={isBlocked}
         onclick={() => {
           isPaused.current = !isPaused.current
         }}

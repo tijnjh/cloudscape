@@ -38,6 +38,7 @@
     subtitle,
     thumbnail,
     actions,
+    disabled,
     ...props
   }: GenericListingProps = $props()
 </script>
@@ -45,10 +46,15 @@
 <div class='flex items-center gap-4 text-left'>
   <BitsUiButton.Root
     {...props}
+    {disabled}
     class={[
-      'relative isolate flex w-full min-w-0 cursor-pointer gap-4 text-left transition-transform active:scale-95 active:opacity-50',
+      'relative isolate flex w-full min-w-0 gap-4 text-left transition-transform',
+      disabled
+        ? 'cursor-not-allowed opacity-50'
+        : 'cursor-pointer active:scale-95 active:opacity-50',
       'before:absolute before:-inset-2 before:-z-10 before:rounded-[10px] before:bg-base-300-700 before:content-[\'\']',
       'before:scale-90 before:opacity-0 before:transition-[opacity,scale] hover:before:scale-100 hover:before:opacity-100',
+      disabled && 'before:hidden hover:before:scale-90 hover:before:opacity-0',
     ]}
   >
     <ListingThumbnail {...thumbnail} />

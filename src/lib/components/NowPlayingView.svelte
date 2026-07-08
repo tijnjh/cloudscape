@@ -11,7 +11,10 @@
   import UserListing from './listings/UserListing.svelte'
   import Menu from './Menu.svelte'
   import QueryView from './QueryView.svelte'
+  import BlockedTrackNotice from './BlockedTrackNotice.svelte'
   import Button from './ui/Button.svelte'
+
+  const isBlocked = $derived(nowPlaying.current?.policy === 'BLOCK')
 
   $effect(() => {
     if (nowPlaying.current) {
@@ -104,15 +107,19 @@
       </hgroup>
     {/if}
 
-    {#key nowPlaying.current}
-      <audio
-        class='h-10'
-        bind:paused={isPaused.current}
-        controls
-        {@attach nowPlaying.current && applySource(nowPlaying.current)}
-      >
-      </audio>
-    {/key}
+    {#if isBlocked}
+      <BlockedTrackNotice />
+    {:else if nowPlaying.current}
+      {#key nowPlaying.current}
+        <audio
+          class='h-10'
+          bind:paused={isPaused.current}
+          controls
+          {@attach applySource(nowPlaying.current)}
+        >
+        </audio>
+      {/key}
+    {/if}
   </div>
 
   <div class='mt-8 flex w-full flex-col gap-4 md:h-dvh md:max-w-sm'>

@@ -1,5 +1,6 @@
 <script lang='ts'>
   import { resolveTrack } from '$lib/api/track'
+  import BlockedTrackNotice from '$lib/components/BlockedTrackNotice.svelte'
   import CommentsView from '$lib/components/CommentsView.svelte'
   import HeroSection from '$lib/components/HeroSection.svelte'
   import TrackListing from '$lib/components/listings/TrackListing.svelte'
@@ -43,6 +44,10 @@
   {#snippet right()}
     <QueryView query={trackQuery}>
       {#snippet content(track)}
+        {#if track.policy === 'BLOCK'}
+          <BlockedTrackNotice />
+        {/if}
+
         <TrackListing {track} />
 
         {#if track.commentable}

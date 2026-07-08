@@ -79,6 +79,8 @@
   import GenericListing from './GenericListing.svelte'
 
   const { track }: { track: Track } = $props()
+
+  const isBlocked = $derived(track.policy === 'BLOCK')
 </script>
 
 <GenericListing
@@ -88,12 +90,15 @@
     src: track.artwork_url,
     alt: `Album cover of ${track.title}`,
   }}
+  disabled={isBlocked}
   onclick={() => {
     nowPlaying.current = track
 
-    setTimeout(() => {
-      isPaused.current = false
-    }, 50)
+    if (!isBlocked) {
+      setTimeout(() => {
+        isPaused.current = false
+      }, 50)
+    }
   }}
   badges={track.policy === 'SNIP' ? ['30s only'] : []}
   actions={getTrackListingMenuActions(track)}
