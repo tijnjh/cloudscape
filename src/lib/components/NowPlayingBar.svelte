@@ -15,13 +15,14 @@
 
 {#if !showNowPlayingView.current}
   <div
+    data-material
     in:fly={{ y: reduceMotion.current ? 0 : 100, duration: 200 }}
-    class='fixed inset-x-2 bottom-2 z-30 mx-auto rounded-2xl bg-base-300-700/75 backdrop-blur-lg md:inset-x-4 md:bottom-4 md:max-w-xl'
+    class='fixed inset-x-2 bottom-2 z-30 mx-auto rounded-2xl border border-base-50/25 bg-base-100-900/72 shadow-xl shadow-base-950/15 backdrop-blur-2xl backdrop-saturate-150 md:inset-x-4 md:bottom-4 md:max-w-xl dark:border-white/10 dark:shadow-black/35'
   >
     <div class='grid grid-cols-[1fr_auto] items-center gap-4 p-3'>
       <button
         onclick={() => (showNowPlayingView.current = true)}
-        class='flex gap-4 truncate text-left'
+        class='flex gap-4 truncate text-left transition-opacity outline-none focus-visible:ring-2 focus-visible:ring-accent active:opacity-60'
       >
         <div class='relative size-12 shrink-0 overflow-hidden rounded-sm'>
           {#if nowPlaying.current}
@@ -54,7 +55,7 @@
         </div>
 
         <div class='flex w-full min-w-0 flex-col'>
-          <h3 class='m-0 truncate p-0'>
+          <h3 class='m-0 truncate p-0 font-medium tracking-[-0.01em]'>
             {nowPlaying.current?.title ?? ''}
           </h3>
           <p class='truncate opacity-50'>

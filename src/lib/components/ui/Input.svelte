@@ -22,15 +22,15 @@
 
 <div
   class={cn(
-    'relative flex h-10 items-center gap-2 overflow-clip rounded-full bg-base-300-700 pl-4 ring-blue-500 focus-within:ring-2',
+    'relative flex h-11 items-center gap-2 overflow-clip rounded-full border border-base-400-600/15 bg-base-50-950/45 pl-4 shadow-sm shadow-base-950/5 ring-accent transition-[box-shadow,background-color] duration-200 focus-within:bg-base-50-950/70 focus-within:ring-2 dark:bg-base-300-700/75',
     className,
   )}
 >
   {#if Icon}
-    <Icon size={16} strokeWidth={3} class='shrink-0' />
+    <Icon size={16} strokeWidth={2.5} class='shrink-0 opacity-55' />
   {/if}
 
-  <input {...props} bind:value class='h-full grow outline-none' />
+  <input {...props} bind:value class='h-full grow bg-transparent outline-none placeholder:opacity-45' />
 
   {#if value}
     <div transition:scale={{ start: 0.75, duration: 150 }}>

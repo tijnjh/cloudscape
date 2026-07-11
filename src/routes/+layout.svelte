@@ -60,7 +60,8 @@
 <QueryClientProvider client={queryClient}>
   {#if page.route.id !== '/'}
     <div
-      class='fixed inset-x-0 top-0 z-20 mx-auto flex max-w-5xl justify-between bg-linear-to-b from-base-200-800 to-base-300-700/0 p-4'
+      data-nav-chrome
+      class='fixed inset-x-0 top-0 z-20 mx-auto flex max-w-5xl justify-between p-4'
     >
       <Button
         variant='secondary'

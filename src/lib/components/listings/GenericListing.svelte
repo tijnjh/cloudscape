@@ -52,7 +52,7 @@
       disabled
         ? 'cursor-not-allowed opacity-50'
         : 'cursor-pointer active:scale-97 active:opacity-50',
-      'before:absolute before:-inset-2 before:-z-10 before:rounded-[10px] before:bg-base-300-700 before:content-[\'\']',
+      'rounded-lg outline-none before:absolute before:-inset-2 before:-z-10 before:rounded-xl before:bg-base-300-700/80 before:content-[\'\'] focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-base-200-800',
       'before:scale-95 before:opacity-0 before:transition-[opacity,scale] before:duration-160 before:ease-out [@media(hover:hover)_and_(pointer:fine)]:hover:before:scale-100 [@media(hover:hover)_and_(pointer:fine)]:hover:before:opacity-100',
       disabled && 'before:hidden',
     ]}

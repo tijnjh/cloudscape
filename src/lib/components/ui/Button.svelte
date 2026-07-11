@@ -7,13 +7,13 @@
   export const buttonVariants = tv({
     slots: {
       base: [
-        'flex cursor-pointer items-center justify-center gap-2 truncate rounded-full transition-transform duration-150 ease-out',
+        'flex cursor-pointer items-center justify-center gap-2 truncate rounded-full border border-transparent font-medium tracking-[-0.01em] transition-[transform,opacity,background-color,box-shadow] duration-150 ease-out outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-base-200-800',
       ],
     },
     variants: {
       variant: {
-        primary: 'bg-accent text-base-200-800',
-        secondary: 'bg-base-300-700',
+        primary: 'bg-accent text-base-200-800 shadow-sm shadow-base-950/10 dark:shadow-black/25',
+        secondary: 'border-base-400-600/15 bg-base-50-950/45 shadow-sm shadow-base-950/5 dark:bg-base-300-700/75 dark:shadow-black/20',
       },
       size: {
         default: 'px-4 py-2',
@@ -21,7 +21,7 @@
       },
       disabled: {
         true: 'cursor-not-allowed opacity-50',
-        false: 'hover:opacity-80 active:scale-97 active:opacity-50',
+        false: 'hover:opacity-85 active:scale-97 active:opacity-65',
       },
     },
     defaultVariants: {

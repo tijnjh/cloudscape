@@ -31,7 +31,7 @@
   {#snippet left()}
     <div class='flex w-full flex-col items-start gap-4'>
       <div class='flex w-full items-center justify-between'>
-        <h1 class='text-3xl font-medium'>Cloudscape</h1>
+        <h1 class='text-3xl font-semibold tracking-tight'>Cloudscape</h1>
         <div class='flex items-center gap-2'>
           <Button variant='secondary' href='https://tijn.dev/cloudscape'>
             Source
@@ -46,7 +46,7 @@
     {#if favoriteTrackIds.current.length > 0}
       <h2
         title='These are saved in localstorage'
-        class='mt-8 text-2xl font-medium'
+        class='mt-8 text-2xl font-semibold tracking-[-0.02em]'
       >
         Your Favorites
       </h2>
@@ -64,7 +64,7 @@
     <QueryView query={selectionsQuery}>
       {#snippet content(data)}
         {#each data.collection as selection (selection.items)}
-          <h3 class='text-2xl font-medium'>
+          <h3 class='text-2xl font-semibold tracking-[-0.02em]'>
             {selection.title}
           </h3>
           {#each selection.items.collection as item, i (item.id + selection.id + i)}
