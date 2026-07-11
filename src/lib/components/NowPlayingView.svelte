@@ -7,11 +7,11 @@
   import { XIcon } from '@lucide/svelte'
   import { createQuery } from '@tanstack/svelte-query'
   import { cn } from 'cnfn'
+  import BlockedTrackNotice from './BlockedTrackNotice.svelte'
   import TrackListing, { getTrackListingMenuActions } from './listings/TrackListing.svelte'
   import UserListing from './listings/UserListing.svelte'
   import Menu from './Menu.svelte'
   import QueryView from './QueryView.svelte'
-  import BlockedTrackNotice from './BlockedTrackNotice.svelte'
   import Button from './ui/Button.svelte'
 
   const isBlocked = $derived(nowPlaying.current?.policy === 'BLOCK')
@@ -76,8 +76,10 @@
 
 <div
   class={cn(
-    'fixed inset-x-0 z-30 grid h-full grid-cols-1 place-items-center gap-x-8 overflow-y-scroll bg-base-300-700/75 p-4 backdrop-blur-lg transition-[top] duration-300 md:grid-cols-2',
-    showNowPlayingView.current ? 'top-0' : 'top-full',
+    'fixed inset-0 z-30 grid grid-cols-1 place-items-center gap-x-8 overflow-y-scroll bg-base-300-700/75 p-4 backdrop-blur-lg transition-[translate,opacity] duration-300 ease-drawer will-change-[translate,opacity] motion-reduce:translate-y-0 motion-reduce:duration-200 motion-reduce:ease-out md:grid-cols-2',
+    showNowPlayingView.current
+      ? 'translate-y-0 opacity-100'
+      : 'pointer-events-none translate-y-full opacity-0',
   )}
 >
   <div class='flex w-full flex-col gap-4 max-md:mt-16 md:max-w-sm'>

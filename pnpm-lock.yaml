@@ -14,9 +14,6 @@ importers:
       '@humanspeak/svelte-motion':
         specifier: ^0.6.5
         version: 0.6.7(svelte@5.56.4(@typescript-eslint/types@8.63.0))
-      '@numeric-text/svelte':
-        specifier: ^0.1.4
-        version: 0.1.4(svelte@5.56.4(@typescript-eslint/types@8.63.0))
       '@tanstack/svelte-query':
         specifier: ^6.1.34
         version: 6.1.36(svelte@5.56.4(@typescript-eslint/types@8.63.0))
@@ -391,14 +388,6 @@ packages:
     peerDependencies:
       '@emnapi/core': ^1.7.1
       '@emnapi/runtime': ^1.7.1
-
-  '@numeric-text/core@0.1.4':
-    resolution: {integrity: sha512-tMaH5u/kdpw3AP+XJMnDWyq39zVHoP80NCLTFwzVept64dIAMKBNLlYtUK0+EULiyFg6IiSwswmc9tMukV1tLw==}
-
-  '@numeric-text/svelte@0.1.4':
-    resolution: {integrity: sha512-dtVrYcadp5NBOeoF8NXHKXKid+vCrpx3s36MBfqAoDLBiLsqgAY+1kDwAOH75gAFGsviAE14JR4ygVVefDNn3w==}
-    peerDependencies:
-      svelte: ^5
 
   '@ota-meshi/ast-token-store@0.3.0':
     resolution: {integrity: sha512-XRO0zi2NIUKq2lUk3T1ecFSld1fMWRKE6naRFGkgkdeosx7IslyUKNv5Dcb5PJTja9tHJoFu0v/7yEpAkrkrTg==}
@@ -2722,13 +2711,6 @@ snapshots:
       '@emnapi/runtime': 1.11.1
       '@tybys/wasm-util': 0.10.3
     optional: true
-
-  '@numeric-text/core@0.1.4': {}
-
-  '@numeric-text/svelte@0.1.4(svelte@5.56.4(@typescript-eslint/types@8.63.0))':
-    dependencies:
-      '@numeric-text/core': 0.1.4
-      svelte: 5.56.4(@typescript-eslint/types@8.63.0)
 
   '@ota-meshi/ast-token-store@0.3.0': {}
 

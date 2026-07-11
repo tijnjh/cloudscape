@@ -7,7 +7,7 @@
   export const buttonVariants = tv({
     slots: {
       base: [
-        'flex cursor-pointer items-center justify-center gap-2 truncate rounded-full transition-transform',
+        'flex cursor-pointer items-center justify-center gap-2 truncate rounded-full transition-transform duration-150 ease-out',
       ],
     },
     variants: {
@@ -21,7 +21,7 @@
       },
       disabled: {
         true: 'cursor-not-allowed opacity-50',
-        false: 'hover:opacity-80 active:scale-90 active:opacity-50',
+        false: 'hover:opacity-80 active:scale-97 active:opacity-50',
       },
     },
     defaultVariants: {

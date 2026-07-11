@@ -4,6 +4,8 @@
   import type { User } from '$lib/schemas/user'
   import type { CreateInfiniteQueryResult, InfiniteData } from '@tanstack/svelte-query'
   import { whenInView } from '$lib/utils'
+  import { cubicOut } from 'svelte/easing'
+  import { MediaQuery } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
   import ErrorDisplay from './ErrorDisplay.svelte'
   import PlaylistListing from './listings/PlaylistListing.svelte'
@@ -19,6 +21,8 @@
     query: CreateInfiniteQueryResult<InfiniteData<T[], unknown>, Error>
     orderedIds?: number[]
   } = $props()
+
+  const reduceMotion = new MediaQuery('(prefers-reduced-motion: reduce)')
 
   const sortedPages = $derived.by(() => {
     if (!orderedIds) {
@@ -49,7 +53,10 @@
 {:else if query.isError}
   <ErrorDisplay error={query.error} />
 {:else}
-  <div in:fly={{ y: 16 }} class='flex flex-col gap-4'>
+  <div
+    in:fly={{ y: reduceMotion.current ? 0 : 16, duration: 200, easing: cubicOut }}
+    class='flex flex-col gap-4'
+  >
     {#each sortedPages as page (page)}
       {#each page as result (result.id)}
         {#if result.kind === 'track'}

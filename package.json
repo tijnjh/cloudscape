@@ -16,7 +16,6 @@
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "^5.2.8",
     "@humanspeak/svelte-motion": "^0.6.5",
-    "@numeric-text/svelte": "^0.1.4",
     "@tanstack/svelte-query": "^6.1.34",
     "@tijnjh/match": "^0.0.3",
     "bits-ui": "^2.18.1",

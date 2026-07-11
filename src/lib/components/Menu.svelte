@@ -58,8 +58,8 @@
             {#if open}
               <div
                 {...props}
-                class='z-1000 flex origin-top-right flex-col gap-2 pt-2'
-                transition:scale={{ start: 0.9, duration: 150 }}
+                class='z-1000 flex origin-(--bits-dropdown-menu-content-transform-origin) flex-col gap-2 pt-2'
+                transition:scale={{ start: 0.95, duration: 150 }}
               >
                 {#each actions as action (action.label)}
                   <Button
@@ -89,18 +89,20 @@
     <Dialog.Portal>
       <Dialog.Overlay
         class={[
-          'fixed inset-0 z-40 bg-base-950/50 backdrop-blur-lg duration-300',
-          'data-[state=open]:animate-in data-[state=open]:fade-in',
-          'data-[state=closed]:animate-out data-[state=closed]:fade-out',
+          'fixed inset-0 z-40 bg-base-950/50 backdrop-blur-lg',
+          'data-[state=open]:animate-in data-[state=open]:duration-200 data-[state=open]:fade-in',
+          'data-[state=closed]:animate-out data-[state=closed]:duration-150 data-[state=closed]:fade-out',
+          'motion-reduce:backdrop-blur-none motion-reduce:duration-150',
         ]}
       />
 
       <Dialog.Content
         class={cn(
           'fixed inset-x-0 bottom-0 z-50 mb-24 w-full',
-          'duration-400 ease-[cubic-bezier(0.65,0.05,0.36,1)]',
-          'data-[state=open]:animate-in data-[state=open]:blur-in data-[state=open]:fade-in data-[state=open]:slide-in-from-bottom',
-          'data-[state=closed]:animate-out data-[state=closed]:blur-out data-[state=closed]:fade-out data-[state=closed]:slide-out-to-bottom',
+          'data-[state=open]:animate-in data-[state=open]:duration-250 data-[state=open]:ease-drawer data-[state=open]:blur-in data-[state=open]:fade-in data-[state=open]:slide-in-from-bottom',
+          'data-[state=closed]:animate-out data-[state=closed]:duration-180 data-[state=closed]:ease-out data-[state=closed]:blur-out data-[state=closed]:fade-out data-[state=closed]:slide-out-to-bottom',
+          'motion-reduce:data-[state=open]:slide-in-from-bottom-0 motion-reduce:data-[state=open]:blur-in-0',
+          'motion-reduce:duration-150 motion-reduce:data-[state=closed]:slide-out-to-bottom-0 motion-reduce:data-[state=closed]:blur-out-0',
         )}
       >
         <div
