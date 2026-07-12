@@ -1,6 +1,5 @@
-import { goto } from '$app/navigation'
-import { resolve } from '$app/paths'
-import { selectedInstance } from '$lib/global.svelte'
+import { selectedInstanceAtom } from '$lib/global'
+import { getDefaultStore } from 'jotai'
 import * as v from 'valibot'
 
 interface Init<TSchema extends v.GenericSchema> extends RequestInit {
@@ -28,12 +27,15 @@ export async function $api<TSchema extends v.GenericSchema>(
   input: string,
   { schema, searchParams, ...baseInit }: Init<TSchema> = {},
 ) {
-  if (!selectedInstance.current) {
-    throw goto(resolve('/_/preferences/instance'))
+  const selectedInstance = getDefaultStore().get(selectedInstanceAtom)
+
+  if (!selectedInstance) {
+    location.assign('/_/preferences/instance')
+    throw new Error('No server selected')
   }
 
   const url = [
-    selectedInstance.current,
+    selectedInstance,
     '/_/api/v2',
     input,
     searchParams && formatSearchParams(searchParams),
