@@ -1,5 +1,5 @@
 import { getSoundcloakInstances } from '$lib/api/other'
-import Button from '$lib/components/ui/Button'
+import { Button } from '$lib/components/ui/Button'
 import { selectedInstanceAtom } from '$lib/global'
 import { createFileRoute } from '@tanstack/react-router'
 import { useAtom } from 'jotai'

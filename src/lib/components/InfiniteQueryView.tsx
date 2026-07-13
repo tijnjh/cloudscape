@@ -6,16 +6,16 @@ import { useWhenInView } from '$lib/utils'
 import { match } from 'matchexpr'
 import { motion, useReducedMotion } from 'motion/react'
 import { useCallback, useMemo } from 'react'
-import ErrorDisplay from './ErrorDisplay'
-import PlaylistListing from './listings/PlaylistListing'
-import TrackListing from './listings/TrackListing'
-import UserListing from './listings/UserListing'
-import Spinner from './Spinner'
-import Button from './ui/Button'
+import { ErrorDisplay } from './ErrorDisplay'
+import { PlaylistListing } from './listings/PlaylistListing'
+import { TrackListing } from './listings/TrackListing'
+import { UserListing } from './listings/UserListing'
+import { Spinner } from './Spinner'
+import { Button } from './ui/Button'
 
 type Result = Track | Playlist | User
 
-export default function InfiniteQueryView<T extends Result>({
+export function InfiniteQueryView<T extends Result>({
   query,
   orderedIds,
 }: {

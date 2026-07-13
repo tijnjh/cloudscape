@@ -1,5 +1,5 @@
-import Main from '$lib/components/Main'
-import Button from '$lib/components/ui/Button'
+import { Main } from '$lib/components/Main'
+import { Button } from '$lib/components/ui/Button'
 import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
 import { ServerCogIcon, SwatchBookIcon } from 'lucide-react'
 

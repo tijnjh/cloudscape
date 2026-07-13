@@ -2,9 +2,9 @@ import type { InputProps as InputPrimitiveProps } from '@base-ui/react/input'
 import { useNavigate } from '@tanstack/react-router'
 import { SearchIcon } from 'lucide-react'
 import { useState } from 'react'
-import Input from './ui/Input'
+import { Input } from './ui/Input'
 
-export default function SearchBar({ value, onChange }: InputPrimitiveProps) {
+export function SearchBar({ value, onChange }: InputPrimitiveProps) {
   const navigate = useNavigate()
 
   const [query, setQuery] = useState<string>(String(value) ?? '')

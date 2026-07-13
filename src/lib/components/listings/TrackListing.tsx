@@ -8,7 +8,7 @@ import {
 import { useLocation } from '@tanstack/react-router'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { ClipboardIcon, DiscIcon, SpeakerIcon, StarIcon, StarOffIcon, UserIcon } from 'lucide-react'
-import GenericListing from './GenericListing'
+import { GenericListing } from './GenericListing'
 
 export function useTrackListingMenuActions(track: Track) {
   const location = useLocation()
@@ -74,7 +74,7 @@ export function useTrackListingMenuActions(track: Track) {
   ] satisfies Action[]
 }
 
-export default function TrackListing({ track }: { track: Track }) {
+export function TrackListing({ track }: { track: Track }) {
   const setNowPlaying = useSetAtom(nowPlayingAtom)
   const setIsPaused = useSetAtom(isPausedAtom)
   const isBlocked = track.policy === 'BLOCK'

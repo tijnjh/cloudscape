@@ -1,7 +1,7 @@
 import type { Playlist } from '$lib/schemas/playlist'
-import GenericListing from './GenericListing'
+import { GenericListing } from './GenericListing'
 
-export default function PlaylistListing({ playlist }: { playlist: Playlist }) {
+export function PlaylistListing({ playlist }: { playlist: Playlist }) {
   return (
     <GenericListing
       title={playlist.title}

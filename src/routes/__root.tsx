@@ -1,7 +1,7 @@
 import favicon from '$lib/assets/favicon.svg'
-import NowPlayingBar from '$lib/components/NowPlayingBar'
-import NowPlayingView from '$lib/components/NowPlayingView'
-import Button from '$lib/components/ui/Button'
+import { NowPlayingBar } from '$lib/components/NowPlayingBar'
+import { NowPlayingView } from '$lib/components/NowPlayingView'
+import { Button } from '$lib/components/ui/Button'
 import {
   isBlackAccentAtom,
   selectedAccentColorAtom,

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { cn } from 'cnfn'
 
-export default function Main({
+export function Main({
   children,
   left,
   right,

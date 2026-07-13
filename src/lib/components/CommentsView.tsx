@@ -5,12 +5,12 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { match } from 'matchexpr'
 import { motion, useReducedMotion } from 'motion/react'
 import { useCallback } from 'react'
-import Comment from './Comment'
-import ErrorDisplay from './ErrorDisplay'
-import Spinner from './Spinner'
-import Button from './ui/Button'
+import { Comment } from './Comment'
+import { ErrorDisplay } from './ErrorDisplay'
+import { Spinner } from './Spinner'
+import { Button } from './ui/Button'
 
-export default function CommentsView({ trackId }: { trackId: number }) {
+export function CommentsView({ trackId }: { trackId: number }) {
   const reduceMotion = useReducedMotion()
 
   const commentsQuery = useInfiniteQuery({

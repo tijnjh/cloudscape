@@ -1,7 +1,7 @@
 import { CircleAlertIcon } from 'lucide-react'
 import { serializeError } from 'serialize-error'
 
-export default function ErrorDisplay({ error }: { error: unknown }) {
+export function ErrorDisplay({ error }: { error: unknown }) {
   const err = serializeError(error)
 
   return (

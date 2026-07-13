@@ -7,11 +7,7 @@ export interface ListingThumbnailProps {
   className?: string
 }
 
-export default function ListingThumbnail({
-  src,
-  alt,
-  className,
-}: ListingThumbnailProps) {
+export function ListingThumbnail({ src, alt, className }: ListingThumbnailProps) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null)
 
   if (src && src !== failedSrc) {

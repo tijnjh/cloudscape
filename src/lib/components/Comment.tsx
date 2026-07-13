@@ -1,8 +1,8 @@
 import type { Comment as CommentType } from '$lib/schemas/comment'
 import { formatDate } from '$lib/utils'
 import { Link } from '@tanstack/react-router'
-import ListingThumbnail from './ListingThumbnail'
-import Badge from './ui/Badge'
+import { ListingThumbnail } from './ListingThumbnail'
+import { Badge } from './ui/Badge'
 
 function formatTimestamp(ms: number) {
   const totalSeconds = Math.floor(ms / 1000)
@@ -11,7 +11,7 @@ function formatTimestamp(ms: number) {
   return `${minutes}:${seconds.toString().padStart(2, '0')}`
 }
 
-export default function Comment({ comment }: { comment: CommentType }) {
+export function Comment({ comment }: { comment: CommentType }) {
   return (
     <div className='flex gap-4'>
       <Link

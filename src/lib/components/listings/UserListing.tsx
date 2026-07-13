@@ -1,7 +1,7 @@
 import type { User } from '$lib/schemas/user'
-import GenericListing from './GenericListing'
+import { GenericListing } from './GenericListing'
 
-export default function UserListing({ user }: { user: User }) {
+export function UserListing({ user }: { user: User }) {
   return (
     <GenericListing
       title={`${user.username}`}

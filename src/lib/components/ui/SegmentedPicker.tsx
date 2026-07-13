@@ -1,7 +1,7 @@
 import { cn } from 'cnfn'
-import Button from './Button'
+import { Button } from './Button'
 
-export default function SegmentedPicker<T extends readonly string[]>({
+export function SegmentedPicker<T extends readonly string[]>({
   options,
   current,
   onChange,

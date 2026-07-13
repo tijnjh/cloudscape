@@ -13,12 +13,12 @@ import { cn } from 'cnfn'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { XIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import BlockedTrackNotice from './BlockedTrackNotice'
-import TrackListing, { useTrackListingMenuActions } from './listings/TrackListing'
-import UserListing from './listings/UserListing'
-import Menu from './Menu'
-import QueryView from './QueryView'
-import Button from './ui/Button'
+import { BlockedTrackNotice } from './BlockedTrackNotice'
+import { TrackListing, useTrackListingMenuActions } from './listings/TrackListing'
+import { UserListing } from './listings/UserListing'
+import { Menu } from './Menu'
+import { QueryView } from './QueryView'
+import { Button } from './ui/Button'
 
 function AudioPlayer({ track }: { track: Track }) {
   const elementRef = useRef<HTMLAudioElement>(null)
@@ -121,7 +121,7 @@ function NowPlayingMenu({ track }: { track: Track }) {
   return <Menu actions={actions} />
 }
 
-export default function NowPlayingView() {
+export function NowPlayingView() {
   const location = useLocation()
   const nowPlaying = useAtomValue(nowPlayingAtom)
   const showNowPlayingView = useAtomValue(showNowPlayingViewAtom)

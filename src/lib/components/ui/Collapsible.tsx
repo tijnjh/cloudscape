@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { Collapsible as CollapsiblePrimitive } from '@base-ui/react/collapsible'
 
-export default function Collapsible({
+export function Collapsible({
   children,
   summary,
 }: {

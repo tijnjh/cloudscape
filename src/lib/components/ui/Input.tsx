@@ -7,7 +7,7 @@ export interface InputProps extends InputPrimitiveProps {
   icon?: LucideIcon
 }
 
-export default function Input({ className, icon: Icon, ...props }: InputProps) {
+export function Input({ className, icon: Icon, ...props }: InputProps) {
   return (
     <div
       className={cn(

@@ -1,6 +1,6 @@
 import { CircleAlertIcon } from 'lucide-react'
 
-export default function BlockedTrackNotice() {
+export function BlockedTrackNotice() {
   return (
     <div className='rounded-lg bg-base-300-700 p-4 text-base-600-400'>
       <div className='flex gap-4'>

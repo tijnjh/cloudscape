@@ -1,6 +1,6 @@
 import type { ValidColor } from '$lib/theme'
 import type { CSSProperties } from 'react'
-import Button from '$lib/components/ui/Button'
+import { Button } from '$lib/components/ui/Button'
 import {
   isBlackAccentAtom,
   selectedAccentColorAtom,

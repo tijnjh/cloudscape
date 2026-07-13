@@ -3,10 +3,10 @@ import type { ReactNode } from 'react'
 import { cn } from 'cnfn'
 import { match } from 'matchexpr'
 import { motion, useReducedMotion } from 'motion/react'
-import ErrorDisplay from './ErrorDisplay'
-import Spinner from './Spinner'
+import { ErrorDisplay } from './ErrorDisplay'
+import { Spinner } from './Spinner'
 
-export default function QueryView<T>({
+export function QueryView<T>({
   query,
   content,
   className,

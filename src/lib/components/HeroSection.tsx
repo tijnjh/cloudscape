@@ -1,8 +1,8 @@
 import type { User } from '$lib/schemas/user'
 import { cn } from 'cnfn'
-import UserListing from './listings/UserListing'
-import Badge from './ui/Badge'
-import Collapsible from './ui/Collapsible'
+import { UserListing } from './listings/UserListing'
+import { Badge } from './ui/Badge'
+import { Collapsible } from './ui/Collapsible'
 
 export interface HeroSectionProps {
   pictureSrc?: string | null
@@ -13,7 +13,7 @@ export interface HeroSectionProps {
   roundedPicture?: boolean
 }
 
-export default function HeroSection({
+export function HeroSection({
   pictureSrc,
   title,
   description,

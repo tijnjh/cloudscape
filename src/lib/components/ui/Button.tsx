@@ -41,7 +41,7 @@ export type ButtonProps = Omit<ComponentProps<typeof BaseButton>, 'className'>
     iconPosition?: 'leading' | 'trailing'
   }
 
-export default function Button({
+export function Button({
   children,
   variant,
   size,
