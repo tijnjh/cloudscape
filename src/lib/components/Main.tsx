@@ -5,7 +5,7 @@ export default function Main({
   children,
   left,
   right,
-  split = [50, 50],
+  split: [leftSplit, rightSplit] = [50, 50],
   className,
 }: {
   children?: ReactNode
@@ -14,8 +14,6 @@ export default function Main({
   split?: [number, number]
   className?: string
 }) {
-  const [leftSplit, rightSplit] = split
-
   function accountForGap(percent: number) {
     return `calc(${percent}% - .5rem)`
   }

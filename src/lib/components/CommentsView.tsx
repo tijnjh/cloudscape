@@ -2,6 +2,7 @@ import { getTrackComments } from '$lib/api/track'
 import { max_items_per_page } from '$lib/constants'
 import { useWhenInView } from '$lib/utils'
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { match } from 'matchexpr'
 import { motion, useReducedMotion } from 'motion/react'
 import { useCallback } from 'react'
 import Comment from './Comment'
@@ -39,26 +40,27 @@ export default function CommentsView({ trackId }: { trackId: number }) {
 
   return (
     <>
-      {commentsQuery.isLoading
-        ? <Spinner />
-        : commentsQuery.isError
-          ? <ErrorDisplay error={commentsQuery.error} />
-          : (
-              <motion.div
-                initial={{ y: reduceMotion ? 0 : 16, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
-                className='flex flex-col gap-6'
-              >
-                {commentsQuery.data?.pages.flat().length === 0 && (
-                  <span className='mt-4 text-lg text-base-100-900/25'>No comments yet...</span>
-                )}
 
-                {commentsQuery.data?.pages.flat().map(comment => (
-                  <Comment key={comment.id} comment={comment} />
-                ))}
-              </motion.div>
+      {match(commentsQuery, 'status', {
+        pending: () => <Spinner />,
+        error: () => <ErrorDisplay error={commentsQuery.error} />,
+        success: () => (
+          <motion.div
+            initial={{ y: reduceMotion ? 0 : 16, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className='flex flex-col gap-6'
+          >
+            {commentsQuery.data?.pages.flat().length === 0 && (
+              <span className='mt-4 text-lg text-base-100-900/25'>No comments yet...</span>
             )}
+
+            {commentsQuery.data?.pages.flat().map(comment => (
+              <Comment key={comment.id} comment={comment} />
+            ))}
+          </motion.div>
+        ),
+      })}
 
       {commentsQuery.hasNextPage && (
         <Button
