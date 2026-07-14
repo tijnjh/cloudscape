@@ -34,8 +34,15 @@ function InstancePage() {
     }
   }
 
-  function reload() {
-    location.reload()
+  function selectInstance(instanceUrl: string) {
+    const isInitialSelection = selectedInstance === undefined
+
+    setSelectedInstance(instanceUrl)
+
+    if (isInitialSelection)
+      location.assign('/')
+    else
+      location.reload()
   }
 
   return (
@@ -49,10 +56,7 @@ function InstancePage() {
         return instance.Settings.EnableAPI && (
           <Button
             key={instance.URL}
-            onClick={() => {
-              setSelectedInstance(instance.URL)
-              reload()
-            }}
+            onClick={() => selectInstance(instance.URL)}
             variant={isSelected ? 'primary' : 'secondary'}
           >
             {cleanUrl(instance.URL)}
