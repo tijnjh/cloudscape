@@ -24,7 +24,6 @@ function AudioPlayer({ track }: { track: Track }) {
   const elementRef = useRef<HTMLAudioElement>(null)
   const activeRef = useRef(true)
   const commandRef = useRef<'pause' | 'play' | null>(null)
-  const desiredPausedRef = useRef(true)
   const selectedInstance = useAtomValue(selectedInstanceAtom)
   const [isPaused, setIsPaused] = useAtom(isPausedAtom)
   const [readySource, setReadySource] = useState<string | null>(null)
@@ -38,10 +37,6 @@ function AudioPlayer({ track }: { track: Track }) {
       activeRef.current = false
     }
   }, [])
-
-  useEffect(() => {
-    desiredPausedRef.current = isPaused
-  }, [isPaused])
 
   useEffect(() => {
     const element = elementRef.current
@@ -92,11 +87,6 @@ function AudioPlayer({ track }: { track: Track }) {
       className='h-10'
       controls
       onPlay={() => {
-        if (desiredPausedRef.current) {
-          commandRef.current = 'pause'
-          elementRef.current?.pause()
-          return
-        }
         if (commandRef.current === 'play') {
           commandRef.current = null
           return
