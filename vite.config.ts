@@ -1,13 +1,26 @@
-import adapter from '@sveltejs/adapter-static'
-import { sveltekit } from '@sveltejs/kit/vite'
+import { fileURLToPath } from 'node:url'
+import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  envPrefix: ['VITE_', 'PUBLIC_'],
+  resolve: {
+    alias: {
+      $lib: fileURLToPath(new URL('./src/lib', import.meta.url)),
+    },
+  },
   plugins: [
-    tailwindcss(),
-    sveltekit({
-      adapter: adapter({ fallback: 'index.html' }),
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
     }),
+    react(),
+    babel({
+      presets: [reactCompilerPreset()],
+    }),
+    tailwindcss(),
   ],
 })

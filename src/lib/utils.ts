@@ -1,11 +1,23 @@
-import type { Attachment } from 'svelte/attachments'
-import { IsInViewport, watch } from 'runed'
+import { useEffect, useRef } from 'react'
 
-export function whenInView(fn: VoidFunction): Attachment<HTMLElement> {
-  return (element) => {
-    const isInViewport = new IsInViewport(() => element)
-    watch(() => isInViewport.current, fn)
-  }
+export function useWhenInView(fn: VoidFunction) {
+  const ref = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    const element = ref.current
+    if (!element)
+      return
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting)
+        fn()
+    })
+
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [fn])
+
+  return ref
 }
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
