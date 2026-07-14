@@ -1,4 +1,4 @@
-import { cn } from 'cnfn'
+import { cn } from 'cnfast'
 import { useState } from 'react'
 
 export interface ListingThumbnailProps {

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { cn } from 'cnfn'
+import { cn } from 'cnfast'
 
 export function Main({
   children,

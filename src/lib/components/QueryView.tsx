@@ -1,6 +1,6 @@
 import type { UseInfiniteQueryResult, UseQueryResult } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { cn } from 'cnfn'
+import { cn } from 'cnfast'
 import { motion, useReducedMotion } from 'motion/react'
 import { ErrorDisplay } from './ErrorDisplay'
 import { Spinner } from './Spinner'

@@ -17,7 +17,7 @@
     "@fontsource/atkinson-hyperlegible": "^5.2.8",
     "@tanstack/react-query": "^5.90.0",
     "@tanstack/react-router": "^1.130.0",
-    "cnfn": "^5.5.1",
+    "cnfast": "^0.0.8",
     "dedent": "^1.7.2",
     "hls.js": "^1.6.16",
     "ios-haptics": "^3.1.1",
