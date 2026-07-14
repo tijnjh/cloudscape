@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
@@ -8,7 +9,7 @@ export default defineConfig({
   envPrefix: ['VITE_', 'PUBLIC_'],
   resolve: {
     alias: {
-      $lib: new URL('./src/lib', import.meta.url).pathname,
+      $lib: fileURLToPath(new URL('./src/lib', import.meta.url)),
     },
   },
   plugins: [

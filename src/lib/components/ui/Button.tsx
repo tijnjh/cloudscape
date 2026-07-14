@@ -1,9 +1,10 @@
 import type { LucideIcon } from 'lucide-react'
-import type { ComponentProps, ReactNode } from 'react'
+import type { ComponentPropsWithoutRef, ComponentRef, ReactNode } from 'react'
 import type { VariantProps } from 'tailwind-variants'
 import { Button as BaseButton } from '@base-ui/react/button'
 import { Link } from '@tanstack/react-router'
 import { cn } from 'cnfn'
+import { forwardRef } from 'react'
 import { tv } from 'tailwind-variants'
 
 export const buttonVariants = tv({
@@ -32,7 +33,9 @@ export const buttonVariants = tv({
   },
 })
 
-export type ButtonProps = Omit<ComponentProps<typeof BaseButton>, 'className'>
+export type ButtonElement = ComponentRef<typeof BaseButton>
+
+export type ButtonProps = Omit<ComponentPropsWithoutRef<typeof BaseButton>, 'className'>
   & VariantProps<typeof buttonVariants> & {
     children?: ReactNode
     className?: string
@@ -41,7 +44,9 @@ export type ButtonProps = Omit<ComponentProps<typeof BaseButton>, 'className'>
     iconPosition?: 'leading' | 'trailing'
   }
 
-export function Button({
+// The ref must reach BaseButton for consumers such as haptics and observers.
+// eslint-disable-next-line react/no-forward-ref
+export const Button = forwardRef<ButtonElement, ButtonProps>(({
   children,
   variant,
   size,
@@ -50,7 +55,7 @@ export function Button({
   className,
   href,
   ...props
-}: ButtonProps) {
+}, ref) => {
   const classes = buttonVariants({ variant, size, disabled: props.disabled })
 
   const icon = Icon
@@ -71,6 +76,7 @@ export function Button({
 
   return (
     <BaseButton
+      ref={ref}
       render={render}
       nativeButton={!render}
       className={classes.base({ class: cn(className) })}
@@ -83,4 +89,4 @@ export function Button({
       {iconPosition === 'trailing' && icon}
     </BaseButton>
   )
-}
+})
