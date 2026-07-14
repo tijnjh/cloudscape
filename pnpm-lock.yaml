@@ -38,9 +38,6 @@ importers:
       lucide-react:
         specifier: ^0.468.0
         version: 0.468.0(react@19.2.7)
-      matchexpr:
-        specifier: ^0.0.3
-        version: 0.0.3
       motion:
         specifier: ^12.23.0
         version: 12.42.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1980,9 +1977,6 @@ packages:
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
-
-  matchexpr@0.0.3:
-    resolution: {integrity: sha512-8Ua7b5pgGfETx3mPIfvcLFkdg64zxU6e96aYUJLIaosTMa0Wq1iOm2I7Ge9jXfftki38MSVBH5CWOY/BuxZ60A==}
 
   mdast-util-find-and-replace@3.0.2:
     resolution: {integrity: sha512-Tmd1Vg/m3Xz43afeNxDIhWRtFZgM2VLyaf4vSTYwudTyeuTneoL3qtWMA5jeLyz/O1vDJmmV4QuScFCA2tBPwg==}
@@ -4543,8 +4537,6 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   markdown-table@3.0.4: {}
-
-  matchexpr@0.0.3: {}
 
   mdast-util-find-and-replace@3.0.2:
     dependencies:

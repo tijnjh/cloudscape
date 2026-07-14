@@ -9,7 +9,6 @@ import { max_items_per_page } from '$lib/constants'
 import { useDocumentHead } from '$lib/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { match } from 'matchexpr'
 import * as v from 'valibot'
 
 const kinds = ['tracks', 'playlists'] as const
@@ -36,19 +35,17 @@ function UserPage() {
 
   const userDetailsQuery = useInfiniteQuery({
     queryKey: ['user', user.id, searchParams.kind],
-    queryFn: async ({ pageParam = 0 }) => {
-      const fn = match(searchParams.kind, {
-        tracks: () => getUserTracks,
-        playlists: () => getUserPlaylists,
-      })
-
-      const result = await fn({
+    queryFn: async ({ pageParam = 0 }): Promise<(Track | Playlist)[]> => {
+      const params = {
         id: user.id,
         offset: pageParam * max_items_per_page,
         limit: max_items_per_page,
-      })
+      }
 
-      return result.collection as (Track | Playlist)[] // need to cast for some reason :P
+      if (searchParams.kind === 'tracks')
+        return (await getUserTracks(params)).collection
+
+      return (await getUserPlaylists(params)).collection
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>

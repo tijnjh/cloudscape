@@ -4,22 +4,20 @@ import { PlaylistListing } from '$lib/components/listings/PlaylistListing'
 import { TrackListing } from '$lib/components/listings/TrackListing'
 import { UserListing } from '$lib/components/listings/UserListing'
 import { Main } from '$lib/components/Main'
+import { QueryView } from '$lib/components/QueryView'
 import { SearchBar } from '$lib/components/SearchBar'
 import { Button } from '$lib/components/ui/Button'
 import { favoriteTrackIdsAtom } from '$lib/global'
+import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { getDefaultStore } from 'jotai'
+import { useAtomValue } from 'jotai'
 import { Settings2Icon } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
   loader: async () => {
     const selections = await getSelections()
-
-    const favoriteTrackIds = getDefaultStore().get(favoriteTrackIdsAtom)
-    const favorites = await getTracksByIds(favoriteTrackIds)
-
-    return { selections, favorites }
+    return { selections }
   },
 
   head: () => ({
@@ -28,7 +26,13 @@ export const Route = createFileRoute('/')({
 })
 
 function HomePage() {
-  const { favorites, selections } = Route.useLoaderData()
+  const { selections } = Route.useLoaderData()
+  const favoriteTrackIds = useAtomValue(favoriteTrackIdsAtom)
+  const favoritesQuery = useQuery({
+    queryKey: ['favorites', favoriteTrackIds],
+    queryFn: () => getTracksByIds(favoriteTrackIds),
+    enabled: favoriteTrackIds.length > 0,
+  })
 
   return (
     <Main
@@ -49,16 +53,23 @@ function HomePage() {
             <SearchBar />
           </div>
 
-          <h2
-            title='These are saved in localstorage'
-            className='mt-8 text-2xl font-medium'
-          >
-            Your Favorites
-          </h2>
+          {favoriteTrackIds.length > 0 && (
+            <>
+              <h2
+                title='These are saved in localstorage'
+                className='mt-8 text-2xl font-medium'
+              >
+                Your Favorites
+              </h2>
 
-          {favorites.map(favorite => (
-            <TrackListing key={favorite.id} track={favorite} />
-          ))}
+              <QueryView
+                query={favoritesQuery}
+                content={favorites => favorites.map(favorite => (
+                  <TrackListing key={favorite.id} track={favorite} />
+                ))}
+              />
+            </>
+          )}
         </>
       )}
       right={(

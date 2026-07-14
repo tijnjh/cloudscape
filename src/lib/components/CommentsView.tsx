@@ -26,17 +26,21 @@ export function CommentsView({ trackId }: { trackId: number }) {
       <QueryView
         query={commentsQuery}
         className='gap-6'
-        content={data => (
-          <>
-            {data.pages.flat().length === 0 && (
-              <span className='mt-4 text-lg text-base-100-900/25'>No comments yet...</span>
-            )}
+        content={(data) => {
+          const comments = data.pages.flat()
 
-            {data.pages.flat().map(comment => (
-              <Comment key={comment.id} comment={comment} />
-            ))}
-          </>
-        )}
+          return (
+            <>
+              {comments.length === 0 && (
+                <span className='mt-4 text-lg text-base-100-900/25'>No comments yet...</span>
+              )}
+
+              {comments.map(comment => (
+                <Comment key={comment.id} comment={comment} />
+              ))}
+            </>
+          )
+        }}
       />
 
       <InfiniteQueryLoadMore query={commentsQuery} />

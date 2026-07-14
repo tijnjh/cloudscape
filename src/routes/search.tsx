@@ -10,7 +10,6 @@ import { max_items_per_page } from '$lib/constants'
 import { useDocumentHead } from '$lib/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { match } from 'matchexpr'
 import { useEffect, useState } from 'react'
 import * as v from 'valibot'
 
@@ -41,24 +40,26 @@ function SearchPage() {
 
   const searchQuery = useInfiniteQuery({
     queryKey: ['search', debouncedQ, searchParams.kind],
-    queryFn: async ({ pageParam }) => {
+    queryFn: async ({ pageParam }): Promise<(Track | Playlist | User)[]> => {
       if (!debouncedQ)
         return []
 
-      const fn = match(searchParams.kind, {
-        tracks: () => searchTracks,
-        playlists: () => searchPlaylists,
-        users: () => searchUsers,
-        all: () => searchAnything,
-      })
-
-      const result = await fn({
+      const params = {
         query: debouncedQ,
         offset: pageParam * max_items_per_page,
         limit: max_items_per_page,
-      })
+      }
 
-      return result.collection as (Track | Playlist | User)[]
+      switch (searchParams.kind) {
+        case 'tracks':
+          return (await searchTracks(params)).collection
+        case 'playlists':
+          return (await searchPlaylists(params)).collection
+        case 'users':
+          return (await searchUsers(params)).collection
+        case 'all':
+          return (await searchAnything(params)).collection
+      }
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>
@@ -76,7 +77,7 @@ function SearchPage() {
   return (
     <Main
       left={(
-        <SearchBar value={searchParams.q} />
+        <SearchBar key={searchParams.q} value={searchParams.q} />
       )}
       right={(
         <>
