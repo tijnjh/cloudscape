@@ -6,7 +6,7 @@ import {
   selectedInstanceAtom,
   showNowPlayingViewAtom,
 } from '$lib/global'
-import { Hls } from '$lib/hls'
+import { getHls } from '$lib/hls'
 import { useQuery } from '@tanstack/react-query'
 import { useLocation } from '@tanstack/react-router'
 import { cn } from 'cnfast'
@@ -43,17 +43,29 @@ function AudioPlayer({ track }: { track: Track }) {
     if (!element || !source)
       return
 
-    if (!Hls.isSupported())
-      throw new Error('hls is not supported')
+    let hls: InstanceType<Awaited<ReturnType<typeof getHls>>> | undefined
+    let cancelled = false
 
-    const hls = new Hls()
-    hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      if (activeRef.current)
-        setReadySource(source)
+    void getHls().then((Hls) => {
+      if (cancelled)
+        return
+
+      if (!Hls.isSupported())
+        throw new Error('hls is not supported')
+
+      hls = new Hls()
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        if (activeRef.current)
+          setReadySource(source)
+      })
+      hls.loadSource(source)
+      hls.attachMedia(element)
     })
-    hls.loadSource(source)
-    hls.attachMedia(element)
-    return () => hls.destroy()
+
+    return () => {
+      cancelled = true
+      hls?.destroy()
+    }
   }, [source])
 
   useEffect(() => {
