@@ -1,4 +1,4 @@
-import { selectedInstanceAtom } from '$lib/global'
+import { selectedInstanceAtom } from '$lib/atoms'
 import { getDefaultStore } from 'jotai'
 import * as v from 'valibot'
 

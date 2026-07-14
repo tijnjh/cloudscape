@@ -5,7 +5,7 @@ import {
   nowPlayingAtom,
   selectedInstanceAtom,
   showNowPlayingViewAtom,
-} from '$lib/global'
+} from '$lib/atoms'
 import { getHls } from '$lib/hls'
 import { useQuery } from '@tanstack/react-query'
 import { useLocation } from '@tanstack/react-router'

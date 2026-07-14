@@ -1,13 +1,13 @@
 import favicon from '$lib/assets/favicon.svg'
-import { NowPlayingBar } from '$lib/components/NowPlayingBar'
-import { NowPlayingView } from '$lib/components/NowPlayingView'
-import { Button } from '$lib/components/ui/Button'
 import {
   isBlackAccentAtom,
   selectedAccentColorAtom,
   selectedBaseColorAtom,
   themeModeAtom,
-} from '$lib/global'
+} from '$lib/atoms'
+import { NowPlayingBar } from '$lib/components/NowPlayingBar'
+import { NowPlayingView } from '$lib/components/NowPlayingView'
+import { Button } from '$lib/components/ui/Button'
 import { shades } from '$lib/theme'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router'

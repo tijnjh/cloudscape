@@ -4,7 +4,7 @@ import {
   favoriteTrackIdsAtom,
   isPausedAtom,
   nowPlayingAtom,
-} from '$lib/global'
+} from '$lib/atoms'
 import { useLocation } from '@tanstack/react-router'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { ClipboardIcon, DiscIcon, SpeakerIcon, StarIcon, StarOffIcon, UserIcon } from 'lucide-react'

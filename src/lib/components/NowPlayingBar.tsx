@@ -1,4 +1,4 @@
-import { isPausedAtom, nowPlayingAtom, showNowPlayingViewAtom } from '$lib/global'
+import { isPausedAtom, nowPlayingAtom, showNowPlayingViewAtom } from '$lib/atoms'
 import { hapticTrigger } from 'ios-haptics'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { PauseIcon, PlayIcon } from 'lucide-react'

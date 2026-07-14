@@ -1,12 +1,12 @@
 import type { ValidColor } from '$lib/theme'
 import type { CSSProperties } from 'react'
-import { Button } from '$lib/components/ui/Button'
 import {
   isBlackAccentAtom,
   selectedAccentColorAtom,
   selectedBaseColorAtom,
   themeModeAtom,
-} from '$lib/global'
+} from '$lib/atoms'
+import { Button } from '$lib/components/ui/Button'
 import { accentColors, baseColors } from '$lib/theme'
 import { createFileRoute } from '@tanstack/react-router'
 import { useAtom } from 'jotai'
