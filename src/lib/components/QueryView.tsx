@@ -1,4 +1,4 @@
-import type { UseQueryResult } from '@tanstack/react-query'
+import type { UseInfiniteQueryResult, UseQueryResult } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { cn } from 'cnfn'
 import { match } from 'matchexpr'
@@ -11,7 +11,7 @@ export function QueryView<T>({
   content,
   className,
 }: {
-  query: UseQueryResult<T>
+  query: UseQueryResult<T> | UseInfiniteQueryResult<T>
   content: (data: T) => ReactNode
   className?: string
 }) {
