@@ -18,9 +18,10 @@ export async function getRelatedTracks(id: number) {
   })
 }
 
-export async function getSearchSuggestions(query: string) {
+export async function getSearchSuggestions(query: string, signal?: AbortSignal) {
   return await $api('/search/queries', {
     searchParams: { q: query },
+    signal,
     schema: Collection(
       v.object({
         output: v.string(),
