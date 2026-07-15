@@ -1,30 +1,18 @@
-import { getTrackComments } from '$lib/api/track'
-import { max_items_per_page } from '$lib/constants'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import type { Comment as CommentData } from '$lib/schemas/comment'
+import type { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query'
 import { Comment } from './Comment'
 import { InfiniteQueryLoadMore } from './InfiniteQueryLoadMore'
 import { QueryView } from './QueryView'
 
-export function CommentsView({ trackId }: { trackId: number }) {
-  const commentsQuery = useInfiniteQuery({
-    queryKey: ['track-comments', trackId],
-    queryFn: async ({ pageParam = 0 }) => {
-      const result = await getTrackComments({
-        id: trackId,
-        offset: pageParam * max_items_per_page,
-        limit: max_items_per_page,
-      })
-      return result.collection
-    },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length === 0 ? undefined : allPages.length,
-  })
-
+export function CommentsView({
+  query,
+}: {
+  query: UseInfiniteQueryResult<InfiniteData<CommentData[], unknown>, Error>
+}) {
   return (
     <>
       <QueryView
-        query={commentsQuery}
+        query={query}
         className='gap-6'
         content={(data) => {
           const comments = data.pages.flat()
@@ -43,7 +31,7 @@ export function CommentsView({ trackId }: { trackId: number }) {
         }}
       />
 
-      <InfiniteQueryLoadMore query={commentsQuery} />
+      <InfiniteQueryLoadMore query={query} />
     </>
   )
 }
