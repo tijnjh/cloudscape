@@ -60,7 +60,7 @@ export function InfiniteQueryView<T extends Result>({
         content={() => (
           <>
             {results.length === 0 && (
-              <span className='mt-4 text-lg text-base-100-900/25'>Nothing here...</span>
+              <span className='mt-4 text-lg text-base-900-100/25'>Nothing here...</span>
             )}
 
             {results.map(renderResult)}

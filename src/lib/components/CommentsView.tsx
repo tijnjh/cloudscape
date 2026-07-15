@@ -20,7 +20,7 @@ export function CommentsView({
           return (
             <>
               {comments.length === 0 && (
-                <span className='mt-4 text-lg text-base-100-900/25'>No comments yet...</span>
+                <span className='mt-4 text-lg text-base-900-100/25'>No comments yet...</span>
               )}
 
               {comments.map(comment => (
