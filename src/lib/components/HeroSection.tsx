@@ -1,8 +1,8 @@
 import type { User } from '$lib/schemas/user'
 import { cn } from 'cnfast'
 import { UserListing } from './listings/UserListing'
-import { Badge } from './ui/Badge'
-import { Collapsible } from './ui/Collapsible'
+import { Badge } from './ui/badge'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible'
 
 export interface HeroSectionProps {
   pictureSrc?: string | null
@@ -44,7 +44,7 @@ export function HeroSection({
         <h1 className='text-2xl font-medium'>{title}</h1>
         {badges && (
           <div className='flex gap-2'>
-            {badges.map(badge => badge && <Badge key={badge} label={badge} />)}
+            {badges.map(badge => badge && <Badge key={badge}>{badge}</Badge>)}
           </div>
         )}
       </div>
@@ -56,10 +56,15 @@ export function HeroSection({
       )}
 
       {description && (
-        <Collapsible summary='Description'>
-          <p className='whitespace-pre-wrap text-base-600-400'>
-            {description}
-          </p>
+        <Collapsible>
+          <CollapsibleTrigger>
+            <p className='text-lg font-medium'>Description</p>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <p className='whitespace-pre-wrap text-base-600-400'>
+              {description}
+            </p>
+          </CollapsibleContent>
         </Collapsible>
       )}
     </>

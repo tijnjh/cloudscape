@@ -5,7 +5,7 @@ import { searchAnything, searchPlaylists, searchTracks, searchUsers } from '$lib
 import { InfiniteQueryView } from '$lib/components/InfiniteQueryView'
 import { Main } from '$lib/components/Main'
 import { SearchBar } from '$lib/components/SearchBar'
-import { SegmentedPicker } from '$lib/components/ui/SegmentedPicker'
+import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs'
 import { max_items_per_page } from '$lib/constants'
 import { useDocumentHead } from '$lib/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -81,11 +81,18 @@ function SearchPage() {
       )}
       right={(
         <>
-          <SegmentedPicker
-            options={kinds}
-            current={searchParams.kind}
-            onChange={kind => updateSearch({ kind })}
-          />
+          <Tabs
+            defaultValue={searchParams.kind}
+            onValueChange={kind => updateSearch({ kind })}
+          >
+            <TabsList>
+              {kinds.map(kind => (
+                <TabsTrigger key={kind} value={kind}>
+                  {kind}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
           <InfiniteQueryView query={searchQuery} />
         </>
       )}

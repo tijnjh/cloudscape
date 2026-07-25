@@ -1,7 +1,6 @@
-import { Input } from '$lib/components/ui/Input'
 import { useNavigate } from '@tanstack/react-router'
-import { SearchIcon } from 'lucide-react'
 import { useState } from 'react'
+import { Input } from './ui/input'
 
 export function SearchBar({ value = '' }: { value?: string }) {
   const navigate = useNavigate()
@@ -23,7 +22,7 @@ export function SearchBar({ value = '' }: { value?: string }) {
       }}
     >
       <Input
-        icon={SearchIcon}
+        // icon={SearchIcon}
         type='search'
         name='q'
         placeholder='Search for artists, tracks or playlists...'
@@ -32,7 +31,7 @@ export function SearchBar({ value = '' }: { value?: string }) {
         autoComplete='off'
         value={query}
         onChange={event => setQuery(event.target.value)}
-        onClear={() => setQuery('')}
+        // onClear={() => setQuery('')}
       />
     </form>
   )

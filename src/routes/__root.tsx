@@ -7,12 +7,12 @@ import {
 } from '$lib/atoms'
 import { NowPlayingBar } from '$lib/components/NowPlayingBar'
 import { NowPlayingView } from '$lib/components/NowPlayingView'
-import { Button } from '$lib/components/ui/Button'
+import { Button } from '$lib/components/ui/button'
 import { shades } from '$lib/theme'
+import { IconChevronLeft } from '@tabler/icons-react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router'
+import { createRootRoute, Link, Outlet, useLocation } from '@tanstack/react-router'
 import { useAtomValue } from 'jotai'
-import { ChevronLeft } from 'lucide-react'
 import { useEffect } from 'react'
 import './layout.css'
 
@@ -77,13 +77,18 @@ function RootLayout() {
         >
           <Button
             variant='secondary'
-            icon={ChevronLeft}
             onClick={() => history.back()}
           >
+            <IconChevronLeft />
             Back
           </Button>
 
-          <Button variant='secondary' href='/'>Home</Button>
+          <Button
+            variant='secondary'
+            render={<Link to='/' />}
+          >
+            Home
+          </Button>
         </div>
       )}
 

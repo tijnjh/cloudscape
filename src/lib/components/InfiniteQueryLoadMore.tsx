@@ -1,7 +1,7 @@
 import type { UseInfiniteQueryResult } from '@tanstack/react-query'
 import { useWhenInView } from '$lib/utils'
 import { useCallback } from 'react'
-import { Button } from './ui/Button'
+import { Button } from './ui/button'
 
 export function InfiniteQueryLoadMore<T>({
   query,

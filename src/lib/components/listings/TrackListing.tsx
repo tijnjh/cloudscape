@@ -5,9 +5,9 @@ import {
   isPausedAtom,
   nowPlayingAtom,
 } from '$lib/atoms'
+import { IconClipboard, IconDisc, IconRadio, IconStar, IconStarOff, IconUser } from '@tabler/icons-react'
 import { useLocation } from '@tanstack/react-router'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { ClipboardIcon, DiscIcon, SpeakerIcon, StarIcon, StarOffIcon, UserIcon } from 'lucide-react'
 import { GenericListing } from './GenericListing'
 
 export function useTrackListingMenuActions(track: Track) {
@@ -19,7 +19,7 @@ export function useTrackListingMenuActions(track: Track) {
   return [
     {
       label: isFavorited ? 'Unfavorite' : 'Favorite',
-      icon: isFavorited ? StarOffIcon : StarIcon,
+      icon: isFavorited ? IconStarOff : IconStar,
       onClick: () => {
         setFavoriteTrackIds((ids) => {
           if (ids.includes(track.id)) {
@@ -37,7 +37,7 @@ export function useTrackListingMenuActions(track: Track) {
       ? [
           {
             label: 'Go to track',
-            icon: DiscIcon,
+            icon: IconDisc,
             href: `/${track.user.permalink}/${track.permalink}`,
           },
         ]
@@ -47,7 +47,7 @@ export function useTrackListingMenuActions(track: Track) {
       ? [
           {
             label: 'Go to artist',
-            icon: UserIcon,
+            icon: IconUser,
             href: `/${track.user.permalink}`,
           },
         ]
@@ -58,14 +58,14 @@ export function useTrackListingMenuActions(track: Track) {
           {
             label: `Go to track station`,
             href: `/discover/sets/track-stations:${track.id}`,
-            icon: SpeakerIcon,
+            icon: IconRadio,
           },
         ]
       : []),
 
     {
       label: 'Copy track URL',
-      icon: ClipboardIcon,
+      icon: IconClipboard,
       onClick: () => {
         const url = `${window.location.protocol}//${window.location.host}/${track.user.permalink}/${track.permalink}`
         navigator.clipboard?.writeText(url)

@@ -7,18 +7,18 @@ import {
   showNowPlayingViewAtom,
 } from '$lib/atoms'
 import { getHls } from '$lib/hls'
+import { IconX } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { useLocation } from '@tanstack/react-router'
 import { cn } from 'cnfast'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { XIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { BlockedTrackNotice } from './BlockedTrackNotice'
 import { TrackListing, useTrackListingMenuActions } from './listings/TrackListing'
 import { UserListing } from './listings/UserListing'
 import { Menu } from './Menu'
 import { QueryView } from './QueryView'
-import { Button } from './ui/Button'
+import { Button } from './ui/button'
 
 function AudioPlayer({ track }: { track: Track }) {
   const elementRef = useRef<HTMLAudioElement>(null)
@@ -241,8 +241,9 @@ export function NowPlayingView() {
         size='icon'
         onClick={() => setShowNowPlayingView(false)}
         className='sticky bottom-4 max-md:mt-16 md:absolute md:top-4 md:right-4'
-        icon={XIcon}
-      />
+      >
+        <IconX />
+      </Button>
     </div>
   )
 }

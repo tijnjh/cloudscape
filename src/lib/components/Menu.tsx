@@ -1,13 +1,14 @@
-import type { LucideIcon } from 'lucide-react'
+import type { TablerIcon } from '@tabler/icons-react'
 import { useMediaQuery } from '$lib/hooks'
 import { Dialog } from '@base-ui/react/dialog'
 import { Menu as BaseMenu } from '@base-ui/react/menu'
-import { EllipsisIcon } from 'lucide-react'
-import { Button } from './ui/Button'
+import { IconDots } from '@tabler/icons-react'
+import { Link } from '@tanstack/react-router'
+import { Button } from './ui/button'
 
 export interface Action {
   label: string
-  icon: LucideIcon
+  icon: TablerIcon
   href?: string
   onClick?: VoidFunction
 }
@@ -30,7 +31,7 @@ export function Menu({
       className='shrink-0'
       aria-label='More options'
     >
-      <EllipsisIcon size={16} />
+      <IconDots size={16} />
     </Button>
   )
 
@@ -50,10 +51,10 @@ export function Menu({
                   onClick={action.onClick}
                   render={(
                     <Button
-                      href={action.href}
-                      icon={action.icon}
+                      render={<Link to={action.href} />}
                       className='w-full justify-start'
                     >
+                      <action.icon size={16} />
                       {action.label}
                     </Button>
                   )}
@@ -96,12 +97,12 @@ export function Menu({
                 onClick={action.onClick}
                 render={(
                   <Button
-                    icon={action.icon}
                     variant='secondary'
-                    href={action.href}
+                    render={<Link to={action.href} />}
                     className='w-full justify-start'
                   >
                     {action.label}
+                    <action.icon />
                   </Button>
                 )}
               />

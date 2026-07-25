@@ -6,7 +6,7 @@ import {
   selectedBaseColorAtom,
   themeModeAtom,
 } from '$lib/atoms'
-import { Button } from '$lib/components/ui/Button'
+import { Button } from '$lib/components/ui/button'
 import { accentColors, baseColors } from '$lib/theme'
 import { createFileRoute } from '@tanstack/react-router'
 import { useAtom } from 'jotai'
@@ -37,7 +37,7 @@ function Swatch({
       } as CSSProperties
 
   return (
-    <Button style={style} onClick={onClick} variant={isSelected ? 'primary' : 'secondary'}>
+    <Button style={style} onClick={onClick} variant={isSelected ? 'default' : 'secondary'}>
       <div
         className='size-3 rounded-full bg-(--swatch-color-light) outline-2 outline-base-300-700 dark:bg-(--swatch-color-dark)'
       />
@@ -62,7 +62,7 @@ function ThemePage() {
         {themeModes.map(mode => (
           <Button
             key={mode}
-            variant={themeMode === mode ? 'primary' : 'secondary'}
+            variant={themeMode === mode ? 'default' : 'secondary'}
             onClick={() => setThemeMode(mode)}
             className='capitalize'
           >

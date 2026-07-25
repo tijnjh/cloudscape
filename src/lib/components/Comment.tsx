@@ -2,7 +2,7 @@ import type { Comment as CommentType } from '$lib/schemas/comment'
 import { formatDate } from '$lib/utils'
 import { Link } from '@tanstack/react-router'
 import { ListingThumbnail } from './ListingThumbnail'
-import { Badge } from './ui/Badge'
+import { Badge } from './ui/badge'
 
 function formatTimestamp(ms: number) {
   const totalSeconds = Math.floor(ms / 1000)
@@ -40,7 +40,7 @@ export function Comment({ comment }: { comment: CommentType }) {
           </Link>
 
           {comment.timestamp != null && (
-            <Badge label={`@ ${formatTimestamp(comment.timestamp)}`} />
+            <Badge>{`@ ${formatTimestamp(comment.timestamp)}`}</Badge>
           )}
         </div>
 

@@ -1,8 +1,8 @@
-import { LoaderCircleIcon } from 'lucide-react'
+import { IconLoader } from '@tabler/icons-react'
 
 export function Spinner() {
   return (
-    <LoaderCircleIcon
+    <IconLoader
       className='mx-auto mt-16 size-9 animate-spin rounded-full text-accent/50'
     />
   )

@@ -1,10 +1,10 @@
 import { isPausedAtom, nowPlayingAtom, showNowPlayingViewAtom } from '$lib/atoms'
+import { IconPlayerPause, IconPlayerPlay } from '@tabler/icons-react'
 import { hapticTrigger } from 'ios-haptics'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { PauseIcon, PlayIcon } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ListingThumbnail } from './ListingThumbnail'
-import { Button } from './ui/Button'
+import { Button } from './ui/button'
 
 export function NowPlayingBar() {
   const nowPlaying = useAtomValue(nowPlayingAtom)
@@ -12,7 +12,7 @@ export function NowPlayingBar() {
   const setShowNowPlayingView = useSetAtom(showNowPlayingViewAtom)
   const [isPaused, setIsPaused] = useAtom(isPausedAtom)
   const reduceMotion = useReducedMotion()
-  const StatusIcon = isPaused ? PlayIcon : PauseIcon
+  const StatusIcon = isPaused ? IconPlayerPlay : IconPlayerPause
   const isBlocked = nowPlaying?.policy === 'BLOCK'
 
   return (

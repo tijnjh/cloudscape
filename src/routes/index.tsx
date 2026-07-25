@@ -7,11 +7,11 @@ import { UserListing } from '$lib/components/listings/UserListing'
 import { Main } from '$lib/components/Main'
 import { QueryView } from '$lib/components/QueryView'
 import { SearchBar } from '$lib/components/SearchBar'
-import { Button } from '$lib/components/ui/Button'
+import { Button } from '$lib/components/ui/button'
+import { IconSettings } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useAtomValue } from 'jotai'
-import { Settings2Icon } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
@@ -43,10 +43,18 @@ function HomePage() {
             <div className='flex w-full items-center justify-between'>
               <h1 className='text-3xl font-medium'>Cloudscape</h1>
               <div className='flex items-center gap-2'>
-                <Button variant='secondary' href='https://tijn.dev/cloudscape'>
+                <Button
+                  variant='secondary'
+                  render={<a href='https://tijn.dev/cloudscape' />}
+                >
                   Source
                 </Button>
-                <Button size='icon' icon={Settings2Icon} href='/_/preferences' />
+                <Button
+                  size='icon'
+                  render={<Link to='/_/preferences' />}
+                >
+                  <IconSettings />
+                </Button>
               </div>
             </div>
 

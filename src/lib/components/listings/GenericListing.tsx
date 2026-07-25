@@ -5,7 +5,7 @@ import { Button as BaseButton } from '@base-ui/react/button'
 import { Link } from '@tanstack/react-router'
 import { ListingThumbnail } from '../ListingThumbnail'
 import { Menu } from '../Menu'
-import { Badge } from '../ui/Badge'
+import { Badge } from '../ui/badge'
 
 export type GenericListingProps = Omit<ComponentProps<typeof BaseButton>, 'className'> & {
   title: string
@@ -51,7 +51,7 @@ export function GenericListing({
           <div className='flex gap-2'>
             <h3 className='truncate'>{title}</h3>
 
-            {badges?.map(badge => badge && <Badge key={badge} label={badge} />)}
+            {badges?.map(badge => badge && <Badge key={badge}>{badge}</Badge>)}
           </div>
           <p className='truncate text-accent/75'>
             {subtitle}

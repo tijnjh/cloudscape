@@ -1,6 +1,6 @@
 import { getSoundcloakInstances } from '$lib/api/other'
 import { selectedInstanceAtom } from '$lib/atoms'
-import { Button } from '$lib/components/ui/Button'
+import { Button } from '$lib/components/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
 import { useAtom } from 'jotai'
 
@@ -57,7 +57,7 @@ function InstancePage() {
           <Button
             key={instance.URL}
             onClick={() => selectInstance(instance.URL)}
-            variant={isSelected ? 'primary' : 'secondary'}
+            variant={isSelected ? 'default' : 'secondary'}
           >
             {cleanUrl(instance.URL)}
             {' '}

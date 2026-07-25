@@ -1,11 +1,11 @@
 import { Main } from '$lib/components/Main'
-import { Button } from '$lib/components/ui/Button'
-import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
-import { ServerCogIcon, SwatchBookIcon } from 'lucide-react'
+import { Button } from '$lib/components/ui/button'
+import { IconColorSwatch, IconServerCog } from '@tabler/icons-react'
+import { createFileRoute, Link, Outlet, useLocation } from '@tanstack/react-router'
 
 const tabs = [
-  { name: 'theme', icon: SwatchBookIcon },
-  { name: 'instance', icon: ServerCogIcon },
+  { name: 'theme', icon: IconColorSwatch },
+  { name: 'instance', icon: IconServerCog },
 ]
 
 export const Route = createFileRoute('/_/preferences')({
@@ -19,7 +19,7 @@ function PreferencesLayout() {
     <Main
       split={[25, 75]}
       left={(
-        <div className='flex gap-2 lg:contents'>
+        <div className='flex gap-2 md:contents'>
           {tabs.map((tab) => {
             const href = `/_/preferences/${tab.name}`
             const isSelected = location.pathname === href
@@ -27,11 +27,11 @@ function PreferencesLayout() {
             return (
               <Button
                 key={tab.name}
-                href={href}
-                icon={tab.icon}
+                render={<Link to={href} />}
                 className='w-fit justify-start capitalize md:w-full'
-                variant={isSelected ? 'primary' : 'secondary'}
+                variant={isSelected ? 'default' : 'secondary'}
               >
+                <tab.icon />
                 {tab.name}
               </Button>
             )

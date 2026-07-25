@@ -1,4 +1,4 @@
-import { CircleAlertIcon } from 'lucide-react'
+import { IconAlertCircle } from '@tabler/icons-react'
 import { serializeError } from 'serialize-error'
 
 export function ErrorDisplay({ error }: { error: unknown }) {
@@ -7,7 +7,7 @@ export function ErrorDisplay({ error }: { error: unknown }) {
   return (
     <div className='@container rounded-lg bg-rose-500/20 p-4 text-rose-800-200'>
       <div className='flex flex-col gap-4 @lg:flex-row'>
-        <CircleAlertIcon className='shrink-0' />
+        <IconAlertCircle className='shrink-0' />
         {err.message}
       </div>
     </div>
