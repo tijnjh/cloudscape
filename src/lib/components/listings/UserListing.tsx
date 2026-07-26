@@ -1,4 +1,5 @@
 import type { User } from '$lib/schemas/user'
+import { Link } from '@tanstack/react-router'
 import { GenericListing } from './GenericListing'
 
 export function UserListing({ user }: { user: User }) {
@@ -11,7 +12,14 @@ export function UserListing({ user }: { user: User }) {
         alt: `Profile picture of ${user.permalink}`,
         className: 'rounded-full',
       }}
-      href={`/${user.permalink}`}
+      render={(
+        <Link
+          to='/$user'
+          params={{
+            user: user.permalink,
+          }}
+        />
+      )}
       badges={[user.verified && 'Verified']}
     />
   )

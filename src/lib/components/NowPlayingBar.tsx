@@ -23,7 +23,7 @@ export function NowPlayingBar() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: reduceMotion ? 0 : 100, opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className='fixed inset-x-2 bottom-2 z-30 mx-auto rounded-2xl bg-base-300-700/75 backdrop-blur-lg md:inset-x-4 md:bottom-4 md:max-w-xl'
+          className='fixed inset-x-2 bottom-2 z-30 mx-auto rounded-2xl bg-background/75 border border-border backdrop-blur-lg md:inset-x-4 md:bottom-4 md:max-w-xl'
         >
           <div className='grid grid-cols-[1fr_auto] items-center gap-4 p-3'>
             <button

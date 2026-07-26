@@ -180,7 +180,7 @@ export function NowPlayingView() {
   return (
     <div
       className={cn(
-        'fixed inset-0 z-30 grid grid-cols-1 place-items-center gap-x-8 overflow-y-scroll bg-base-300-700/75 p-4 backdrop-blur-lg transition-[translate,opacity] duration-300 ease-drawer will-change-[translate,opacity] motion-reduce:translate-y-0 motion-reduce:duration-200 motion-reduce:ease-out md:grid-cols-2',
+        'fixed inset-0 z-30 grid grid-cols-1 place-items-center gap-x-8 overflow-y-scroll bg-background p-4 backdrop-blur-lg transition-[translate,opacity] duration-300 ease-drawer will-change-[translate,opacity] motion-reduce:translate-y-0 motion-reduce:duration-200 motion-reduce:ease-out md:grid-cols-2',
         showNowPlayingView
           ? 'translate-y-0 opacity-100'
           : 'pointer-events-none translate-y-full opacity-0',

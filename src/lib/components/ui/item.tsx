@@ -13,7 +13,7 @@ function ItemGroup({ className, ...props }: React.ComponentProps<'div'>) {
       role='list'
       data-slot='item-group'
       className={cn(
-        'group/item-group flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2',
+        'group/item-group flex w-full flex-col gap-3 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2',
         className,
       )}
       {...props}
@@ -36,7 +36,7 @@ function ItemSeparator({
 }
 
 const itemVariants = cva(
-  'group/item flex w-full flex-wrap items-center rounded-2xl border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted',
+  'group/item flex w-full flex-wrap items-center rounded-2xl border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a,button]:transition-colors [a,button]:hover:bg-muted',
   {
     variants: {
       variant: {

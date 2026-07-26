@@ -1,4 +1,5 @@
 import type { Playlist } from '$lib/schemas/playlist'
+import { Link } from '@tanstack/react-router'
 import { GenericListing } from './GenericListing'
 
 export function PlaylistListing({ playlist }: { playlist: Playlist }) {
@@ -10,7 +11,15 @@ export function PlaylistListing({ playlist }: { playlist: Playlist }) {
         src: playlist.artwork_url,
         alt: `Playlist picture of ${playlist.title}`,
       }}
-      href={`/${playlist.user.permalink}/sets/${playlist.permalink}`}
+      render={(
+        <Link
+          to='/$user/sets/$playlist'
+          params={{
+            user: playlist.user.permalink,
+            playlist: playlist.permalink,
+          }}
+        />
+      )}
       badges={playlist.is_album ? ['Album'] : []}
     />
   )

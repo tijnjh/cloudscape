@@ -56,7 +56,7 @@ export function useTrackListingMenuActions(track: Track) {
     ...(!location.pathname.includes(`track-stations:${track.id}`)
       ? [
           {
-            label: `Go to track station`,
+            label: `Go to station`,
             href: `/discover/sets/track-stations:${track.id}`,
             icon: IconRadio,
           },
@@ -87,11 +87,16 @@ export function TrackListing({ track }: { track: Track }) {
         src: track.artwork_url,
         alt: `Album cover of ${track.title}`,
       }}
-      disabled={isBlocked}
-      onClick={() => {
-        setNowPlaying(track)
-        setIsPaused(isBlocked)
-      }}
+      variant={isBlocked ? 'muted' : 'outline'}
+      render={(
+        <button
+          onClick={() => {
+            setNowPlaying(track)
+            setIsPaused(isBlocked)
+          }}
+        />
+      )}
+
       badges={track.policy === 'SNIP' ? ['30s only'] : []}
       actions={useTrackListingMenuActions(track)}
     />

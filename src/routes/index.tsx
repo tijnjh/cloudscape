@@ -8,6 +8,7 @@ import { Main } from '$lib/components/Main'
 import { QueryView } from '$lib/components/QueryView'
 import { SearchBar } from '$lib/components/SearchBar'
 import { Button } from '$lib/components/ui/button'
+import { ItemGroup } from '$lib/components/ui/item'
 import { IconSettings } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
@@ -72,9 +73,13 @@ function HomePage() {
 
               <QueryView
                 query={favoritesQuery}
-                content={favorites => favorites.map(favorite => (
-                  <TrackListing key={favorite.id} track={favorite} />
-                ))}
+                content={favorites => (
+                  <ItemGroup>
+                    {favorites.map(favorite => (
+                      <TrackListing key={favorite.id} track={favorite} />
+                    ))}
+                  </ItemGroup>
+                )}
               />
             </>
           )}
@@ -88,9 +93,12 @@ function HomePage() {
                 <h3 className='text-2xl font-medium'>
                   {selection.title}
                 </h3>
-                {selection.items.collection.map(item => item.kind === 'playlist'
-                  ? <PlaylistListing key={`${item.kind}${item.id}${selection.id}`} playlist={item} />
-                  : <UserListing key={`${item.kind}${item.id}${selection.id}`} user={item} />)}
+
+                <ItemGroup>
+                  {selection.items.collection.map(item => item.kind === 'playlist'
+                    ? <PlaylistListing key={`${item.kind}${item.id}${selection.id}`} playlist={item} />
+                    : <UserListing key={`${item.kind}${item.id}${selection.id}`} user={item} />)}
+                </ItemGroup>
                 <br />
               </div>
             ))

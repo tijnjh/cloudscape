@@ -8,6 +8,7 @@ import { PlaylistListing } from './listings/PlaylistListing'
 import { TrackListing } from './listings/TrackListing'
 import { UserListing } from './listings/UserListing'
 import { QueryView } from './QueryView'
+import { ItemGroup } from './ui/item'
 
 type Result = Track | Playlist | User
 
@@ -63,7 +64,9 @@ export function InfiniteQueryView<T extends Result>({
               <span className='mt-4 text-lg text-base-900-100/25'>Nothing here...</span>
             )}
 
-            {results.map(renderResult)}
+            <ItemGroup>
+              {results.map(renderResult)}
+            </ItemGroup>
           </>
         )}
       />

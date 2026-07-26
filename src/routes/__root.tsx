@@ -73,7 +73,7 @@ function RootLayout() {
     <QueryClientProvider client={queryClient}>
       {location.pathname !== '/' && (
         <div
-          className='fixed inset-x-0 top-0 z-20 mx-auto flex max-w-5xl justify-between bg-linear-to-b from-base-200-800 to-base-300-700/0 p-4'
+          className='fixed inset-x-0 top-0 z-20 mx-auto flex max-w-5xl justify-between bg-linear-to-b from-background to-base-300-700/0 p-4'
         >
           <Button
             variant='secondary'

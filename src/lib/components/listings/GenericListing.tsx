@@ -1,20 +1,29 @@
-import type { Button as BaseButton } from '@base-ui/react/button'
 import type { ComponentProps } from 'react'
 import type { ListingThumbnailProps } from '../ListingThumbnail'
 import type { Action } from '../Menu'
+import { IconArrowUpRight, IconDots } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
-import { ListingThumbnail } from '../ListingThumbnail'
-import { Menu } from '../Menu'
+import cn from 'cnfast'
 import { Badge } from '../ui/badge'
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '../ui/item'
+import { Button } from '../ui/button'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '../ui/item'
 
-export type GenericListingProps = & {
+// export type GenericListingProps = & {
+//   title: string
+//   badges?: (string | false)[]
+//   subtitle: string
+//   thumbnail: ListingThumbnailProps
+//   actions?: Action[]
+//   href?: string
+// }
+
+export interface GenericListingProps extends ComponentProps<typeof Item> {
   title: string
   badges?: (string | false)[]
   subtitle: string
   thumbnail: ListingThumbnailProps
   actions?: Action[]
-  href?: string
 }
 
 export function GenericListing({
@@ -23,28 +32,72 @@ export function GenericListing({
   subtitle,
   thumbnail,
   actions,
-  disabled,
-  href,
+  render,
   ...props
 }: GenericListingProps) {
-  const render = href ? <Link to={href} /> : undefined
-
   return (
-    <Item render={render} variant='outline' size='default'>
-      <ItemMedia variant='image'>
+    <Item
+      render={render}
+      variant='outline'
+      size='default'
+      className='text-left p-3'
+      {...props}
+    >
+      <ItemMedia variant='image' className='rounded-sm'>
         <img src={thumbnail.src!} alt={thumbnail.alt} />
       </ItemMedia>
+
       <ItemContent>
-        <ItemTitle className='line-clamp-1'>
-          {title}
+        <ItemTitle className=''>
+          <h3 className='text-ellipsis'>{title}</h3>
+          {badges?.map(badge => badge && <Badge key={badge}>{badge}</Badge>)}
         </ItemTitle>
+
         <ItemDescription>
           {subtitle}
         </ItemDescription>
       </ItemContent>
-      <ItemContent>
 
-      </ItemContent>
+      <ItemActions>
+        {actions && (
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              onClick={e => e.stopPropagation()}
+              render={(
+                <Button variant='outline' size='icon'>
+                  <IconDots />
+                </Button>
+              )}
+            />
+
+            <DropdownMenuContent onClick={e => e.stopPropagation()}>
+              {actions.map(action => (
+                <DropdownMenuGroup key={action.label}>
+                  <DropdownMenuItem
+                    render={action.href ? <Link to={action.href} /> : undefined}
+                    className={cn(action.href && 'cursor-pointer')}
+                    onClick={action.onClick}
+
+                  >
+                    <action.icon />
+                    {action.label}
+
+                    {action.href && (
+                      <IconArrowUpRight className='ml-auto' />
+                    )}
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+        {/* {actions && actions.map(action => (
+          <Button>
+            {action.label}
+          </Button>
+        ))} */}
+
+      </ItemActions>
     </Item>
   )
 
