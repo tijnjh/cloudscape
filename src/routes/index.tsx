@@ -2,6 +2,7 @@ import { getSelections } from '$lib/api/discovery'
 import { getTracksByIds } from '$lib/api/track'
 import { favoriteTrackIdsAtom } from '$lib/atoms'
 import { PlaylistListing } from '$lib/components/listings/PlaylistListing'
+import { SystemPlaylistListing } from '$lib/components/listings/SystemPlaylistListing'
 import { TrackListing } from '$lib/components/listings/TrackListing'
 import { UserListing } from '$lib/components/listings/UserListing'
 import { Main } from '$lib/components/Main'
@@ -80,9 +81,32 @@ function HomePage() {
                 <h3 className='text-2xl font-medium'>
                   {selection.title}
                 </h3>
-                {selection.items.collection.map(item => item.kind === 'playlist'
-                  ? <PlaylistListing key={`${item.kind}${item.id}${selection.id}`} playlist={item} />
-                  : <UserListing key={`${item.kind}${item.id}${selection.id}`} user={item} />)}
+                {selection.items.collection.map((item) => {
+                  if (item.kind === 'playlist') {
+                    return (
+                      <PlaylistListing
+                        key={`${item.kind}${item.id}${selection.id}`}
+                        playlist={item}
+                      />
+                    )
+                  }
+
+                  if (item.kind === 'system-playlist') {
+                    return (
+                      <SystemPlaylistListing
+                        key={`${item.kind}${item.id}${selection.id}`}
+                        playlist={item}
+                      />
+                    )
+                  }
+
+                  return (
+                    <UserListing
+                      key={`${item.kind}${item.id}${selection.id}`}
+                      user={item}
+                    />
+                  )
+                })}
                 <br />
               </div>
             ))

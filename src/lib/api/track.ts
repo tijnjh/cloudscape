@@ -1,9 +1,9 @@
 import type { WithPagination } from '$lib/types'
+import type { Collection } from '$lib/types/collection'
+import type { Comment } from '$lib/types/comment'
+import type { Track } from '$lib/types/track'
 import { max_items_per_page } from '$lib/constants'
-import { Collection } from '$lib/schemas/collection'
-import { Comment } from '$lib/schemas/comment'
-import { Track } from '$lib/schemas/track'
-import * as v from 'valibot'
+import typia from 'typia'
 import { $api, getPermalinkPath } from './utils'
 
 export async function resolveTrack({
@@ -13,11 +13,15 @@ export async function resolveTrack({
   user: string
   track: string
 }) {
-  return await $api(getPermalinkPath(user, track), { schema: Track })
+  return await $api(getPermalinkPath(user, track), {
+    schema: typia.createAssert<Track>(),
+  })
 }
 
 export async function getTrackById(id: number) {
-  return await $api(`/tracks/${id}`, { schema: Track })
+  return await $api(`/tracks/${id}`, {
+    schema: typia.createAssert<Track>(),
+  })
 }
 
 export async function getTrackComments({
@@ -27,7 +31,7 @@ export async function getTrackComments({
 }: WithPagination<{ id: number }>) {
   return await $api(`/tracks/${id}/comments`, {
     searchParams: { limit, offset, sort: 'newest', threaded: 0 },
-    schema: Collection(Comment),
+    schema: typia.createAssert<Collection<Comment>>(),
   })
 }
 
@@ -41,6 +45,6 @@ export async function getTracksByIds(ids: number[]) {
       ids: ids.join(','),
       limit: max_items_per_page,
     },
-    schema: v.array(Track),
+    schema: typia.createAssert<Track[]>(),
   })
 }

@@ -1,4 +1,4 @@
-import type { Comment as CommentType } from '$lib/schemas/comment'
+import type { Comment as CommentType } from '$lib/types/comment'
 import { formatDate } from '$lib/utils'
 import { Link } from '@tanstack/react-router'
 import { ListingThumbnail } from './ListingThumbnail'

@@ -1,4 +1,4 @@
-import type { Track } from '$lib/schemas/track'
+import type { Track } from '$lib/types/track'
 import { getRelatedTracks } from '$lib/api/discovery'
 import {
   isPausedAtom,

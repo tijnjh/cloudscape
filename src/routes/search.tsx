@@ -1,6 +1,7 @@
-import type { Playlist } from '$lib/schemas/playlist'
-import type { Track } from '$lib/schemas/track'
-import type { User } from '$lib/schemas/user'
+import type { Playlist } from '$lib/types/playlist'
+import type { Track } from '$lib/types/track'
+import type { User } from '$lib/types/user'
+import type { tags } from 'typia'
 import { searchAnything, searchPlaylists, searchTracks, searchUsers } from '$lib/api/search'
 import { InfiniteQueryView } from '$lib/components/InfiniteQueryView'
 import { Main } from '$lib/components/Main'
@@ -11,18 +12,15 @@ import { useDocumentHead } from '$lib/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import * as v from 'valibot'
+import typia from 'typia'
 
 const kinds = ['all', 'tracks', 'playlists', 'users'] as const
 
 export const Route = createFileRoute('/search')({
-  validateSearch: v.object({
-    q: v.optional(v.string(), ''),
-    kind: v.optional(
-      v.picklist(kinds),
-      'all',
-    ),
-  }),
+  validateSearch: typia.createValidate<{
+    q?: string & tags.Default<''>
+    kind?: typeof kinds[number] & tags.Default<'all'>
+  }>(),
   component: SearchPage,
 })
 

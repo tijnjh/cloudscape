@@ -1,9 +1,9 @@
 import type { WithPagination } from '$lib/types'
-import { Collection } from '$lib/schemas/collection'
-import { Playlist } from '$lib/schemas/playlist'
-import { Track } from '$lib/schemas/track'
-import { User } from '$lib/schemas/user'
-import * as v from 'valibot'
+import type { Collection } from '$lib/types/collection'
+import type { Playlist } from '$lib/types/playlist'
+import type { Track } from '$lib/types/track'
+import type { User } from '$lib/types/user'
+import typia from 'typia'
 import { $api } from './utils'
 
 export async function searchAnything({
@@ -13,7 +13,7 @@ export async function searchAnything({
 }: WithPagination<{ query: string }>) {
   return await $api('/search', {
     searchParams: { q: query, limit, offset },
-    schema: Collection(v.union([Track, Playlist, User])),
+    schema: typia.createAssert<Collection<Track | Playlist | User>>(),
   })
 }
 
@@ -24,7 +24,7 @@ export async function searchTracks({
 }: WithPagination<{ query: string }>) {
   return await $api('/search/tracks', {
     searchParams: { q: query, limit, offset },
-    schema: Collection(Track),
+    schema: typia.createAssert<Collection<Track>>(),
   })
 }
 
@@ -35,7 +35,7 @@ export async function searchPlaylists({
 }: WithPagination<{ query: string }>) {
   return await $api('/search/playlists', {
     searchParams: { q: query, limit, offset },
-    schema: Collection(Playlist),
+    schema: typia.createAssert<Collection<Playlist>>(),
   })
 }
 
@@ -46,6 +46,6 @@ export async function searchUsers({
 }: WithPagination<{ query: string }>) {
   return await $api('/search/users', {
     searchParams: { q: query, limit, offset },
-    schema: Collection(User),
+    schema: typia.createAssert<Collection<User>>(),
   })
 }

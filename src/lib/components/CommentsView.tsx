@@ -1,4 +1,4 @@
-import type { Comment as CommentData } from '$lib/schemas/comment'
+import type { Comment as CommentData } from '$lib/types/comment'
 import type { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query'
 import { Comment } from './Comment'
 import { InfiniteQueryLoadMore } from './InfiniteQueryLoadMore'

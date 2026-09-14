@@ -1,4 +1,4 @@
-import type { User } from '$lib/schemas/user'
+import type { User } from '$lib/types/user'
 import { cn } from 'cnfast'
 import { UserListing } from './listings/UserListing'
 import { Badge } from './ui/Badge'

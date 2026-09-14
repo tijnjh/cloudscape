@@ -1,4 +1,4 @@
-import type { Track } from '$lib/schemas/track'
+import type { Track } from '$lib/types/track'
 import type { Action } from '../Menu'
 import {
   favoriteTrackIdsAtom,

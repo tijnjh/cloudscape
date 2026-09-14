@@ -1,5 +1,6 @@
-import type { Playlist } from '$lib/schemas/playlist'
-import type { Track } from '$lib/schemas/track'
+import type { Playlist } from '$lib/types/playlist'
+import type { Track } from '$lib/types/track'
+import type { tags } from 'typia'
 import { getUserPlaylists, getUserTracks, resolveUser } from '$lib/api/user'
 import { HeroSection } from '$lib/components/HeroSection'
 import { InfiniteQueryView } from '$lib/components/InfiniteQueryView'
@@ -9,14 +10,14 @@ import { max_items_per_page } from '$lib/constants'
 import { useDocumentHead } from '$lib/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import * as v from 'valibot'
+import typia from 'typia'
 
 const kinds = ['tracks', 'playlists'] as const
 
 export const Route = createFileRoute('/$user')({
-  validateSearch: v.object({
-    kind: v.optional(v.picklist(kinds), 'tracks'),
-  }),
+  validateSearch: typia.createValidate<{
+    kind?: typeof kinds[number] & tags.Default<'tracks'>
+  }>(),
 
   loader: async ({ params }) => {
     const user = await resolveUser(params.user)

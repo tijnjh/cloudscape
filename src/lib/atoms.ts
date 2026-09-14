@@ -1,5 +1,5 @@
-import type { Track } from './schemas/track'
 import type { AccentColor, BaseColor } from './theme'
+import type { Track } from './types/track'
 import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
 
