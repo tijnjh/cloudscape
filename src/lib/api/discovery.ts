@@ -1,6 +1,7 @@
 import { Collection } from '$lib/schemas/collection'
 import { Playlist } from '$lib/schemas/playlist'
 import { Selection } from '$lib/schemas/selection'
+import { SystemPlaylist } from '$lib/schemas/system-playlist'
 import { Track } from '$lib/schemas/track'
 import { User } from '$lib/schemas/user'
 import * as v from 'valibot'
@@ -8,7 +9,7 @@ import { $api } from './utils'
 
 export async function getSelections() {
   return await $api('/mixed-selections', {
-    schema: Collection(Selection(v.union([Playlist, User]))),
+    schema: Collection(Selection(v.union([Playlist, User, SystemPlaylist]))),
   })
 }
 

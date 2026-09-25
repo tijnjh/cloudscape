@@ -2,6 +2,7 @@ import type { Playlist } from '$lib/schemas/playlist'
 import type { Track } from '$lib/schemas/track'
 import type { User } from '$lib/schemas/user'
 import type { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query'
+import { match } from 'matchexpr'
 import { useMemo } from 'react'
 import { InfiniteQueryLoadMore } from './InfiniteQueryLoadMore'
 import { PlaylistListing } from './listings/PlaylistListing'
@@ -40,18 +41,11 @@ export function InfiniteQueryView<T extends Result>({
 
   const results = sortedPages.flat()
 
-  function renderResult(result: Result) {
-    switch (result.kind) {
-      case 'track':
-        return <TrackListing key={result.id} track={result} />
-      case 'playlist':
-        return <PlaylistListing key={result.id} playlist={result} />
-      case 'user':
-        return <UserListing key={result.id} user={result} />
-      default:
-        return null
-    }
-  }
+  const renderResult = (result: Result) => match(result, 'kind', {
+    track: result => <TrackListing key={result.id} track={result} />,
+    playlist: result => <PlaylistListing key={result.id} playlist={result} />,
+    user: result => <UserListing key={result.id} user={result} />,
+  })
 
   return (
     <>

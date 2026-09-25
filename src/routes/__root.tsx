@@ -1,4 +1,4 @@
-import favicon from '$lib/assets/favicon.svg'
+// import favicon from '$lib/assets/favicon.svg'
 import {
   isBlackAccentAtom,
   selectedAccentColorAtom,
@@ -35,7 +35,7 @@ function RootLayout() {
     document.querySelector<HTMLLinkElement>('link[rel=\'icon\']')?.remove()
     const link = document.createElement('link')
     link.rel = 'icon'
-    link.href = favicon
+    // link.href = favicon
     document.head.append(link)
   }, [])
 

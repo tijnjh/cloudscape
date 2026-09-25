@@ -2,6 +2,7 @@ import { getSelections } from '$lib/api/discovery'
 import { getTracksByIds } from '$lib/api/track'
 import { favoriteTrackIdsAtom } from '$lib/atoms'
 import { PlaylistListing } from '$lib/components/listings/PlaylistListing'
+import { SystemPlaylistListing } from '$lib/components/listings/SystemPlaylistListing'
 import { TrackListing } from '$lib/components/listings/TrackListing'
 import { UserListing } from '$lib/components/listings/UserListing'
 import { Main } from '$lib/components/Main'
@@ -12,6 +13,7 @@ import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useAtomValue } from 'jotai'
 import { Settings2Icon } from 'lucide-react'
+import { match } from 'matchexpr'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
@@ -80,9 +82,11 @@ function HomePage() {
                 <h3 className='text-2xl font-medium'>
                   {selection.title}
                 </h3>
-                {selection.items.collection.map(item => item.kind === 'playlist'
-                  ? <PlaylistListing key={`${item.kind}${item.id}${selection.id}`} playlist={item} />
-                  : <UserListing key={`${item.kind}${item.id}${selection.id}`} user={item} />)}
+                {selection.items.collection.map(item => match(item, 'kind', {
+                  playlist: item => <PlaylistListing key={`${item.kind}${item.id}${selection.id}`} playlist={item} />,
+                  'system-playlist': item => <SystemPlaylistListing key={`${item.kind}${item.id}${selection.id}`} playlist={item} />,
+                  user: item => <UserListing key={`${item.kind}${item.id}${selection.id}`} user={item} />,
+                }))}
                 <br />
               </div>
             ))
