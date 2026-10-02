@@ -1,5 +1,5 @@
 import type { User } from '$lib/schemas/user'
-import { GenericListing } from './GenericListing'
+import { GenericListing } from './generic-listing'
 
 export function UserListing({ user }: { user: User }) {
   return (

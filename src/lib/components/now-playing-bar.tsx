@@ -3,8 +3,8 @@ import { hapticTrigger } from 'ios-haptics'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { PauseIcon, PlayIcon } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { ListingThumbnail } from './ListingThumbnail'
-import { Button } from './ui/Button'
+import { ListingThumbnail } from './listing-thumbnail'
+import { Button } from './ui/button'
 
 export function NowPlayingBar() {
   const nowPlaying = useAtomValue(nowPlayingAtom)

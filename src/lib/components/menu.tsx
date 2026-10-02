@@ -3,7 +3,7 @@ import { useMediaQuery } from '$lib/hooks'
 import { Dialog } from '@base-ui/react/dialog'
 import { Menu as BaseMenu } from '@base-ui/react/menu'
 import { EllipsisIcon } from 'lucide-react'
-import { Button } from './ui/Button'
+import { Button } from './ui/button'
 
 export interface Action {
   label: string

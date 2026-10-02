@@ -4,11 +4,11 @@ import type { User } from '$lib/schemas/user'
 import type { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query'
 import { match } from 'matchexpr'
 import { useMemo } from 'react'
-import { InfiniteQueryLoadMore } from './InfiniteQueryLoadMore'
-import { PlaylistListing } from './listings/PlaylistListing'
-import { TrackListing } from './listings/TrackListing'
-import { UserListing } from './listings/UserListing'
-import { QueryView } from './QueryView'
+import { InfiniteQueryLoadMore } from './infinite-query-load-more'
+import { PlaylistListing } from './listings/playlist-listing'
+import { TrackListing } from './listings/track-listing'
+import { UserListing } from './listings/user-listing'
+import { QueryView } from './query-view'
 
 type Result = Track | Playlist | User
 

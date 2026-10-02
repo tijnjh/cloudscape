@@ -2,8 +2,8 @@ import type { UseInfiniteQueryResult, UseQueryResult } from '@tanstack/react-que
 import type { ReactNode } from 'react'
 import { cn } from 'cnfast'
 import { motion, useReducedMotion } from 'motion/react'
-import { ErrorDisplay } from './ErrorDisplay'
-import { Spinner } from './Spinner'
+import { ErrorDisplay } from './error-display'
+import { Spinner } from './spinner'
 
 export function QueryView<T>({
   query,

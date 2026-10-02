@@ -1,8 +1,8 @@
 import type { Comment as CommentType } from '$lib/schemas/comment'
 import { formatDate } from '$lib/utils'
 import { Link } from '@tanstack/react-router'
-import { ListingThumbnail } from './ListingThumbnail'
-import { Badge } from './ui/Badge'
+import { ListingThumbnail } from './listing-thumbnail'
+import { Badge } from './ui/badge'
 
 function formatTimestamp(ms: number) {
   const totalSeconds = Math.floor(ms / 1000)

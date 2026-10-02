@@ -5,9 +5,9 @@ import {
   selectedBaseColorAtom,
   themeModeAtom,
 } from '$lib/atoms'
-import { NowPlayingBar } from '$lib/components/NowPlayingBar'
-import { NowPlayingView } from '$lib/components/NowPlayingView'
-import { Button } from '$lib/components/ui/Button'
+import { NowPlayingBar } from '$lib/components/now-playing-bar'
+import { NowPlayingView } from '$lib/components/now-playing-view'
+import { Button } from '$lib/components/ui/button'
 import { shades } from '$lib/theme'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router'

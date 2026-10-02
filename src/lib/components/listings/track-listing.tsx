@@ -1,5 +1,5 @@
 import type { Track } from '$lib/schemas/track'
-import type { Action } from '../Menu'
+import type { Action } from '../menu'
 import {
   favoriteTrackIdsAtom,
   isPausedAtom,
@@ -8,7 +8,7 @@ import {
 import { useLocation } from '@tanstack/react-router'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { ClipboardIcon, DiscIcon, SpeakerIcon, StarIcon, StarOffIcon, UserIcon } from 'lucide-react'
-import { GenericListing } from './GenericListing'
+import { GenericListing } from './generic-listing'
 
 export function useTrackListingMenuActions(track: Track) {
   const location = useLocation()

@@ -9,19 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SearchRouteImport } from './routes/search'
-import { Route as UserRouteImport } from './routes/$user'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as Char91_Char93PreferencesRouteImport } from './routes/[_]/preferences'
+import { Route as UserRouteImport } from './routes/$user'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as UserTrackRouteImport } from './routes/$user_.$track'
-import { Route as Char91_Char93PreferencesIndexRouteImport } from './routes/[_]/preferences.index'
-import { Route as Char91_Char93PreferencesThemeRouteImport } from './routes/[_]/preferences.theme'
-import { Route as Char91_Char93PreferencesInstanceRouteImport } from './routes/[_]/preferences.instance'
+import { Route as Char91_Char93PreferencesRouteImport } from './routes/[_]/preferences'
 import { Route as UserSetsPlaylistRouteImport } from './routes/$user_.sets.$playlist'
+import { Route as Char91_Char93PreferencesIndexRouteImport } from './routes/[_]/preferences.index'
+import { Route as Char91_Char93PreferencesInstanceRouteImport } from './routes/[_]/preferences.instance'
+import { Route as Char91_Char93PreferencesThemeRouteImport } from './routes/[_]/preferences.theme'
 
-const SearchRoute = SearchRouteImport.update({
-  id: '/search',
-  path: '/search',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UserRoute = UserRouteImport.update({
@@ -29,9 +29,14 @@ const UserRoute = UserRouteImport.update({
   path: '/$user',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UserTrackRoute = UserTrackRouteImport.update({
+  id: '/$user_/$track',
+  path: '/$user/$track',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91_Char93PreferencesRoute =
@@ -40,9 +45,9 @@ const Char91_Char93PreferencesRoute =
     path: '/_/preferences',
     getParentRoute: () => rootRouteImport,
   } as any)
-const UserTrackRoute = UserTrackRouteImport.update({
-  id: '/$user_/$track',
-  path: '/$user/$track',
+const UserSetsPlaylistRoute = UserSetsPlaylistRouteImport.update({
+  id: '/$user_/sets/$playlist',
+  path: '/$user/sets/$playlist',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91_Char93PreferencesIndexRoute =
@@ -51,23 +56,18 @@ const Char91_Char93PreferencesIndexRoute =
     path: '/',
     getParentRoute: () => Char91_Char93PreferencesRoute,
   } as any)
-const Char91_Char93PreferencesThemeRoute =
-  Char91_Char93PreferencesThemeRouteImport.update({
-    id: '/theme',
-    path: '/theme',
-    getParentRoute: () => Char91_Char93PreferencesRoute,
-  } as any)
 const Char91_Char93PreferencesInstanceRoute =
   Char91_Char93PreferencesInstanceRouteImport.update({
     id: '/instance',
     path: '/instance',
     getParentRoute: () => Char91_Char93PreferencesRoute,
   } as any)
-const UserSetsPlaylistRoute = UserSetsPlaylistRouteImport.update({
-  id: '/$user_/sets/$playlist',
-  path: '/$user/sets/$playlist',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const Char91_Char93PreferencesThemeRoute =
+  Char91_Char93PreferencesThemeRouteImport.update({
+    id: '/theme',
+    path: '/theme',
+    getParentRoute: () => Char91_Char93PreferencesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -148,11 +148,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/search': {
-      id: '/search'
-      path: '/search'
-      fullPath: '/search'
-      preLoaderRoute: typeof SearchRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$user': {
@@ -162,18 +162,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_/preferences': {
-      id: '/_/preferences'
-      path: '/_/preferences'
-      fullPath: '/_/preferences'
-      preLoaderRoute: typeof Char91_Char93PreferencesRouteImport
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$user_/$track': {
@@ -183,18 +176,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserTrackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_/preferences': {
+      id: '/_/preferences'
+      path: '/_/preferences'
+      fullPath: '/_/preferences'
+      preLoaderRoute: typeof Char91_Char93PreferencesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$user_/sets/$playlist': {
+      id: '/$user_/sets/$playlist'
+      path: '/$user/sets/$playlist'
+      fullPath: '/$user/sets/$playlist'
+      preLoaderRoute: typeof UserSetsPlaylistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_/preferences/': {
       id: '/_/preferences/'
       path: '/'
       fullPath: '/_/preferences/'
       preLoaderRoute: typeof Char91_Char93PreferencesIndexRouteImport
-      parentRoute: typeof Char91_Char93PreferencesRoute
-    }
-    '/_/preferences/theme': {
-      id: '/_/preferences/theme'
-      path: '/theme'
-      fullPath: '/_/preferences/theme'
-      preLoaderRoute: typeof Char91_Char93PreferencesThemeRouteImport
       parentRoute: typeof Char91_Char93PreferencesRoute
     }
     '/_/preferences/instance': {
@@ -204,12 +204,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91_Char93PreferencesInstanceRouteImport
       parentRoute: typeof Char91_Char93PreferencesRoute
     }
-    '/$user_/sets/$playlist': {
-      id: '/$user_/sets/$playlist'
-      path: '/$user/sets/$playlist'
-      fullPath: '/$user/sets/$playlist'
-      preLoaderRoute: typeof UserSetsPlaylistRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_/preferences/theme': {
+      id: '/_/preferences/theme'
+      path: '/theme'
+      fullPath: '/_/preferences/theme'
+      preLoaderRoute: typeof Char91_Char93PreferencesThemeRouteImport
+      parentRoute: typeof Char91_Char93PreferencesRoute
     }
   }
 }

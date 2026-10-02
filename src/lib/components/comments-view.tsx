@@ -1,8 +1,8 @@
 import type { Comment as CommentData } from '$lib/schemas/comment'
 import type { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query'
-import { Comment } from './Comment'
-import { InfiniteQueryLoadMore } from './InfiniteQueryLoadMore'
-import { QueryView } from './QueryView'
+import { Comment } from './comment'
+import { InfiniteQueryLoadMore } from './infinite-query-load-more'
+import { QueryView } from './query-view'
 
 export function CommentsView({
   query,

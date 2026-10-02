@@ -1,5 +1,5 @@
 import type { Playlist } from '$lib/schemas/playlist'
-import { GenericListing } from './GenericListing'
+import { GenericListing } from './generic-listing'
 
 export function PlaylistListing({ playlist }: { playlist: Playlist }) {
   return (

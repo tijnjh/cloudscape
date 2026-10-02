@@ -6,7 +6,7 @@ import {
   selectedBaseColorAtom,
   themeModeAtom,
 } from '$lib/atoms'
-import { Button } from '$lib/components/ui/Button'
+import { Button } from '$lib/components/ui/button'
 import { accentColors, baseColors } from '$lib/theme'
 import { createFileRoute } from '@tanstack/react-router'
 import { useAtom } from 'jotai'

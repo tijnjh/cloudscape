@@ -1,5 +1,5 @@
 import type { SystemPlaylist } from '$lib/schemas/system-playlist'
-import { GenericListing } from './GenericListing'
+import { GenericListing } from './generic-listing'
 
 export function SystemPlaylistListing({ playlist }: { playlist: SystemPlaylist }) {
   return (

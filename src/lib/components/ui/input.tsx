@@ -3,7 +3,7 @@ import type { LucideIcon } from 'lucide-react'
 import { Input as InputPrimitive } from '@base-ui/react/input'
 import { cn } from 'cnfast'
 import { XIcon } from 'lucide-react'
-import { Button } from './Button'
+import { Button } from './button'
 
 export interface InputProps extends InputPrimitiveProps {
   icon?: LucideIcon
