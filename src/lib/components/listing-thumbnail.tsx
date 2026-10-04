@@ -1,13 +1,15 @@
 import { cn } from 'cnfast'
 import { useState } from 'react'
 
-export interface ListingThumbnailProps {
+export function ListingThumbnail({
+  src,
+  alt,
+  className,
+}: {
   src?: string | null
   alt: string
   className?: string
-}
-
-export function ListingThumbnail({ src, alt, className }: ListingThumbnailProps) {
+}) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null)
 
   if (src && src !== failedSrc) {

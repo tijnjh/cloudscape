@@ -4,15 +4,6 @@ import { UserListing } from './listings/user-listing'
 import { Badge } from './ui/badge'
 import { Collapsible } from './ui/collapsible'
 
-export interface HeroSectionProps {
-  pictureSrc?: string | null
-  title: string
-  badges?: (string | false)[]
-  description?: string | null
-  user?: User
-  roundedPicture?: boolean
-}
-
 export function HeroSection({
   pictureSrc,
   title,
@@ -20,7 +11,14 @@ export function HeroSection({
   badges,
   user,
   roundedPicture = false,
-}: HeroSectionProps) {
+}: {
+  pictureSrc?: string | null
+  title: string
+  badges?: (string | false)[]
+  description?: string | null
+  user?: User
+  roundedPicture?: boolean
+}) {
   return (
     <>
       {pictureSrc && (
@@ -42,6 +40,7 @@ export function HeroSection({
 
       <div className='flex items-center gap-2'>
         <h1 className='text-2xl font-medium'>{title}</h1>
+
         {badges && (
           <div className='flex gap-2'>
             {badges.map(badge => badge && <Badge key={badge} label={badge} />)}

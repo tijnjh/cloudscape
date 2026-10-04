@@ -5,12 +5,16 @@ import { cn } from 'cnfast'
 import { XIcon } from 'lucide-react'
 import { Button } from './button'
 
-export interface InputProps extends InputPrimitiveProps {
+export function Input({
+  className,
+  icon: Icon,
+  onClear,
+  value,
+  ...props
+}: InputPrimitiveProps & {
   icon?: LucideIcon
   onClear?: VoidFunction
-}
-
-export function Input({ className, icon: Icon, onClear, value, ...props }: InputProps) {
+}) {
   return (
     <div
       className={cn(
