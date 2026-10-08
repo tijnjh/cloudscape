@@ -1,5 +1,5 @@
-import type { Track } from '$lib/schemas/track'
-import { getRelatedTracks } from '$lib/api/discovery'
+import type { Sc } from '$lib/types/soundcloud'
+import { $api } from '$lib/api/client'
 import {
   isPausedAtom,
   nowPlayingAtom,
@@ -7,7 +7,6 @@ import {
   showNowPlayingViewAtom,
 } from '$lib/atoms'
 import { getHls } from '$lib/hls'
-import { useQuery } from '@tanstack/react-query'
 import { useLocation } from '@tanstack/react-router'
 import { cn } from 'cnfast'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
@@ -20,7 +19,7 @@ import { Menu } from './menu'
 import { QueryView } from './query-view'
 import { Button } from './ui/button'
 
-function AudioPlayer({ track }: { track: Track }) {
+function AudioPlayer({ track }: { track: Sc.Track }) {
   const elementRef = useRef<HTMLAudioElement>(null)
   const activeRef = useRef(true)
   const commandRef = useRef<'pause' | 'play' | null>(null)
@@ -28,7 +27,7 @@ function AudioPlayer({ track }: { track: Track }) {
   const [isPaused, setIsPaused] = useAtom(isPausedAtom)
   const [readySource, setReadySource] = useState<string | null>(null)
   const source = selectedInstance
-    ? `${selectedInstance}/_/api/hls/${track.user.permalink}/${track.permalink}`
+    ? `${selectedInstance}/_/api/hls/${track.user!.permalink}/${track.permalink}`
     : null
 
   useEffect(() => {
@@ -118,7 +117,7 @@ function AudioPlayer({ track }: { track: Track }) {
   )
 }
 
-function NowPlayingMenu({ track }: { track: Track }) {
+function NowPlayingMenu({ track }: { track: Sc.Track }) {
   const actions = useTrackListingMenuActions(track)
   return <Menu actions={actions} />
 }
@@ -165,16 +164,20 @@ export function NowPlayingView() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [setShowNowPlayingView])
 
-  const relatedTracksQuery = useQuery({
-    queryKey: ['related', nowPlaying?.id],
-    queryFn: async () => {
-      if (!nowPlaying)
-        return []
+  // const relatedTracksQuery = useQuery({
+  //   queryKey: ['related', nowPlaying?.id],
+  //   queryFn: async () => {
+  //     if (!nowPlaying)
+  //       return []
 
-      const relatedTracks = await getRelatedTracks(nowPlaying.id)
+  //     const relatedTracks = await getRelatedTracks(nowPlaying.id)
 
-      return relatedTracks.collection
-    },
+  //     return relatedTracks.collection
+  //   },
+  // })
+
+  const relatedTracksQuery = $api.useQuery('get', '/_/api/v2/tracks/{id}/related', {
+    params: { path: { id: nowPlaying.id } },
   })
 
   return (

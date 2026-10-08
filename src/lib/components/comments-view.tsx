@@ -1,4 +1,4 @@
-import type { Comment as CommentData } from '$lib/schemas/comment'
+import type { Sc } from '$lib/types/soundcloud'
 import type { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query'
 import { Comment } from './comment'
 import { InfiniteQueryLoadMore } from './infinite-query-load-more'
@@ -7,7 +7,7 @@ import { QueryView } from './query-view'
 export function CommentsView({
   query,
 }: {
-  query: UseInfiniteQueryResult<InfiniteData<CommentData[], unknown>, Error>
+  query: UseInfiniteQueryResult<InfiniteData<Sc.Comment[], unknown>, Error>
 }) {
   return (
     <>

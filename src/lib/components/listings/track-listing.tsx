@@ -1,4 +1,4 @@
-import type { Track } from '$lib/schemas/track'
+import type { Sc } from '$lib/types/soundcloud'
 import type { Action } from '../menu'
 import {
   favoriteTrackIdsAtom,
@@ -10,11 +10,11 @@ import { useAtomValue, useSetAtom } from 'jotai'
 import { ClipboardIcon, DiscIcon, SpeakerIcon, StarIcon, StarOffIcon, UserIcon } from 'lucide-react'
 import { GenericListing } from './generic-listing'
 
-export function useTrackListingMenuActions(track: Track) {
+export function useTrackListingMenuActions(track: Sc.Track) {
   const location = useLocation()
   const favoriteTrackIds = useAtomValue(favoriteTrackIdsAtom)
   const setFavoriteTrackIds = useSetAtom(favoriteTrackIdsAtom)
-  const isFavorited = favoriteTrackIds.includes(track.id)
+  const isFavorited = favoriteTrackIds.includes(track.id!)
 
   return [
     {
@@ -22,33 +22,33 @@ export function useTrackListingMenuActions(track: Track) {
       icon: isFavorited ? StarOffIcon : StarIcon,
       onClick: () => {
         setFavoriteTrackIds((ids) => {
-          if (ids.includes(track.id)) {
+          if (ids.includes(track.id!)) {
             return ids.filter(
               id => id !== track.id,
             )
           }
 
-          return [...ids, track.id]
+          return [...ids, track.id!]
         })
       },
     },
 
-    ...(location.pathname !== `/${track.user.permalink}/${track.permalink}`
+    ...(location.pathname !== `/${track.user!.permalink}/${track.permalink}`
       ? [
           {
             label: 'Go to track',
             icon: DiscIcon,
-            href: `/${track.user.permalink}/${track.permalink}`,
+            href: `/${track.user!.permalink}/${track.permalink}`,
           },
         ]
       : []),
 
-    ...(location.pathname !== `/${track.user.permalink}`
+    ...(location.pathname !== `/${track.user!.permalink}`
       ? [
           {
             label: 'Go to artist',
             icon: UserIcon,
-            href: `/${track.user.permalink}`,
+            href: `/${track.user!.permalink}`,
           },
         ]
       : []),
@@ -67,22 +67,22 @@ export function useTrackListingMenuActions(track: Track) {
       label: 'Copy track URL',
       icon: ClipboardIcon,
       onClick: () => {
-        const url = `${window.location.protocol}//${window.location.host}/${track.user.permalink}/${track.permalink}`
+        const url = `${window.location.protocol}//${window.location.host}/${track.user!.permalink}/${track.permalink}`
         navigator.clipboard?.writeText(url)
       },
     },
   ] satisfies Action[]
 }
 
-export function TrackListing({ track }: { track: Track }) {
+export function TrackListing({ track }: { track: Sc.Track }) {
   const setNowPlaying = useSetAtom(nowPlayingAtom)
   const setIsPaused = useSetAtom(isPausedAtom)
   const isBlocked = track.policy === 'BLOCK'
 
   return (
     <GenericListing
-      title={track.title}
-      subtitle={track.user.username}
+      title={track.title!}
+      subtitle={track.user!.username!}
       thumbnail={{
         src: track.artwork_url,
         alt: `Album cover of ${track.title}`,

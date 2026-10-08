@@ -1,5 +1,4 @@
-import { getSelections } from '$lib/api/discovery'
-import { getTracksByIds } from '$lib/api/track'
+import { $api, api } from '$lib/api/client'
 import { favoriteTrackIdsAtom } from '$lib/atoms'
 import { PlaylistListing } from '$lib/components/listings/playlist-listing'
 import { SystemPlaylistListing } from '$lib/components/listings/system-playlist-listing'
@@ -9,17 +8,24 @@ import { Main } from '$lib/components/main'
 import { QueryView } from '$lib/components/query-view'
 import { SearchBar } from '$lib/components/search-bar'
 import { Button } from '$lib/components/ui/button'
-import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { useAtomValue } from 'jotai'
+import { getDefaultStore, useAtomValue } from 'jotai'
 import { Settings2Icon } from 'lucide-react'
 import { match } from 'matchexpr'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
   loader: async () => {
-    const selections = await getSelections()
-    return { selections }
+    // const selections = await getSelections()
+    const { data: selections } = await api.GET('/_/api/v2/mixed-selections')
+
+    const favoriteTrackIds = getDefaultStore().get(favoriteTrackIdsAtom)
+
+    const { data: favorites } = await api.GET('/_/api/v2/tracks', {
+      params: { query: { ids: favoriteTrackIds } },
+    })
+
+    return { selections, favorites }
   },
 
   head: () => ({
@@ -28,12 +34,11 @@ export const Route = createFileRoute('/')({
 })
 
 function HomePage() {
-  const { selections } = Route.useLoaderData()
+  const { selections, favorites } = Route.useLoaderData()
   const favoriteTrackIds = useAtomValue(favoriteTrackIdsAtom)
-  const favoritesQuery = useQuery({
-    queryKey: ['favorites', favoriteTrackIds],
-    queryFn: () => getTracksByIds(favoriteTrackIds),
-    enabled: favoriteTrackIds.length > 0,
+
+  const favoritesQuery = $api.useQuery('get', '/_/api/v2/tracks', {
+    params: { query: { ids: favoriteTrackIds } },
   })
 
   return (

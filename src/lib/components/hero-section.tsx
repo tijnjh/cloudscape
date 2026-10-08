@@ -1,4 +1,4 @@
-import type { User } from '$lib/schemas/user'
+import type { Sc } from '$lib/types/soundcloud'
 import { cn } from 'cnfast'
 import { UserListing } from './listings/user-listing'
 import { Badge } from './ui/badge'
@@ -16,7 +16,7 @@ export function HeroSection({
   title: string
   badges?: (string | false)[]
   description?: string | null
-  user?: User
+  user?: Sc.User
   roundedPicture?: boolean
 }) {
   return (

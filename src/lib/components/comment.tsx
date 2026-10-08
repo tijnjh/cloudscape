@@ -1,4 +1,4 @@
-import type { Comment as CommentType } from '$lib/schemas/comment'
+import type { Sc } from '$lib/types/soundcloud'
 import { formatDate } from '$lib/utils'
 import { Link } from '@tanstack/react-router'
 import { ListingThumbnail } from './listing-thumbnail'
@@ -11,19 +11,19 @@ function formatTimestamp(ms: number) {
   return `${minutes}:${seconds.toString().padStart(2, '0')}`
 }
 
-export function Comment({ comment }: { comment: CommentType }) {
+export function Comment({ comment }: { comment: Sc.Comment }) {
   return (
     <div className='flex gap-4'>
       <Link
         to='/$user'
-        params={{ user: comment.user.permalink }}
+        params={{ user: comment.user!.permalink! }}
         search={{ kind: 'tracks' }}
-        aria-label={comment.user.username}
+        aria-label={comment.user!.username}
         className='shrink-0'
       >
         <ListingThumbnail
-          src={comment.user.avatar_url}
-          alt={`Profile picture of ${comment.user.permalink}`}
+          src={comment.user!.avatar_url}
+          alt={`Profile picture of ${comment.user!.permalink}`}
           className='rounded-full'
         />
       </Link>
@@ -32,11 +32,11 @@ export function Comment({ comment }: { comment: CommentType }) {
         <div className='flex items-center gap-2'>
           <Link
             to='/$user'
-            params={{ user: comment.user.permalink }}
+            params={{ user: comment.user!.permalink! }}
             search={{ kind: 'tracks' }}
             className='truncate font-medium hover:underline'
           >
-            {comment.user.username}
+            {comment.user!.username}
           </Link>
 
           {comment.timestamp != null && (

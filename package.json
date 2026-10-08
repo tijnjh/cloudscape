@@ -7,10 +7,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test:ts": "tsc --noEmit",
     "preview": "vite preview",
     "check": "tsc --noEmit",
     "check:watch": "tsc --noEmit --watch",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "gen:api": "openapi-typescript https://gist.githubusercontent.com/tijnjh/52fb6fddf9e244beeae8df0b5f1474c4/raw/18e0c05b02d9f34fa6f9716bba5e61143beb96ba/soundcloak.yaml -o ./src/lib/client/schema.d.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -25,6 +27,8 @@
     "lucide-react": "^0.468.0",
     "matchexpr": "^0.0.3",
     "motion": "^12.43.0",
+    "openapi-fetch": "^0.17.0",
+    "openapi-react-query": "^0.5.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "serialize-error": "^13.0.2",
@@ -51,6 +55,7 @@
     "eslint-plugin-format": "^2.0.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",
+    "openapi-typescript": "^7.13.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vite": "^8.3.2"

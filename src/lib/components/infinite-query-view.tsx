@@ -1,6 +1,4 @@
-import type { Playlist } from '$lib/schemas/playlist'
-import type { Track } from '$lib/schemas/track'
-import type { User } from '$lib/schemas/user'
+import type { Sc } from '$lib/types/soundcloud'
 import type { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query'
 import { match } from 'matchexpr'
 import { useMemo } from 'react'
@@ -10,7 +8,10 @@ import { TrackListing } from './listings/track-listing'
 import { UserListing } from './listings/user-listing'
 import { QueryView } from './query-view'
 
-type Result = Track | Playlist | User
+type Result
+  = | (Sc.Track & { kind: 'track' })
+    | (Sc.Playlist & { kind: 'playlist' })
+    | (Sc.User & { kind: 'user' })
 
 export function InfiniteQueryView<T extends Result>({
   query,
@@ -27,8 +28,8 @@ export function InfiniteQueryView<T extends Result>({
     const order = new Map(orderedIds.map((id, index) => [id, index]))
 
     return pages.map(page => [...page].sort((a, b) => {
-      const ai = order.get(a.id)
-      const bi = order.get(b.id)
+      const ai = order.get(a.id as number)
+      const bi = order.get(b.id as number)
       if (ai === undefined && bi === undefined)
         return 0
       if (ai === undefined)
