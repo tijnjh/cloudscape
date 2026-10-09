@@ -1,5 +1,4 @@
 import type { ComponentProps } from 'react'
-import type { ListingThumbnailProps } from '../listing-thumbnail'
 import type { Action } from '../menu'
 import { Button as BaseButton } from '@base-ui/react/button'
 import { Link } from '@tanstack/react-router'
@@ -11,7 +10,7 @@ export type GenericListingProps = Omit<ComponentProps<typeof BaseButton>, 'class
   title: string
   badges?: (string | false)[]
   subtitle: string
-  thumbnail: ListingThumbnailProps
+  thumbnail: ComponentProps<typeof ListingThumbnail>
   actions?: Action[]
   href?: string
 }
