@@ -1,4 +1,5 @@
 import { getTrackComments, resolveTrack } from '$lib/api/track'
+import { AddToCollection } from '$lib/components/add-to-collection'
 import { BlockedTrackNotice } from '$lib/components/blocked-track-notice'
 import { CommentsView } from '$lib/components/comments-view'
 import { HeroSection } from '$lib/components/hero-section'
@@ -50,14 +51,17 @@ function TrackPage() {
   return (
     <Main
       left={(
-        <HeroSection
-          pictureSrc={track.artwork_url}
-          title={track.title}
-          user={track.user}
-          description={dedent`${track.genre}
+        <>
+          <HeroSection
+            pictureSrc={track.artwork_url}
+            title={track.title}
+            user={track.user}
+            description={dedent`${track.genre}
                   ${releaseDate ?? ''}
                   ${track.label_name}`.trim()}
-        />
+          />
+          <AddToCollection trackId={track.id} />
+        </>
       )}
       right={(
 

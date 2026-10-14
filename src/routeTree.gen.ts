@@ -13,8 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as UserRouteImport } from './routes/$user'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as UserTrackRouteImport } from './routes/$user_.$track'
+import { Route as Char91_Char93CollectionsRouteImport } from './routes/[_]/collections'
 import { Route as Char91_Char93PreferencesRouteImport } from './routes/[_]/preferences'
 import { Route as UserSetsPlaylistRouteImport } from './routes/$user_.sets.$playlist'
+import { Route as Char91_Char93CollectionsCollectionIdRouteImport } from './routes/[_]/collections_.$collectionId'
 import { Route as Char91_Char93PreferencesIndexRouteImport } from './routes/[_]/preferences.index'
 import { Route as Char91_Char93PreferencesInstanceRouteImport } from './routes/[_]/preferences.instance'
 import { Route as Char91_Char93PreferencesThemeRouteImport } from './routes/[_]/preferences.theme'
@@ -39,6 +41,12 @@ const UserTrackRoute = UserTrackRouteImport.update({
   path: '/$user/$track',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91_Char93CollectionsRoute =
+  Char91_Char93CollectionsRouteImport.update({
+    id: '/_/collections',
+    path: '/_/collections',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const Char91_Char93PreferencesRoute =
   Char91_Char93PreferencesRouteImport.update({
     id: '/_/preferences',
@@ -50,6 +58,12 @@ const UserSetsPlaylistRoute = UserSetsPlaylistRouteImport.update({
   path: '/$user/sets/$playlist',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91_Char93CollectionsCollectionIdRoute =
+  Char91_Char93CollectionsCollectionIdRouteImport.update({
+    id: '/_/collections_/$collectionId',
+    path: '/_/collections/$collectionId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const Char91_Char93PreferencesIndexRoute =
   Char91_Char93PreferencesIndexRouteImport.update({
     id: '/',
@@ -74,8 +88,10 @@ export interface FileRoutesByFullPath {
   '/$user': typeof UserRoute
   '/search': typeof SearchRoute
   '/$user/$track': typeof UserTrackRoute
+  '/_/collections': typeof Char91_Char93CollectionsRoute
   '/_/preferences': typeof Char91_Char93PreferencesRouteWithChildren
   '/$user/sets/$playlist': typeof UserSetsPlaylistRoute
+  '/_/collections/$collectionId': typeof Char91_Char93CollectionsCollectionIdRoute
   '/_/preferences/instance': typeof Char91_Char93PreferencesInstanceRoute
   '/_/preferences/theme': typeof Char91_Char93PreferencesThemeRoute
   '/_/preferences/': typeof Char91_Char93PreferencesIndexRoute
@@ -85,7 +101,9 @@ export interface FileRoutesByTo {
   '/$user': typeof UserRoute
   '/search': typeof SearchRoute
   '/$user/$track': typeof UserTrackRoute
+  '/_/collections': typeof Char91_Char93CollectionsRoute
   '/$user/sets/$playlist': typeof UserSetsPlaylistRoute
+  '/_/collections/$collectionId': typeof Char91_Char93CollectionsCollectionIdRoute
   '/_/preferences/instance': typeof Char91_Char93PreferencesInstanceRoute
   '/_/preferences/theme': typeof Char91_Char93PreferencesThemeRoute
   '/_/preferences': typeof Char91_Char93PreferencesIndexRoute
@@ -96,8 +114,10 @@ export interface FileRoutesById {
   '/$user': typeof UserRoute
   '/search': typeof SearchRoute
   '/$user_/$track': typeof UserTrackRoute
+  '/_/collections': typeof Char91_Char93CollectionsRoute
   '/_/preferences': typeof Char91_Char93PreferencesRouteWithChildren
   '/$user_/sets/$playlist': typeof UserSetsPlaylistRoute
+  '/_/collections_/$collectionId': typeof Char91_Char93CollectionsCollectionIdRoute
   '/_/preferences/instance': typeof Char91_Char93PreferencesInstanceRoute
   '/_/preferences/theme': typeof Char91_Char93PreferencesThemeRoute
   '/_/preferences/': typeof Char91_Char93PreferencesIndexRoute
@@ -109,8 +129,10 @@ export interface FileRouteTypes {
     | '/$user'
     | '/search'
     | '/$user/$track'
+    | '/_/collections'
     | '/_/preferences'
     | '/$user/sets/$playlist'
+    | '/_/collections/$collectionId'
     | '/_/preferences/instance'
     | '/_/preferences/theme'
     | '/_/preferences/'
@@ -120,7 +142,9 @@ export interface FileRouteTypes {
     | '/$user'
     | '/search'
     | '/$user/$track'
+    | '/_/collections'
     | '/$user/sets/$playlist'
+    | '/_/collections/$collectionId'
     | '/_/preferences/instance'
     | '/_/preferences/theme'
     | '/_/preferences'
@@ -130,8 +154,10 @@ export interface FileRouteTypes {
     | '/$user'
     | '/search'
     | '/$user_/$track'
+    | '/_/collections'
     | '/_/preferences'
     | '/$user_/sets/$playlist'
+    | '/_/collections_/$collectionId'
     | '/_/preferences/instance'
     | '/_/preferences/theme'
     | '/_/preferences/'
@@ -142,8 +168,10 @@ export interface RootRouteChildren {
   UserRoute: typeof UserRoute
   SearchRoute: typeof SearchRoute
   UserTrackRoute: typeof UserTrackRoute
+  Char91_Char93CollectionsRoute: typeof Char91_Char93CollectionsRoute
   Char91_Char93PreferencesRoute: typeof Char91_Char93PreferencesRouteWithChildren
   UserSetsPlaylistRoute: typeof UserSetsPlaylistRoute
+  Char91_Char93CollectionsCollectionIdRoute: typeof Char91_Char93CollectionsCollectionIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -176,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserTrackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_/collections': {
+      id: '/_/collections'
+      path: '/_/collections'
+      fullPath: '/_/collections'
+      preLoaderRoute: typeof Char91_Char93CollectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_/preferences': {
       id: '/_/preferences'
       path: '/_/preferences'
@@ -188,6 +223,13 @@ declare module '@tanstack/react-router' {
       path: '/$user/sets/$playlist'
       fullPath: '/$user/sets/$playlist'
       preLoaderRoute: typeof UserSetsPlaylistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_/collections_/$collectionId': {
+      id: '/_/collections_/$collectionId'
+      path: '/_/collections/$collectionId'
+      fullPath: '/_/collections/$collectionId'
+      preLoaderRoute: typeof Char91_Char93CollectionsCollectionIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_/preferences/': {
@@ -238,8 +280,11 @@ const rootRouteChildren: RootRouteChildren = {
   UserRoute: UserRoute,
   SearchRoute: SearchRoute,
   UserTrackRoute: UserTrackRoute,
+  Char91_Char93CollectionsRoute: Char91_Char93CollectionsRoute,
   Char91_Char93PreferencesRoute: Char91_Char93PreferencesRouteWithChildren,
   UserSetsPlaylistRoute: UserSetsPlaylistRoute,
+  Char91_Char93CollectionsCollectionIdRoute:
+    Char91_Char93CollectionsCollectionIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
