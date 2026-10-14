@@ -5,9 +5,11 @@ import {
   isPausedAtom,
   nowPlayingAtom,
 } from '$lib/atoms'
+import { collectionsAtom } from '$lib/collection-atoms'
+import { maxCollectionTracks } from '$lib/collections'
 import { useLocation } from '@tanstack/react-router'
-import { useAtomValue, useSetAtom } from 'jotai'
-import { ClipboardIcon, DiscIcon, SpeakerIcon, StarIcon, StarOffIcon, UserIcon } from 'lucide-react'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { CheckIcon, ClipboardIcon, DiscIcon, LibraryIcon, ListPlusIcon, PlusIcon, SpeakerIcon, StarIcon, StarOffIcon, UserIcon } from 'lucide-react'
 import { GenericListing } from './generic-listing'
 
 export function useTrackListingMenuActions(track: Track) {
@@ -15,6 +17,7 @@ export function useTrackListingMenuActions(track: Track) {
   const favoriteTrackIds = useAtomValue(favoriteTrackIdsAtom)
   const setFavoriteTrackIds = useSetAtom(favoriteTrackIdsAtom)
   const isFavorited = favoriteTrackIds.includes(track.id)
+  const [collections, setCollections] = useAtom(collectionsAtom)
 
   return [
     {
@@ -31,6 +34,33 @@ export function useTrackListingMenuActions(track: Track) {
           return [...ids, track.id]
         })
       },
+    },
+
+    {
+      label: 'Add to collection',
+      icon: ListPlusIcon,
+      children: [
+        ...collections.map((collection) => {
+          const added = collection.trackIds.includes(track.id)
+          const full = collection.trackIds.length >= maxCollectionTracks
+          return {
+            id: collection.id,
+            label: `${collection.name}${full && !added ? ' (full)' : ''}`,
+            icon: added ? CheckIcon : LibraryIcon,
+            disabled: added || full,
+            onClick: () => {
+              setCollections(current => current.map(item => item.id === collection.id && !item.trackIds.includes(track.id) && item.trackIds.length < maxCollectionTracks
+                ? { ...item, trackIds: [...item.trackIds, track.id] }
+                : item))
+            },
+          }
+        }),
+        {
+          label: collections.length === 0 ? 'No collections yet — create one on Home' : 'Create a collection on Home',
+          icon: PlusIcon,
+          href: '/',
+        },
+      ],
     },
 
     ...(location.pathname !== `/${track.user.permalink}/${track.permalink}`

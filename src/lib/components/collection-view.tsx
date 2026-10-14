@@ -173,7 +173,7 @@ export function CollectionView({ collection, localId }: { collection: Collection
       right={(
         <>
           {collection.trackIds.length === 0
-            ? <p className='text-base-600-400'>This collection is empty. Open a track and choose “Add to collection” to get started.</p>
+            ? <p className='text-base-600-400'>This collection is empty. Open a track’s options menu and choose “Add to collection” to get started.</p>
             : (
                 <>
                   {!selectedInstance && (
