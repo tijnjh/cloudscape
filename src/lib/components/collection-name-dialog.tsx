@@ -1,6 +1,7 @@
 import { maxCollectionNameLength } from '$lib/collections'
 import { Dialog } from '@base-ui/react/dialog'
 import { useState } from 'react'
+import { AnimatedDialog } from './ui/animated-dialog'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 
@@ -18,18 +19,13 @@ export function CollectionNameDialog({
   onSave: (name: string) => void
 }) {
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Portal>
-        <Dialog.Backdrop className='fixed inset-0 z-40 bg-base-950/50 backdrop-blur-sm' />
-        <Dialog.Popup className='fixed top-1/2 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-1/2 rounded-2xl bg-base-200-800 p-6 shadow-xl'>
-          <Dialog.Title className='text-2xl font-medium'>{title}</Dialog.Title>
-          <Dialog.Description className='mt-2 text-base-600-400'>
-            Collections are saved in this browser. Share a link to send someone a copy.
-          </Dialog.Description>
-          <NameForm initialName={initialName} onSave={onSave} onClose={() => onOpenChange(false)} />
-        </Dialog.Popup>
-      </Dialog.Portal>
-    </Dialog.Root>
+    <AnimatedDialog open={open} onOpenChange={onOpenChange}>
+      <Dialog.Title className='text-2xl font-medium'>{title}</Dialog.Title>
+      <Dialog.Description className='mt-2 text-base-600-400'>
+        Collections are saved in this browser. Share a link to send someone a copy.
+      </Dialog.Description>
+      <NameForm initialName={initialName} onSave={onSave} onClose={() => onOpenChange(false)} />
+    </AnimatedDialog>
   )
 }
 

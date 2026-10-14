@@ -17,6 +17,7 @@ import { ErrorDisplay } from './error-display'
 import { TrackListing } from './listings/track-listing'
 import { Main } from './main'
 import { Spinner } from './spinner'
+import { AnimatedDialog } from './ui/animated-dialog'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 
@@ -154,35 +155,30 @@ export function CollectionView({ collection, localId }: { collection: Collection
             initialName={collection.name}
             onSave={name => updateCollection(current => ({ ...current, name }))}
           />
-          <Dialog.Root open={deleting} onOpenChange={setDeleting}>
-            <Dialog.Portal>
-              <Dialog.Backdrop className='fixed inset-0 z-40 bg-base-950/50 backdrop-blur-sm' />
-              <Dialog.Popup className='fixed top-1/2 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-1/2 rounded-2xl bg-base-200-800 p-6 shadow-xl'>
-                <Dialog.Title className='text-2xl font-medium'>Delete collection?</Dialog.Title>
-                <Dialog.Description className='mt-2 wrap-anywhere'>
-                  Delete “
-                  {collection.name}
-                  ” from this browser? Previously shared links will still work.
-                </Dialog.Description>
-                <div className='mt-4 flex justify-end gap-2'>
-                  <Button variant='secondary' onClick={() => setDeleting(false)}>Cancel</Button>
-                  <Button onClick={() => {
-                    try {
-                      setCollections(current => current.filter(item => item.id !== localId))
-                      void navigate({ to: '/' })
-                    }
-                    catch {
-                      setDeleting(false)
-                      setError('Could not delete this collection. Check that browser storage is available.')
-                    }
-                  }}
-                  >
-                    Delete collection
-                  </Button>
-                </div>
-              </Dialog.Popup>
-            </Dialog.Portal>
-          </Dialog.Root>
+          <AnimatedDialog open={deleting} onOpenChange={setDeleting}>
+            <Dialog.Title className='text-2xl font-medium'>Delete collection?</Dialog.Title>
+            <Dialog.Description className='mt-2 wrap-anywhere'>
+              Delete “
+              {collection.name}
+              ” from this browser? Previously shared links will still work.
+            </Dialog.Description>
+            <div className='mt-4 flex justify-end gap-2'>
+              <Button variant='secondary' onClick={() => setDeleting(false)}>Cancel</Button>
+              <Button onClick={() => {
+                try {
+                  setCollections(current => current.filter(item => item.id !== localId))
+                  void navigate({ to: '/' })
+                }
+                catch {
+                  setDeleting(false)
+                  setError('Could not delete this collection. Check that browser storage is available.')
+                }
+              }}
+              >
+                Delete collection
+              </Button>
+            </div>
+          </AnimatedDialog>
         </>
       )}
       right={(
