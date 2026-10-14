@@ -1,36 +1,32 @@
+import { collectionsAtom } from '$lib/atoms'
 import { decodeCollection } from '$lib/collections'
 import { CollectionView } from '$lib/components/collection-view'
+import { ErrorDisplay } from '$lib/components/error-display'
 import { Main } from '$lib/components/main'
 import { Button } from '$lib/components/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
+import { useAtomValue } from 'jotai'
 
 export const Route = createFileRoute('/_/collections')({
-  validateSearch: (search: Record<string, unknown>): { c?: string } => ({
+  validateSearch: (search: Record<string, unknown>): { id?: string, c?: string } => ({
+    id: typeof search.id === 'string' ? search.id : undefined,
     c: typeof search.c === 'string' ? search.c : undefined,
   }),
-  component: SharedCollectionPage,
+  component: CollectionPage,
+  errorComponent: ({ error }) => (
+    <Main>
+      <ErrorDisplay error={error} />
+      <Button href='/'>Home</Button>
+    </Main>
+  ),
 })
 
-function SharedCollectionPage() {
-  const { c } = Route.useSearch()
-  const collection = readSharedCollection(c)
-  if (collection)
-    return <CollectionView key={c} collection={collection} />
+function CollectionPage() {
+  const { id, c } = Route.useSearch()
+  const collections = useAtomValue(collectionsAtom)
+  const collection = c !== undefined ? decodeCollection(c) : collections.find(item => item.id === id)
+  if (!collection)
+    throw new Error('This collection is not saved in this browser.')
 
-  return (
-    <Main>
-      <h1 className='text-2xl font-medium'>Unable to open collection</h1>
-      <p role='alert'>This collection link is invalid or incomplete. Ask the sender for a new link.</p>
-      <Button variant='secondary' href='/'>Your collections</Button>
-    </Main>
-  )
-}
-
-function readSharedCollection(c?: string) {
-  try {
-    return decodeCollection(c ?? '')
-  }
-  catch {
-    return null
-  }
+  return <CollectionView key={c ?? id} collection={collection} localId={c !== undefined ? undefined : id} />
 }

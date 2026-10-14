@@ -1,4 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
+import type { ReactElement } from 'react'
 import { useMediaQuery } from '$lib/hooks'
 import { Dialog } from '@base-ui/react/dialog'
 import { Menu as BaseMenu } from '@base-ui/react/menu'
@@ -20,39 +21,18 @@ export function Menu({
   title,
   subtitle,
   actions,
+  trigger: customTrigger,
 }: {
   title?: string
   subtitle?: string
   actions?: Action[]
+  trigger?: ReactElement
 }) {
   const isDesktop = useMediaQuery('(min-width: 768px)')
-  const [open, setOpen] = useState(false)
-  const [path, setPath] = useState<string[]>([])
-  const [error, setError] = useState('')
-  const activeSubmenu = path.reduce<Action | undefined>(
-    (parent, id) => (parent?.children ?? actions)?.find(action => (action.id ?? action.label) === id),
-    undefined,
-  )
+  const [submenu, setSubmenu] = useState<string>()
+  const selected = actions?.find(action => action.label === submenu)
 
-  function onOpenChange(nextOpen: boolean) {
-    setOpen(nextOpen)
-    if (nextOpen) {
-      setPath([])
-      setError('')
-    }
-  }
-
-  function activate(action: Action) {
-    try {
-      action.onClick?.()
-      setOpen(false)
-    }
-    catch {
-      setError('Could not save. Check that browser storage is available and has free space.')
-    }
-  }
-
-  const trigger = (
+  const trigger = customTrigger ?? (
     <Button
       variant='secondary'
       size='icon'
@@ -64,25 +44,57 @@ export function Menu({
   )
 
   if (isDesktop) {
+    const Root = customTrigger ? BaseMenu.SubmenuRoot : BaseMenu.Root
+    const Trigger = customTrigger ? BaseMenu.SubmenuTrigger : BaseMenu.Trigger
     return (
-      <BaseMenu.Root open={open} onOpenChange={onOpenChange}>
-        <BaseMenu.Trigger render={trigger} />
+      <Root>
+        <Trigger nativeButton render={trigger} />
         <BaseMenu.Portal>
-          <BaseMenu.Positioner align='end' sideOffset={8} className='z-1000'>
+          <BaseMenu.Positioner align={customTrigger ? 'start' : 'end'} sideOffset={8} className='z-1000'>
             <BaseMenu.Popup
-              className='flex origin-(--transform-origin) flex-col gap-2 data-starting-style:scale-95 data-starting-style:opacity-0 transition-[scale,opacity] duration-150'
+              className='flex max-h-(--available-height) max-w-[calc(100vw-2rem)] origin-(--transform-origin) flex-col gap-2 overflow-y-auto data-starting-style:scale-95 data-starting-style:opacity-0 transition-[scale,opacity] duration-150'
             >
-              <DesktopMenuItems actions={actions} onAction={activate} error={error} />
-              {error && <p role='alert' className='max-w-xs rounded-xl bg-base-300-700 p-3 text-sm'>{error}</p>}
+              {actions?.map(action => action.children
+                ? (
+                    <Menu
+                      key={action.id ?? action.label}
+                      title={action.label}
+                      actions={action.children}
+                      trigger={(
+                        <Button icon={action.icon}>
+                          {action.label}
+                          <ChevronRightIcon size={16} />
+                        </Button>
+                      )}
+                    />
+                  )
+                : (
+                    <BaseMenu.Item
+                      key={action.id ?? action.label}
+                      disabled={action.disabled}
+                      nativeButton={false}
+                      onClick={action.onClick}
+                      render={(
+                        <Button
+                          href={action.href}
+                          icon={action.icon}
+                          disabled={action.disabled}
+                          className='w-full justify-start'
+                        >
+                          <span className='truncate'>{action.label}</span>
+                        </Button>
+                      )}
+                    />
+                  ))}
             </BaseMenu.Popup>
           </BaseMenu.Positioner>
         </BaseMenu.Portal>
-      </BaseMenu.Root>
+      </Root>
     )
   }
 
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    <Dialog.Root onOpenChange={() => setSubmenu(undefined)}>
       <Dialog.Trigger render={trigger} />
 
       <Dialog.Portal>
@@ -97,87 +109,43 @@ export function Menu({
             className='flex max-h-[calc(100dvh-8rem)] flex-col gap-2 overflow-y-auto p-4'
           >
             <Dialog.Title className='w-fit text-3xl font-medium text-base-100'>
-              {activeSubmenu?.label ?? title ?? 'Track options'}
+              {selected?.label ?? title}
             </Dialog.Title>
 
             <Dialog.Description className='mb-4 w-fit text-lg text-base-100'>
-              {activeSubmenu ? 'Choose a collection' : subtitle}
+              {selected ? 'Choose an option' : subtitle}
             </Dialog.Description>
 
-            {activeSubmenu && (
-              <Button variant='secondary' icon={ChevronLeftIcon} className='w-full justify-start' onClick={() => setPath(current => current.slice(0, -1))}>
-                Back to options
-              </Button>
-            )}
-            {(activeSubmenu?.children ?? actions)?.map(action => (
-              <Button
-                key={action.id ?? action.label}
-                icon={action.icon}
-                variant='secondary'
-                href={action.href}
-                disabled={action.disabled}
-                className='w-full justify-start'
-                onClick={() => action.children
-                  ? setPath(current => [...current, action.id ?? action.label])
-                  : activate(action)}
-              >
-                <span className='truncate'>{action.label}</span>
-                {action.children && <ChevronRightIcon size={16} className='ml-auto shrink-0' />}
-              </Button>
-            ))}
-            {error && <p role='alert' className='rounded-xl bg-base-300-700 p-3 text-sm'>{error}</p>}
+            {selected && <Button variant='secondary' icon={ChevronLeftIcon} onClick={() => setSubmenu(undefined)}>Back to options</Button>}
+            {(selected?.children ?? actions)?.map(action => action.children
+              ? (
+                  <Button key={action.label} variant='secondary' icon={action.icon} className='w-full justify-start' onClick={() => setSubmenu(action.label)}>
+                    {action.label}
+                    <ChevronRightIcon size={16} className='ml-auto' />
+                  </Button>
+                )
+              : (
+                  <Dialog.Close
+                    key={action.id ?? action.label}
+                    disabled={action.disabled}
+                    nativeButton={!action.href}
+                    onClick={action.onClick}
+                    render={(
+                      <Button
+                        icon={action.icon}
+                        disabled={action.disabled}
+                        variant='secondary'
+                        href={action.href}
+                        className='w-full justify-start'
+                      >
+                        <span className='truncate'>{action.label}</span>
+                      </Button>
+                    )}
+                  />
+                ))}
           </div>
         </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>
   )
-}
-
-function DesktopMenuItems({ actions, onAction, error }: {
-  actions?: Action[]
-  onAction: (action: Action) => void
-  error: string
-}) {
-  return actions?.map(action => action.children
-    ? (
-        <BaseMenu.SubmenuRoot key={action.id ?? action.label}>
-          <BaseMenu.SubmenuTrigger
-            nativeButton
-            disabled={action.disabled}
-            render={(
-              <Button icon={action.icon} className='w-full justify-start'>
-                {action.label}
-                <ChevronRightIcon size={16} className='ml-auto shrink-0' />
-              </Button>
-            )}
-          />
-          <BaseMenu.Portal>
-            <BaseMenu.Positioner sideOffset={8} className='z-1000'>
-              <BaseMenu.Popup className='flex max-h-(--available-height) max-w-[calc(100vw-2rem)] min-w-56 flex-col gap-2 overflow-y-auto rounded-xl bg-base-300-700 p-2 shadow-xl'>
-                <DesktopMenuItems actions={action.children} onAction={onAction} error={error} />
-                {error && <p role='alert' className='max-w-xs p-3 text-sm'>{error}</p>}
-              </BaseMenu.Popup>
-            </BaseMenu.Positioner>
-          </BaseMenu.Portal>
-        </BaseMenu.SubmenuRoot>
-      )
-    : (
-        <BaseMenu.Item
-          key={action.id ?? action.label}
-          nativeButton={!action.href}
-          disabled={action.disabled}
-          closeOnClick={false}
-          onClick={() => onAction(action)}
-          render={(
-            <Button
-              href={action.href}
-              icon={action.icon}
-              disabled={action.disabled}
-              className='w-full justify-start'
-            >
-              <span className='truncate'>{action.label}</span>
-            </Button>
-          )}
-        />
-      ))
 }

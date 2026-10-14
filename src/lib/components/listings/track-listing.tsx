@@ -1,12 +1,13 @@
 import type { Track } from '$lib/schemas/track'
 import type { Action } from '../menu'
 import {
+  collectionsAtom,
   favoriteTrackIdsAtom,
   isPausedAtom,
   nowPlayingAtom,
 } from '$lib/atoms'
-import { collectionsAtom } from '$lib/collection-atoms'
 import { maxCollectionTracks } from '$lib/collections'
+import { Toast } from '@base-ui/react/toast'
 import { useLocation } from '@tanstack/react-router'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { CheckIcon, ClipboardIcon, DiscIcon, LibraryIcon, ListPlusIcon, PlusIcon, SpeakerIcon, StarIcon, StarOffIcon, UserIcon } from 'lucide-react'
@@ -18,6 +19,7 @@ export function useTrackListingMenuActions(track: Track) {
   const setFavoriteTrackIds = useSetAtom(favoriteTrackIdsAtom)
   const isFavorited = favoriteTrackIds.includes(track.id)
   const [collections, setCollections] = useAtom(collectionsAtom)
+  const toast = Toast.useToastManager()
 
   return [
     {
@@ -49,9 +51,14 @@ export function useTrackListingMenuActions(track: Track) {
             icon: added ? CheckIcon : LibraryIcon,
             disabled: added || full,
             onClick: () => {
-              setCollections(current => current.map(item => item.id === collection.id && !item.trackIds.includes(track.id) && item.trackIds.length < maxCollectionTracks
-                ? { ...item, trackIds: [...item.trackIds, track.id] }
-                : item))
+              try {
+                setCollections(current => current.map(item => item.id === collection.id && !item.trackIds.includes(track.id) && item.trackIds.length < maxCollectionTracks
+                  ? { ...item, trackIds: [...item.trackIds, track.id] }
+                  : item))
+              }
+              catch {
+                toast.add({ title: 'Could not save collection', type: 'error' })
+              }
             },
           }
         }),

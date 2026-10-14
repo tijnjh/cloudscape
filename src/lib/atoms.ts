@@ -1,3 +1,4 @@
+import type { LocalCollection } from './collections'
 import type { Track } from './schemas/track'
 import type { AccentColor, BaseColor } from './theme'
 import { atom } from 'jotai'
@@ -17,6 +18,12 @@ export const favoriteTrackIdsAtom = atomWithStorage<number[]>(
   { getOnInit: true },
 )
 export const showNowPlayingViewAtom = atom(false)
+export const collectionsAtom = atomWithStorage<LocalCollection[]>(
+  'collections',
+  [],
+  undefined,
+  { getOnInit: true },
+)
 export const isPausedAtom = atom(true)
 
 export const selectedInstanceAtom = atomWithStorage<string | undefined>(
