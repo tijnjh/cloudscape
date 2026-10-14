@@ -1,8 +1,7 @@
 import { getSelections } from '$lib/api/discovery'
 import { getTracksByIds } from '$lib/api/track'
 import { collectionsAtom, favoriteTrackIdsAtom } from '$lib/atoms'
-import { createCollection } from '$lib/collections'
-import { CollectionNameDialog } from '$lib/components/collection-name-dialog'
+import { createCollection, maxCollectionNameLength } from '$lib/collections'
 import { GenericListing } from '$lib/components/listings/generic-listing'
 import { PlaylistListing } from '$lib/components/listings/playlist-listing'
 import { SystemPlaylistListing } from '$lib/components/listings/system-playlist-listing'
@@ -12,11 +11,15 @@ import { Main } from '$lib/components/main'
 import { QueryView } from '$lib/components/query-view'
 import { SearchBar } from '$lib/components/search-bar'
 import { Button } from '$lib/components/ui/button'
+import { Dialog, DialogClose } from '$lib/components/ui/dialog'
+import { Input } from '$lib/components/ui/input'
+import { Toast } from '@base-ui/react/toast'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useAtom, useAtomValue } from 'jotai'
 import { Settings2Icon } from 'lucide-react'
 import { match } from 'matchexpr'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
@@ -34,6 +37,9 @@ function HomePage() {
   const { selections } = Route.useLoaderData()
   const [collections, setCollections] = useAtom(collectionsAtom)
   const navigate = useNavigate()
+  const toast = Toast.useToastManager()
+  const [isCreating, setIsCreating] = useState(false)
+  const [name, setName] = useState('')
   const favoriteTrackIds = useAtomValue(favoriteTrackIdsAtom)
   const favoritesQuery = useQuery({
     queryKey: ['favorites', favoriteTrackIds],
@@ -67,14 +73,38 @@ function HomePage() {
             >
               Your Favorites
             </h2>
-            <CollectionNameDialog onSave={(name) => {
-              const collection = createCollection(name)
-              setCollections(current => [...current, collection])
-              void navigate({ to: '/_/collections', search: { id: collection.id } })
-            }}
+            <Dialog
+              title='Create collection'
+              trigger={<Button variant='secondary'>Create collection</Button>}
+              open={isCreating}
+              onOpenChange={(open) => {
+                if (open)
+                  setName('')
+                setIsCreating(open)
+              }}
             >
-              <Button variant='secondary'>Create collection</Button>
-            </CollectionNameDialog>
+              <form
+                className='mt-4 flex flex-col gap-4'
+                onSubmit={(event) => {
+                  event.preventDefault()
+                  try {
+                    const collection = createCollection(name.trim())
+                    setCollections(current => [...current, collection])
+                    setIsCreating(false)
+                    void navigate({ to: '/_/collections', search: { id: collection.id } })
+                  }
+                  catch {
+                    toast.add({ title: 'Could not save collection', type: 'error' })
+                  }
+                }}
+              >
+                <Input aria-label='Collection name' value={name} onValueChange={setName} required pattern='.*\S.*' maxLength={maxCollectionNameLength} />
+                <div className='flex justify-end gap-2'>
+                  <DialogClose render={<Button variant='secondary'>Cancel</Button>} />
+                  <Button type='submit'>Save</Button>
+                </div>
+              </form>
+            </Dialog>
           </div>
 
           {favoriteTrackIds.length > 0 && (
