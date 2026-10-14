@@ -9,7 +9,7 @@ import { Dialog } from '@base-ui/react/dialog'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { ArrowDownIcon, ArrowUpIcon, PencilIcon, SaveIcon, Share2Icon, Trash2Icon, XIcon } from 'lucide-react'
+import { ArrowDownIcon, ArrowUpIcon, CheckIcon, PencilIcon, SaveIcon, Share2Icon, Trash2Icon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { CollectionNameDialog } from './collection-name-dialog'
 import { ErrorDisplay } from './error-display'
@@ -23,6 +23,7 @@ export function CollectionView({ collection, localId }: { collection: Collection
   const setCollections = useSetAtom(collectionsAtom)
   const selectedInstance = useAtomValue(selectedInstanceAtom)
   const navigate = useNavigate()
+  const [isEditing, setIsEditing] = useState(false)
   const [renaming, setRenaming] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [shareUrl, setShareUrl] = useState('')
@@ -94,14 +95,26 @@ export function CollectionView({ collection, localId }: { collection: Collection
             {localId
               ? (
                   <>
-                    <Button variant='secondary' icon={PencilIcon} onClick={() => setRenaming(true)}>Rename</Button>
                     <Button
                       variant='secondary'
-                      icon={Trash2Icon}
-                      onClick={() => setDeleting(true)}
+                      icon={isEditing ? CheckIcon : PencilIcon}
+                      aria-pressed={isEditing}
+                      onClick={() => setIsEditing(current => !current)}
                     >
-                      Delete
+                      {isEditing ? 'Done' : 'Edit'}
                     </Button>
+                    {isEditing && (
+                      <>
+                        <Button variant='secondary' icon={PencilIcon} onClick={() => setRenaming(true)}>Rename</Button>
+                        <Button
+                          variant='secondary'
+                          icon={Trash2Icon}
+                          onClick={() => setDeleting(true)}
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    )}
                   </>
                 )
               : (
@@ -203,7 +216,7 @@ export function CollectionView({ collection, localId }: { collection: Collection
                                   {query.isSuccess && ' · Unavailable'}
                                 </p>
                               )}
-                          {localId && (
+                          {localId && isEditing && (
                             <div className='flex items-center gap-2'>
                               <span className='mr-auto text-sm text-base-600-400'>
                                 {index + 1}
