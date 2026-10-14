@@ -94,7 +94,7 @@ export function Menu({
           className='fixed inset-x-0 bottom-0 z-50 mb-24 w-full transition-[translate,opacity,filter] duration-250 ease-drawer data-ending-style:translate-y-full data-ending-style:opacity-0 data-ending-style:blur-sm data-starting-style:translate-y-full data-starting-style:opacity-0 data-starting-style:blur-sm motion-reduce:duration-150 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-starting-style:translate-y-0'
         >
           <div
-            className='flex h-full flex-col justify-center gap-2 overflow-scroll p-4'
+            className='flex max-h-[calc(100dvh-8rem)] flex-col gap-2 overflow-y-auto p-4'
           >
             <Dialog.Title className='w-fit text-3xl font-medium text-base-100'>
               {activeSubmenu?.label ?? title ?? 'Track options'}
