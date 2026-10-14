@@ -82,7 +82,6 @@ export function CollectionView({ collection, localId }: { collection: Collection
     <Main
       left={(
         <>
-          <p className='text-sm text-base-600-400'>{localId ? 'Your collection' : 'Shared collection'}</p>
           <h1 className='text-3xl font-medium wrap-anywhere'>{collection.name}</h1>
           <p className='text-base-600-400'>
             {collection.trackIds.length}
@@ -109,10 +108,13 @@ export function CollectionView({ collection, localId }: { collection: Collection
                         <Button variant='secondary' icon={PencilIcon} onClick={() => setRenaming(true)}>Rename</Button>
                         <Button
                           variant='secondary'
+                          size='icon'
                           icon={Trash2Icon}
+                          className='shrink-0 md:w-auto md:px-4'
+                          aria-label='Delete collection'
                           onClick={() => setDeleting(true)}
                         >
-                          Delete
+                          <span className='hidden md:inline'>Delete</span>
                         </Button>
                       </>
                     )}
