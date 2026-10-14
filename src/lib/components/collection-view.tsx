@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { ArrowDownIcon, ArrowUpIcon, CheckIcon, PencilIcon, SaveIcon, Share2Icon, Trash2Icon, XIcon } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useState } from 'react'
 import { CollectionNameDialog } from './collection-name-dialog'
 import { ErrorDisplay } from './error-display'
@@ -23,6 +24,7 @@ export function CollectionView({ collection, localId }: { collection: Collection
   const setCollections = useSetAtom(collectionsAtom)
   const selectedInstance = useAtomValue(selectedInstanceAtom)
   const navigate = useNavigate()
+  const reduceMotion = useReducedMotion()
   const [isEditing, setIsEditing] = useState(false)
   const [renaming, setRenaming] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -207,7 +209,7 @@ export function CollectionView({ collection, localId }: { collection: Collection
                       const track = tracksById.get(id)
                       const label = track?.title ?? `Track ${id}`
                       return (
-                        <li key={id} className='flex min-w-0 flex-col gap-2'>
+                        <li key={id} className='flex min-w-0 flex-col'>
                           {track
                             ? <TrackListing track={track} />
                             : (
@@ -216,18 +218,29 @@ export function CollectionView({ collection, localId }: { collection: Collection
                                   {query.isSuccess && ' · Unavailable'}
                                 </p>
                               )}
-                          {localId && isEditing && (
-                            <div className='flex items-center gap-2'>
-                              <span className='mr-auto text-sm text-base-600-400'>
-                                {index + 1}
-                                {' / '}
-                                {collection.trackIds.length}
-                              </span>
-                              <Button variant='secondary' size='icon' icon={ArrowUpIcon} aria-label={`Move ${label} up`} disabled={index === 0} onClick={() => editTracks(ids => moveCollectionTrack(ids, id, -1))} />
-                              <Button variant='secondary' size='icon' icon={ArrowDownIcon} aria-label={`Move ${label} down`} disabled={index === collection.trackIds.length - 1} onClick={() => editTracks(ids => moveCollectionTrack(ids, id, 1))} />
-                              <Button variant='secondary' size='icon' icon={XIcon} aria-label={`Remove ${label} from collection`} onClick={() => editTracks(ids => ids.filter(trackId => trackId !== id))} />
-                            </div>
-                          )}
+                          <AnimatePresence initial={false}>
+                            {localId && isEditing && (
+                              <motion.div
+                                key='edit-controls'
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: reduceMotion ? 0 : 0.2, ease: 'easeInOut' }}
+                                className='overflow-hidden'
+                              >
+                                <div className='flex items-center gap-2 pt-2'>
+                                  <span className='mr-auto text-sm text-base-600-400'>
+                                    {index + 1}
+                                    {' / '}
+                                    {collection.trackIds.length}
+                                  </span>
+                                  <Button variant='secondary' size='icon' icon={ArrowUpIcon} aria-label={`Move ${label} up`} disabled={index === 0} onClick={() => editTracks(ids => moveCollectionTrack(ids, id, -1))} />
+                                  <Button variant='secondary' size='icon' icon={ArrowDownIcon} aria-label={`Move ${label} down`} disabled={index === collection.trackIds.length - 1} onClick={() => editTracks(ids => moveCollectionTrack(ids, id, 1))} />
+                                  <Button variant='secondary' size='icon' icon={XIcon} aria-label={`Remove ${label} from collection`} onClick={() => editTracks(ids => ids.filter(trackId => trackId !== id))} />
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                         </li>
                       )
                     })}
