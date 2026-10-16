@@ -41,12 +41,6 @@ export function InfiniteQueryView<T extends Result>({
 
   const results = sortedPages.flat()
 
-  const renderResult = (result: Result) => match(result, 'kind', {
-    track: result => <TrackListing key={result.id} track={result} />,
-    playlist: result => <PlaylistListing key={result.id} playlist={result} />,
-    user: result => <UserListing key={result.id} user={result} />,
-  })
-
   return (
     <>
       <QueryView
@@ -54,10 +48,16 @@ export function InfiniteQueryView<T extends Result>({
         content={() => (
           <>
             {results.length === 0 && (
-              <span className='mt-4 text-lg text-base-900-100/25'>Nothing here...</span>
+              <span className='mt-4 text-lg text-base-900-100/25'>
+                Nothing here...
+              </span>
             )}
 
-            {results.map(renderResult)}
+            {results.map((result: Result) => match(result, 'kind', {
+              track: result => <TrackListing key={result.id} track={result} />,
+              playlist: result => <PlaylistListing key={result.id} playlist={result} />,
+              user: result => <UserListing key={result.id} user={result} />,
+            }))}
           </>
         )}
       />
