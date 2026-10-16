@@ -9,7 +9,7 @@ import {
 import { getHls } from '$lib/hls'
 import { useQuery } from '@tanstack/react-query'
 import { useLocation } from '@tanstack/react-router'
-import { cn } from 'cnfast'
+import { cn } from 'cn'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { XIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'

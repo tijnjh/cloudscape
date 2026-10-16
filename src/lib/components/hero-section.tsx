@@ -1,5 +1,5 @@
 import type { User } from '$lib/schemas/user'
-import { cn } from 'cnfast'
+import { cn } from 'cn'
 import { UserListing } from './listings/user-listing'
 import { Badge } from './ui/badge'
 import { Collapsible } from './ui/collapsible'

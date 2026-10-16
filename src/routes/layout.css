@@ -1,9 +1,8 @@
 @import '@fontsource/atkinson-hyperlegible';
 @import 'tailwindcss' theme(static);
 @import 'tailwind-color-pairings' theme(static);
-@import 'tw-animate-css';
 
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: 'Atkinson Hyperlegible', sans-serif;

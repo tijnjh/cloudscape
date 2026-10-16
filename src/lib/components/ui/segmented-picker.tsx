@@ -1,4 +1,4 @@
-import { cn } from 'cnfast'
+import { cn } from 'cn'
 import { Button } from './button'
 
 export function SegmentedPicker<T extends readonly string[]>({

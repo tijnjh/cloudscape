@@ -3,7 +3,7 @@ import type { ComponentPropsWithoutRef, ComponentRef, ReactNode } from 'react'
 import type { VariantProps } from 'tailwind-variants'
 import { Button as BaseButton } from '@base-ui/react/button'
 import { Link } from '@tanstack/react-router'
-import { cn } from 'cnfast'
+import { cn } from 'cn'
 import { forwardRef } from 'react'
 import { tv } from 'tailwind-variants'
 
